@@ -1,24 +1,27 @@
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Open Sans', sans-serif;
   margin: 0;
   padding: 0;
   line-height: 1.6;
-  background: #f2f2f2;
+  background: #f4f7f9;
   color: #333;
 }
-header {
-  background: #444;
+header.hero {
+  background: linear-gradient(135deg, #4b79a1, #283e51);
   color: #fff;
-  padding: 20px;
   text-align: center;
+  padding: 40px 20px;
 }
-header h1 {
-  margin: 0;
+.hero-img {
+  width: 200px;
+  border-radius: 50%;
+  margin-bottom: 20px;
 }
 nav a {
   margin: 0 10px;
   color: #fff;
   text-decoration: none;
+  font-weight: 600;
 }
 section {
   padding: 20px;
@@ -31,27 +34,31 @@ section {
 }
 .profile {
   text-align: center;
-}
-.profile img {
-  width: 150px;
-  border-radius: 50%;
+  font-size: 1.1em;
 }
 .publications {
   display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: center;
+  flex-direction: column;
+  gap: 15px;
 }
 .pub-tile {
   background: #eee;
   padding: 10px;
   border-radius: 4px;
-  width: 250px;
   text-align: center;
   box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
-#pollResults div {
-  margin: 5px 0;
+.icon {
+  font-size: 2em;
+  margin: 0 10px;
+  color: #444;
+}
+.icon:hover {
+  color: #1e88e5;
+}
+.note {
+  font-size: 0.9em;
+  color: #666;
 }
 footer {
   text-align: center;

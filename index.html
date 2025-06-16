@@ -4,10 +4,12 @@
   <meta charset="UTF-8">
   <title>Arun Johnson</title>
   <link rel="stylesheet" href="css/style.css">
-  <script src="js/script.js" defer></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
-<header>
+<header class="hero">
+  <img src="ArunIcon_Ghibli.png" alt="Arun Johnson" class="hero-img">
   <h1>Arun Johnson</h1>
   <nav>
     <a href="#contact">Contact</a>
@@ -18,59 +20,38 @@
   </nav>
 </header>
 <section class="profile">
-  <img src="https://via.placeholder.com/150" alt="Arun Johnson">
-  <p>Hello! I'm Arun Johnson, welcome to my personal website.</p>
+  <p>Graduate student in Chemical Engineering at MIT interested in electrochemical reactor design. Previously worked on CO₂ capture at Terraform Industries and materials research at Stanford and UC Berkeley.</p>
+</section>
+<section class="contact" id="contact">
+  <h2>Contact</h2>
   <p>
-    <a href="https://t.me/arunsjohnson">Message me on Telegram</a> |
-    <a href="mailto:arun2642@gmail.com">Email me</a> |
-    <a href="https://orcid.org/0000-0002-5775-0430">ORCID</a>
+    <a href="https://t.me/arunsjohnson" class="icon" aria-label="Telegram"><i class="fab fa-telegram"></i></a>
+    <a href="mailto:arun2642@gmail.com" class="icon" aria-label="Email"><i class="fas fa-envelope"></i></a>
+    <a href="https://www.linkedin.com/in/arunsjohnson/" class="icon" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
   </p>
 </section>
 <section id="publications">
   <h2>Academic Publications</h2>
+  <p><a href="https://orcid.org/0000-0002-5775-0430">ORCID</a></p>
   <div class="publications">
-    <a class="pub-tile" href="https://doi.org/10.1109/indcon.2013.6726141">
-      Comparison of denoising methods in diffusion tensor imaging
-    </a>
-    <a class="pub-tile" href="https://doi.org/10.1016/bs.mie.2021.01.011">
-      The use of anthrolysin O and ostreolysin A to study cholesterol in cell membranes
-    </a>
+    <a class="pub-tile" href="https://doi.org/10.1021/jacs.4c05728">Removal of Chromium and Arsenic from Water Using Polyol-Functionalized Porous Aromatic Frameworks</a>
+    <a class="pub-tile" href="https://doi.org/10.1039/d0nr07960j">Size-controlled nanocrystals reveal spatial dependence and severity of nanoparticle coalescence and Ostwald ripening in sintering phenomena</a>
   </div>
 </section>
 <section id="work">
   <h2>Work History</h2>
   <ul>
-    <li>Research Assistant at University Lab (2023 - Present)</li>
-    <li>Intern at Tech Company (2021 - 2022)</li>
-    <li>Teaching Assistant, University (2019 - 2020)</li>
+    <li>Graduate Student, MIT Chemical Engineering (2024–present)</li>
+    <li>R&amp;D Engineer, Terraform Industries (2023–2024)</li>
+    <li>Research Assistant, UC Berkeley / ChemFinity Tech (2020–2023)</li>
+    <li>Undergraduate Researcher, Stanford University (2019–2020)</li>
   </ul>
 </section>
 <section id="interests">
-  <h2>Interests & Background</h2>
-  <p>I enjoy exploring computational biology, data visualization, and open source software. My background includes studies in biomedical engineering and computer science.</p>
+  <h2>Interests &amp; Background</h2>
+  <p>I enjoy exploring electrochemical technologies, sustainable materials, and data visualization.</p>
+  <p class="note">Poll removed – consider using a service like Google Forms if you need persistent data on GitHub Pages.</p>
 </section>
-<section id="poll">
-  <h2>How do you know me?</h2>
-  <div id="pollForm">
-    <label><input type="radio" name="poll" value="school"> From school</label><br>
-    <label><input type="radio" name="poll" value="work"> From work</label><br>
-    <label><input type="radio" name="poll" value="other"> Other</label><br>
-    <button onclick="submitPoll()">Vote</button>
-  </div>
-  <div id="pollResults" style="display:none"></div>
-</section>
-<section id="contact">
-  <h2>Contact Me</h2>
-  <form action="https://formsubmit.co/arun2642@gmail.com" method="POST">
-    <input type="hidden" name="_captcha" value="false">
-    <input type="text" name="name" placeholder="Your Name" required><br>
-    <input type="email" name="email" placeholder="Your Email" required><br>
-    <textarea name="message" placeholder="Message" required></textarea><br>
-    <button type="submit">Send</button>
-  </form>
-</section>
-<footer>
-  &copy; 2025 Arun Johnson
-</footer>
+<footer>&copy; 2025 Arun Johnson</footer>
 </body>
 </html>
