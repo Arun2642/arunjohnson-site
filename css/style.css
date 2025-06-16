@@ -109,3 +109,22 @@ footer {
   text-align: center;
   margin: 20px 0;
 }
+
+#posts {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.post {
+  background: #f8f9fb;
+  padding: 20px;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.post h2 {
+  margin-top: 0;
+  text-align: center;
+  color: #4b79a1;
+}

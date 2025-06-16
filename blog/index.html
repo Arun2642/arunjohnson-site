@@ -5,12 +5,22 @@
   <title>Blog - Arun Johnson</title>
   <link rel="icon" type="image/png" href="../ArunIcon_Ghibli.png">
   <link rel="stylesheet" href="../css/style.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
-<header>
+<header class="hero">
+  <img src="../ArunIcon_Ghibli.png" alt="Arun Johnson" class="hero-img">
   <h1>Blog</h1>
-  <nav><a href="../index.html">Home</a></nav>
+  <nav>
+    <a href="../index.html#contact">Contact</a>
+    <a href="../index.html#publications">Publications</a>
+    <a href="../index.html#work">Work</a>
+    <a href="../index.html#interests">About</a>
+    <a href="index.html">Blog</a>
+    <a href="https://t.me/s/nichromewire" target="_blank">Nichrome</a>
+  </nav>
 </header>
 <section>
   <div id="posts"></div>
@@ -26,6 +36,7 @@ fetch('posts.json')
     }
     list.forEach(item => {
       const div = document.createElement('div');
+      div.className = 'post';
       fetch(item.file)
         .then(r => r.text())
         .then(md => {
