@@ -13,7 +13,7 @@ header.hero {
   padding: 40px 20px;
 }
 .hero-img {
-  width: 200px;
+  width: 120px;
   border-radius: 50%;
   margin-bottom: 20px;
 }
@@ -48,8 +48,12 @@ section {
   text-align: center;
   box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
+.pub-tile img {
+  max-width: 100%;
+  height: auto;
+}
 .icon {
-  font-size: 2em;
+  font-size: 3em;
   margin: 0 10px;
   color: #444;
 }
@@ -65,4 +69,24 @@ footer {
   padding: 10px;
   background: #444;
   color: #fff;
+}
+.arrow {
+  font-size: 2.5em;
+  color: #888;
+  vertical-align: middle;
+}
+.sub {
+  margin-top: -10px;
+  margin-bottom: 10px;
+  color: #555;
+}
+.work-item img {
+  width: 40px;
+  vertical-align: middle;
+  margin-right: 10px;
+}
+.contact-icons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
