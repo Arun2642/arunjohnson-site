@@ -49,8 +49,9 @@ section {
   box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 .pub-tile img {
-  max-width: 100%;
-  height: auto;
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
 }
 .icon {
   font-size: 3em;
@@ -85,8 +86,26 @@ footer {
   vertical-align: middle;
   margin-right: 10px;
 }
+
+.work {
+  list-style: none;
+  padding: 0;
+}
+.work-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
 .contact-icons {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.ti-link {
+  color: inherit;
+  text-decoration: underline;
+}
+.back-home {
+  text-align: center;
+  margin: 20px 0;
 }
