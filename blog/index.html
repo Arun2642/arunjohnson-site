@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Blog - Arun Johnson</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+<header>
+  <h1>Blog</h1>
+  <nav><a href="../index.html">Home</a></nav>
+</header>
+<section>
+  <div id="posts"></div>
+</section>
+<script>
+fetch('posts.json')
+  .then(r => r.json())
+  .then(list => {
+    if (list.length === 0) {
+      document.getElementById('posts').textContent = 'No posts yet.';
+      return;
+    }
+    list.forEach(item => {
+      const div = document.createElement('div');
+      fetch(item.file)
+        .then(r => r.text())
+        .then(md => {
+          div.innerHTML = '<h2>' + item.title + '</h2>' + marked.parse(md);
+        });
+      document.getElementById('posts').appendChild(div);
+    });
+  });
+</script>
+</body>
+</html>
