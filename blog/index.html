@@ -2,16 +2,21 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Posts by Arun Johnson on chemical engineering and technology.">
+  <meta property="og:title" content="Blog - Arun Johnson">
+  <meta property="og:description" content="Posts by Arun Johnson on engineering topics">
   <title>Blog - Arun Johnson</title>
   <link rel="icon" type="image/png" href="../ArunIcon_Ghibli.png">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap">
   <link rel="stylesheet" href="../css/style.css">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="purify.min.js"></script>
 </head>
 <body>
 <header class="hero">
-  <img src="../ArunIcon_Ghibli.png" alt="Arun Johnson" class="hero-img">
+  <img src="../ArunIcon_Ghibli.png" alt="Arun Johnson" class="hero-img" loading="lazy">
   <h1>Blog</h1>
   <nav>
     <a href="../index.html#contact">Contact</a>
@@ -19,13 +24,15 @@
     <a href="../index.html#work">Work</a>
     <a href="../index.html#interests">About</a>
     <a href="index.html">Blog</a>
-    <a href="https://t.me/s/nichromewire" target="_blank">Nichrome</a>
+    <a href="https://t.me/s/nichromewire" target="_blank" rel="noopener noreferrer">Nichrome</a>
   </nav>
 </header>
+<main>
 <section>
   <div id="posts"></div>
   <p class="back-home"><a href="../index.html">Back to main site</a></p>
 </section>
+</main>
 <script>
 fetch('posts.json')
   .then(r => r.json())
@@ -40,7 +47,7 @@ fetch('posts.json')
       fetch(item.file)
         .then(r => r.text())
         .then(md => {
-          div.innerHTML = '<h2>' + item.title + '</h2>' + marked.parse(md);
+          div.innerHTML = '<h2>' + item.title + '</h2>' + DOMPurify.sanitize(marked.parse(md));
         });
       document.getElementById('posts').appendChild(div);
     });
