@@ -27,7 +27,7 @@
 </header>
 <main>
 <section class="profile">
-  <p>Graduate student in Chemical Engineering at MIT working on 10x cheaper systems for green hydrogen production. Previously worked on carbon neutral synthetic fuel at <a href="https://terraformindustries.com" class="ti-link">Terraform Industries</a> and materials research at Berkeley and Stanford.</p>
+  <p>Graduate student in Chemical Engineering at MIT developing 10x cheaper systems for green hydrogen production.<br>Previously worked on carbon-neutral synthetic fuel at <a href="https://terraformindustries.com" class="ti-link">Terraform Industries</a> and materials research at Berkeley and Stanford.</p>
 </section>
 <section class="contact" id="contact">
   <h2>Get in touch with me!</h2>
@@ -67,6 +67,70 @@
   <p>I am part of the Brushett Research Group at MIT, where I explore electrochemical systems that can drive down the cost of green hydrogen. My background spans direct air capture and catalytic reactor design.</p>
 </section>
 </main>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const details = [
+    ['Researching electrochemical systems for low-cost hydrogen in the Brushett group.'],
+    [
+      'Designed Sabatier reactor producing 10 Nm\u00b3/hr methane from air-captured CO\u2082 and green hydrogen.',
+      'Performed detailed GC analysis confirming >99% CO\u2082 conversion.',
+      'Developed kinetic and thermodynamic models for reactor design.',
+      'Supported recruiting, investor outreach and business development.'
+    ],
+    [
+      'Studied functionalized porous aromatic frameworks for removing arsenic and chromium from water (<a href="https://doi.org/10.1021/jacs.4c05728">paper</a>).',
+      'Work spun out into <a href="https://chemfinitytech.com">ChemFinity Tech</a>.',
+      'Combined experimental and computational approaches.'
+    ],
+    ['Organized club projects and outreach around biofuels technology.'],
+    [
+      'Investigated metal nanoparticle sintering on oxide supports.',
+      'Developed Si and ZrO\u2082 nanocapsule reactors with embedded catalysts (<a href="https://doi.org/10.1039/d0nr07960j">paper</a>).'
+    ]
+  ];
+
+  document.querySelectorAll('.work-item').forEach((item, i) => {
+    const img = item.querySelector('img');
+    const text = item.textContent.trim();
+    const m = text.match(/([^,]+),\s*([^\(]+)\s*\(([^\)]*)\)/);
+    if (!m) return;
+    const role = m[1].trim();
+    const org = m[2].trim();
+    const date = m[3].trim();
+
+    const summary = document.createElement('div');
+    summary.className = 'summary';
+    summary.appendChild(img);
+    const span = document.createElement('span');
+    span.innerHTML = `${role}, <strong>${org}</strong> <em>(${date})</em>`;
+    summary.appendChild(span);
+    const icon = document.createElement('span');
+    icon.className = 'toggle-icon';
+    icon.textContent = '▶';
+    summary.appendChild(icon);
+
+    item.textContent = '';
+    item.appendChild(summary);
+
+    if (details[i]) {
+      const d = document.createElement('div');
+      d.className = 'details';
+      const ul = document.createElement('ul');
+      details[i].forEach(t => {
+        const li = document.createElement('li');
+        li.innerHTML = t;
+        ul.appendChild(li);
+      });
+      d.appendChild(ul);
+      item.appendChild(d);
+    }
+
+    summary.addEventListener('click', () => {
+      item.classList.toggle('expanded');
+    });
+  });
+});
+</script>
 <footer>&copy; 2025 Arun Johnson</footer>
 </body>
 </html>
