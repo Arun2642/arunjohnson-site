@@ -86,41 +86,27 @@ footer {
   margin-bottom: 10px;
   color: #555;
 }
-.work-item img {
-  width: 40px;
-  vertical-align: middle;
-  margin-right: 30px;
-}
-
 .work {
   list-style: none;
   padding: 0;
 }
 .work-item {
-  display: flex;
-  align-items: center;
   margin-bottom: 10px;
 }
-.work-item .summary {
+.work-item details summary {
   display: flex;
   align-items: center;
   cursor: pointer;
-  width: 100%;
 }
-.work-item .toggle-icon {
-  margin-left: auto;
-  transition: transform 0.2s;
-}
-.work-item .details {
+.work-item details summary::-webkit-details-marker {
   display: none;
-  padding-left: 70px;
-  margin-top: 5px;
 }
-.work-item.expanded .details {
-  display: block;
+.work-item details summary i {
+  font-size: 1.5em;
+  margin-right: 15px;
 }
-.work-item.expanded .toggle-icon {
-  transform: rotate(90deg);
+.work-item details ul {
+  margin: 5px 0 0 40px;
 }
 .contact-icons {
   display: flex;
