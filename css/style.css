@@ -141,6 +141,12 @@ footer {
   color: #4b79a1;
 }
 
+.post img {
+  max-width: 100%;
+  display: block;
+  margin: 20px auto;
+}
+
 .not-found {
   text-align: center;
   margin-top: 60px;
