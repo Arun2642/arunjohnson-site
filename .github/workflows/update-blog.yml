@@ -1,0 +1,30 @@
+name: Update Blog Index
+on:
+  push:
+    paths:
+      - 'blog/**/*.md'
+      - 'scripts/generate_blog.js'
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node scripts/generate_blog.js
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git add blog/posts.json blog/rss.xml
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "Auto-update blog index" && git push
+          fi
