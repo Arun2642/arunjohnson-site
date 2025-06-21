@@ -4,13 +4,15 @@ on:
     paths:
       - 'blog/**/*.md'
       - 'scripts/generate_blog.js'
+permissions:
+  contents: write
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
