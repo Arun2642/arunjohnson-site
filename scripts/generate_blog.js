@@ -21,14 +21,15 @@ const posts = files.map(f => {
   const filePath = path.join(blogDir, f);
   const content = fs.readFileSync(filePath, 'utf8');
   const title = getTitle(f, content);
-  return { title, file: f };
-});
+  const mtime = fs.statSync(filePath).mtime;
+  return { title, file: f, date: mtime.toISOString() };
+}).sort((a, b) => new Date(b.date) - new Date(a.date));
 
-fs.writeFileSync(path.join(blogDir, 'posts.json'), JSON.stringify(posts, null, 2));
+fs.writeFileSync(path.join(blogDir, 'posts.json'), JSON.stringify(posts, null, 2) + '\n');
 
 const rssItems = posts.map(p => `    <item>
       <title>${p.title}</title>
-      <link>${p.file}</link>
+      <link>https://arunjohnson.com/blog/${encodeURIComponent(p.file)}</link>
       <description>${p.title}</description>
       <guid>${p.file.replace(/\.md$/, '')}</guid>
     </item>`).join('\n');
