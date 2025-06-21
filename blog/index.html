@@ -13,7 +13,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script src="purify.min.js"></script>
-  <script async id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script defer id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
 <header class="hero">
@@ -35,30 +35,32 @@
 </section>
 </main>
 <script>
-fetch('posts.json')
-  .then(r => r.json())
-  .then(list => {
-    if (list.length === 0) {
-      document.getElementById('posts').textContent = 'No posts yet.';
-      return;
-    }
-    list.forEach(item => {
-      const div = document.createElement('div');
-      div.className = 'post';
-      fetch(encodeURI(item.file))
-        .then(r => r.text())
-        .then(md => {
-          md = md.replace(/!\[\[(.*?)\]\]/g, (_,p)=>`![](${encodeURI(p)})`);
-          md = md.replace(/\[\[([^|\]]+)\|([^\]]+)\]\]/g, '$2');
-          md = md.replace(/\[\[([^\]]+)\]\]/g, '$1');
-          div.innerHTML = '<h2>' + item.title + '</h2>' + DOMPurify.sanitize(marked.parse(md));
-          if (window.MathJax) {
-            MathJax.typesetPromise([div]);
-          }
-        });
-      document.getElementById('posts').appendChild(div);
+window.addEventListener('DOMContentLoaded', () => {
+  fetch('posts.json')
+    .then(r => r.json())
+    .then(list => {
+      if (list.length === 0) {
+        document.getElementById('posts').textContent = 'No posts yet.';
+        return;
+      }
+      list.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'post';
+        fetch(encodeURI(item.file))
+          .then(r => r.text())
+          .then(md => {
+            md = md.replace(/!\[\[(.*?)\]\]/g, (_,p)=>`![](${encodeURI(p)})`);
+            md = md.replace(/\[\[([^|\]]+)\|([^\]]+)\]\]/g, '$2');
+            md = md.replace(/\[\[([^\]]+)\]\]/g, '$1');
+            div.innerHTML = '<h2>' + item.title + '</h2>' + DOMPurify.sanitize(marked.parse(md));
+            if (window.MathJax) {
+              MathJax.typesetPromise([div]);
+            }
+          });
+        document.getElementById('posts').appendChild(div);
+      });
     });
-  });
+});
 </script>
 </body>
 </html>
