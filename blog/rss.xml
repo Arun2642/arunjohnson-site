@@ -2,13 +2,13 @@
 <rss version="2.0">
   <channel>
     <title>Arun Johnson Blog</title>
-    <link>https://arunjohnson.example.com/blog/</link>
+    <link>https://arunjohnson.com/blog/</link>
     <description>Updates from Arun Johnson</description>
     <item>
-      <title>Biological Carbon Capture</title>
-      <link>biological-carbon-capture.md</link>
-      <description>An example post about carbon capture methods.</description>
-      <guid>biological-carbon-capture</guid>
+      <title>The Inefficiency of Trees vs. DAC</title>
+      <link>Biological vs. Synthetic Carbon Capture.md</link>
+      <description>The Inefficiency of Trees vs. DAC</description>
+      <guid>Biological vs. Synthetic Carbon Capture</guid>
     </item>
   </channel>
 </rss>

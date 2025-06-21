@@ -47,6 +47,9 @@ fetch('posts.json')
       fetch(item.file)
         .then(r => r.text())
         .then(md => {
+          md = md.replace(/!\[\[(.*?)\]\]/g, '![]($1)');
+          md = md.replace(/\[\[([^|\]]+)\|([^\]]+)\]\]/g, '$2');
+          md = md.replace(/\[\[([^\]]+)\]\]/g, '$1');
           div.innerHTML = '<h2>' + item.title + '</h2>' + DOMPurify.sanitize(marked.parse(md));
         });
       document.getElementById('posts').appendChild(div);
