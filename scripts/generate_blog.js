@@ -9,10 +9,7 @@ function getTitle(filename, content) {
     const titleMatch = frontmatterMatch[1].match(/^title:\s*(.*)$/m);
     if (titleMatch) return titleMatch[1].trim();
   }
-  // take first markdown heading
-  const headingMatch = content.match(/^\s*#{1,6}\s+(.*)$/m);
-  if (headingMatch) return headingMatch[1].trim();
-  // fallback to file name
+  // use file name if no explicit title is provided
   return filename.replace(/\.md$/i, '').replace(/[-_]/g, ' ');
 }
 
