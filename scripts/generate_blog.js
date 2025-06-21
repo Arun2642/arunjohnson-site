@@ -3,24 +3,14 @@ const path = require('path');
 
 const blogDir = path.join(__dirname, '..', 'blog');
 
-function getTitle(filename, content) {
-  const frontmatterMatch = content.match(/^---\n([\s\S]+?)\n---/);
-  if (frontmatterMatch) {
-    const titleMatch = frontmatterMatch[1].match(/^title:\s*(.*)$/m);
-    if (titleMatch) return titleMatch[1].trim();
-  }
-  // take first markdown heading
-  const headingMatch = content.match(/^\s*#{1,6}\s+(.*)$/m);
-  if (headingMatch) return headingMatch[1].trim();
-  // fallback to file name
+function getTitle(filename) {
   return filename.replace(/\.md$/i, '').replace(/[-_]/g, ' ');
 }
 
 const files = fs.readdirSync(blogDir).filter(f => f.toLowerCase().endsWith('.md'));
 const posts = files.map(f => {
   const filePath = path.join(blogDir, f);
-  const content = fs.readFileSync(filePath, 'utf8');
-  const title = getTitle(f, content);
+  const title = getTitle(f);
   const mtime = fs.statSync(filePath).mtime;
   return { title, file: f, date: mtime.toISOString() };
 }).sort((a, b) => new Date(b.date) - new Date(a.date));
