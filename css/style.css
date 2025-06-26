@@ -101,8 +101,9 @@ footer {
 .work-item details summary::-webkit-details-marker {
   display: none;
 }
-.work-item details summary i {
-  font-size: 1.5em;
+.work-item details summary img.logo-icon {
+  width: 24px;
+  height: 24px;
   margin-right: 15px;
 }
 .work-item details ul {
@@ -155,6 +156,6 @@ footer {
 }
 
 #interests {
-  background: #2578c3;
+  background: #4b79a1;
   color: #fff;
 }
