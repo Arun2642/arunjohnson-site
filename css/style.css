@@ -23,6 +23,65 @@ nav a {
   text-decoration: none;
   font-weight: 600;
 }
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background: #4b79a1;
+  min-width: 200px;
+  border-radius: 4px;
+  z-index: 1;
+  text-align: left;
+}
+
+.dropdown-content a {
+  color: #fff;
+  padding: 10px;
+  display: block;
+}
+
+.dropdown-content a:hover {
+  background: #283e51;
+}
+
+.dropdown:hover .dropdown-content,
+.dropdown:focus-within .dropdown-content {
+  display: block;
+}
+
+.tooltip {
+  position: relative;
+  cursor: help;
+  margin-left: 4px;
+  font-weight: normal;
+}
+
+.tooltiptext {
+  visibility: hidden;
+  width: 200px;
+  background-color: #444;
+  color: #fff;
+  text-align: left;
+  padding: 5px;
+  border-radius: 6px;
+  position: absolute;
+  z-index: 2;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
 main {
   padding: 20px;
   max-width: 900px;
