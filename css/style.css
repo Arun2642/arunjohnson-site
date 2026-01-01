@@ -129,6 +129,86 @@ section {
   font-size: 0.9em;
   color: #666;
 }
+.resolutions {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.resolution {
+  padding: 15px;
+  border-radius: 6px;
+  background: #f8f9fb;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+
+.resolution-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.resolution-header h3 {
+  margin: 0;
+}
+
+.resolution-meta {
+  font-size: 0.9em;
+  color: #555;
+}
+
+.progress-track {
+  position: relative;
+  height: 14px;
+  background: #e0e4ea;
+  border-radius: 999px;
+  overflow: hidden;
+  margin-top: 10px;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #4b79a1, #6db3f2);
+  border-radius: 999px;
+}
+
+.progress-percent {
+  margin: 8px 0 0;
+  font-weight: 600;
+  color: #4b79a1;
+}
+
+.progress-goal-marker {
+  position: absolute;
+  top: -4px;
+  bottom: -4px;
+  width: 0;
+  border-left: 2px dashed #444;
+}
+
+.progress-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8em;
+  margin-top: 6px;
+  color: #555;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.85em;
+}
+
+.status-badge.not-done {
+  background: #ffe3e3;
+  color: #b42318;
+  border: 1px solid #f5b5b5;
+}
 footer {
   text-align: center;
   padding: 10px;
