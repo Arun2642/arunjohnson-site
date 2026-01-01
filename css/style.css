@@ -257,9 +257,35 @@ footer {
   color: inherit;
   text-decoration: underline;
 }
+.subtle-link {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px dotted #6b8fb2;
+}
+.subtle-link:hover {
+  border-bottom-color: #4b79a1;
+}
 .back-home {
   text-align: center;
   margin: 20px 0;
+}
+.back-home a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid #d3d9e2;
+  background: #f8f9fb;
+  color: #4b79a1;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+.back-home a:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 12px rgba(75, 121, 161, 0.15);
+  background: #eef3f8;
 }
 
 #posts {
