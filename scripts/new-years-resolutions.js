@@ -3,6 +3,7 @@ const DATA_URL = "data/new-years-resolutions.csv";
 const TARGETS = {
   pushups: { goal: 10000, label: (value) => `${value} / 10,000 push ups` },
   elo: { min: 1000, goal: 1500, label: (value) => `Current ELO: ${value}` },
+  juggle_catches: { goal: 100, label: (value) => `${value} / 100 catches` },
   biology_pages: { goal: 1555, label: (value) => `${value} / 1555 pages` },
   longest_run_miles: { goal: 13, label: (value) => `Longest run: ${value} miles` },
   vo2_max: { min: 45, goal: 55, max: 60, label: (value) => `Current: ${value} (range 45–60)` },
