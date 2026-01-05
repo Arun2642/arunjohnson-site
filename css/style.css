@@ -61,6 +61,19 @@ nav a {
   font-weight: normal;
 }
 
+.info-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #e0e0e0;
+  color: #555;
+  font-size: 0.75em;
+  font-weight: 600;
+}
+
 .tooltiptext {
   visibility: hidden;
   width: 200px;
