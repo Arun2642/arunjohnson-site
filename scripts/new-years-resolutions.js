@@ -16,17 +16,20 @@ const TARGETS = {
 
 const clamp = (value, min = 0, max = 100) => Math.min(Math.max(value, min), max);
 
-const parseCsv = (text) => {
-  const [headerLine, ...rows] = text.trim().split(/\r?\n/);
-  if (!headerLine || rows.length === 0) {
+const parseCsvRows = (text) => {
+  const [headerLine, ...lines] = text.trim().split(/\r?\n/);
+  if (!headerLine || lines.length === 0) {
     return null;
   }
   const headers = headerLine.split(",");
-  const lastRow = rows[rows.length - 1].split(",");
-  return headers.reduce((acc, header, index) => {
-    acc[header] = lastRow[index];
-    return acc;
-  }, {});
+  const rows = lines.map((line) => {
+    const values = line.split(",");
+    return headers.reduce((acc, header, index) => {
+      acc[header] = values[index];
+      return acc;
+    }, {});
+  });
+  return { headers, rows };
 };
 
 const toNumber = (value) => {
@@ -85,6 +88,103 @@ const updateSailingStatusBadge = (rawValue) => {
   badge.classList.toggle("not-done", !done);
 };
 
+const renderGraph = (svg, field, values) => {
+  if (!svg) {
+    return;
+  }
+  const config = TARGETS[field] ?? {};
+  const width = 240;
+  const height = 120;
+  const padding = 16;
+  const plotWidth = width - padding * 2;
+  const plotHeight = height - padding * 2;
+  const goalValue = field === "sailing_done" ? 1 : config.goal;
+
+  const minValueCandidate = Number.isFinite(config.min) ? config.min : Math.min(...values, goalValue ?? Infinity);
+  const maxValueCandidate = Number.isFinite(config.max) ? config.max : Math.max(...values, goalValue ?? -Infinity);
+  let minValue = Number.isFinite(minValueCandidate) ? minValueCandidate : 0;
+  let maxValue = Number.isFinite(maxValueCandidate) ? maxValueCandidate : 1;
+  if (minValue === maxValue) {
+    maxValue = minValue + 1;
+  }
+
+  const xStep = values.length > 1 ? plotWidth / (values.length - 1) : 0;
+  const yScale = (value) => height - padding - ((value - minValue) / (maxValue - minValue)) * plotHeight;
+
+  const points = values.map((value, index) => ({
+    x: padding + index * xStep,
+    y: yScale(value),
+  }));
+
+  const pathData = points
+    .map((point, index) => `${index === 0 ? "M" : "L"} ${point.x.toFixed(1)} ${point.y.toFixed(1)}`)
+    .join(" ");
+
+  const goalLine = Number.isFinite(goalValue)
+    ? `<line class="graph-goal-line" x1="${padding}" x2="${width - padding}" y1="${yScale(goalValue).toFixed(1)}" y2="${yScale(goalValue).toFixed(1)}" />`
+    : "";
+
+  const startPoint = points[0];
+  const endPoint = points[points.length - 1];
+  const pointsMarkup =
+    points.length > 0
+      ? `<circle class="graph-point" cx="${startPoint.x.toFixed(1)}" cy="${startPoint.y.toFixed(1)}" r="2.5" />
+         <circle class="graph-point" cx="${endPoint.x.toFixed(1)}" cy="${endPoint.y.toFixed(1)}" r="2.5" />`
+      : "";
+
+  svg.innerHTML = `
+    <rect x="0" y="0" width="${width}" height="${height}" rx="8" fill="none"></rect>
+    <line class="graph-axis" x1="${padding}" x2="${width - padding}" y1="${height - padding}" y2="${height - padding}" />
+    ${goalLine}
+    <path class="graph-line" d="${pathData}" />
+    ${pointsMarkup}
+  `;
+};
+
+const buildGraphs = (rows) => {
+  const graphSvgs = document.querySelectorAll(".graph-svg");
+  if (!graphSvgs.length || !rows.length) {
+    return;
+  }
+  const dateValues = rows.map((row) => row.date).filter(Boolean);
+  const startDate = dateValues[0];
+  const endDate = dateValues[dateValues.length - 1];
+
+  graphSvgs.forEach((svg) => {
+    const field = svg.dataset.graph;
+    if (!field) {
+      return;
+    }
+    const values = rows.map((row) => {
+      const rawValue = row[field];
+      if (field === "sailing_done") {
+        return toBoolean(rawValue) ? 1 : 0;
+      }
+      return toNumber(rawValue);
+    });
+    renderGraph(svg, field, values);
+
+    const caption = document.querySelector(`[data-graph-caption="${field}"]`);
+    if (caption && startDate && endDate) {
+      caption.textContent = `${startDate} \u2192 ${endDate}`;
+    }
+  });
+};
+
+const setupGraphToggles = () => {
+  document.querySelectorAll(".resolution-graph").forEach((container) => {
+    const button = container.querySelector(".graph-toggle");
+    if (!button) {
+      return;
+    }
+    button.addEventListener("click", (event) => {
+      event.preventDefault();
+      const isPinned = container.classList.toggle("is-pinned");
+      button.setAttribute("aria-expanded", String(isPinned));
+    });
+  });
+};
+
 const loadResolutions = async () => {
   try {
     const response = await fetch(DATA_URL, { cache: "no-cache" });
@@ -92,11 +192,12 @@ const loadResolutions = async () => {
       throw new Error(`Failed to load CSV: ${response.status}`);
     }
     const text = await response.text();
-    const row = parseCsv(text);
-    if (!row) {
+    const parsed = parseCsvRows(text);
+    if (!parsed) {
       return;
     }
-    Object.entries(row).forEach(([field, value]) => {
+    const latestRow = parsed.rows[parsed.rows.length - 1];
+    Object.entries(latestRow).forEach(([field, value]) => {
       if (field === "date") {
         return;
       }
@@ -105,11 +206,13 @@ const loadResolutions = async () => {
         updateSailingStatusBadge(value);
       }
     });
+    buildGraphs(parsed.rows);
   } catch (error) {
     console.warn("Unable to update resolutions progress:", error);
   }
 };
 
 document.addEventListener("DOMContentLoaded", () => {
+  setupGraphToggles();
   loadResolutions();
 });
