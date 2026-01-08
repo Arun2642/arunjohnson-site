@@ -405,6 +405,27 @@ footer {
   align-items: center;
   justify-content: center;
 }
+.orcid-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: #4b79a1;
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+  letter-spacing: 0.02em;
+  box-shadow: 0 4px 10px rgba(40, 62, 81, 0.2);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.orcid-button:hover,
+.orcid-button:focus-visible {
+  background: #3b6588;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(40, 62, 81, 0.25);
+}
 .ti-link {
   color: inherit;
   text-decoration: underline;
