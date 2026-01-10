@@ -18,12 +18,28 @@ const growthState = {
   ground: null,
   tree: null,
   sky: null,
-  lightning: null
+  lightning: null,
+  startTime: null,
+  speedFactor: 1,
+  activeStages: new Set()
 };
 
 function scheduleGrowth() {
+  growthState.startTime = Date.now();
+  window.setInterval(checkGrowthProgress, 1000);
+}
+
+function checkGrowthProgress() {
+  if (!growthState.startTime) {
+    return;
+  }
+  const elapsed = Date.now() - growthState.startTime;
+  const scaledElapsed = elapsed * growthState.speedFactor;
   GROWTH_STAGES.forEach(({ delay, action }) => {
-    window.setTimeout(action, delay);
+    if (scaledElapsed >= delay && !growthState.activeStages.has(action)) {
+      growthState.activeStages.add(action);
+      action();
+    }
   });
 }
 
@@ -200,6 +216,51 @@ function lightningStrike() {
   }
 }
 
+function updateSpeedFactor(value) {
+  const parsedValue = Number(value);
+  if (!Number.isFinite(parsedValue)) {
+    return;
+  }
+  const clamped = Math.min(100, Math.max(1, parsedValue));
+  growthState.speedFactor = clamped;
+  const slider = document.querySelector('[data-growth-speed]');
+  const output = document.querySelector('[data-growth-speed-value]');
+  if (slider) {
+    slider.value = String(clamped);
+  }
+  if (output) {
+    output.textContent = `${clamped}x`;
+  }
+}
+
+function renderSpeedControl() {
+  const control = document.createElement('div');
+  control.className = 'growth-control';
+  control.innerHTML = `
+    <label class="growth-control__label" for="growth-speed">
+      Growth speed
+      <span class="growth-control__value" data-growth-speed-value>1x</span>
+    </label>
+    <input
+      id="growth-speed"
+      class="growth-control__slider"
+      data-growth-speed
+      type="range"
+      min="1"
+      max="100"
+      step="1"
+      value="1"
+      aria-label="Growth speed multiplier"
+    />
+  `;
+  document.body.appendChild(control);
+  const slider = control.querySelector('[data-growth-speed]');
+  slider.addEventListener('input', (event) => {
+    updateSpeedFactor(event.target.value);
+  });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
+  renderSpeedControl();
   scheduleGrowth();
 });
