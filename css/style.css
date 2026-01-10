@@ -108,6 +108,8 @@ section {
   margin-bottom: 20px;
   border-radius: 4px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  position: relative;
+  overflow: hidden;
 }
 .profile {
   text-align: center;
@@ -438,6 +440,358 @@ footer {
   transform: translateY(-1px);
   box-shadow: 0 6px 12px rgba(75, 121, 161, 0.15);
   background: #eef3f8;
+}
+
+.growth-control {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 5;
+  background: rgba(40, 62, 81, 0.88);
+  color: #fff;
+  padding: 10px 14px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(6px);
+}
+
+.growth-control__label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.growth-control__value {
+  font-size: 0.8rem;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 2px 6px;
+  border-radius: 999px;
+}
+
+.growth-control__slider {
+  width: 180px;
+}
+
+.growth-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.moss-tuft {
+  position: absolute;
+  width: 28px;
+  height: 18px;
+  background: radial-gradient(circle at 30% 80%, #7ac57b 0%, #4f8f54 48%, rgba(52, 106, 64, 0.2) 72%);
+  border-radius: 50% 50% 40% 40%;
+  opacity: 0.9;
+  --moss-scale: 0.6;
+  transform: scale(var(--moss-scale));
+  transition: transform 2.5s ease, opacity 2.5s ease;
+  filter: drop-shadow(0 3px 3px rgba(0, 0, 0, 0.18));
+  animation: moss-sway 6s ease-in-out infinite;
+}
+
+.moss-tuft::before,
+.moss-tuft::after {
+  content: "";
+  position: absolute;
+  bottom: 2px;
+  width: 12px;
+  height: 16px;
+  background: radial-gradient(circle at 40% 70%, #8ad68a 0%, #4b8d50 60%, rgba(60, 120, 68, 0.2) 80%);
+  border-radius: 50% 50% 40% 40%;
+}
+
+.moss-tuft::before {
+  left: 2px;
+  transform: rotate(-8deg);
+}
+
+.moss-tuft::after {
+  right: 2px;
+  transform: rotate(12deg);
+}
+.moss-tuft.is-growing {
+  --moss-scale: 1;
+}
+
+.moss-tuft.is-expanded {
+  --moss-scale: 1.4;
+}
+
+.growth-fern {
+  position: absolute;
+  width: 22px;
+  height: 48px;
+  background: linear-gradient(160deg, #5f8b52 0%, #3e6a3d 70%);
+  border-radius: 0 0 50% 50%;
+  transform: rotate(-6deg) scale(0.85);
+  transform-origin: bottom center;
+  opacity: 0;
+  transition: opacity 2s ease, transform 2s ease;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.2));
+}
+
+.growth-fern::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 6px;
+  width: 2px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.4);
+  transform: translateX(-50%);
+  border-radius: 2px;
+}
+
+.growth-fern.is-visible {
+  opacity: 0.9;
+  transform: rotate(3deg) scale(1);
+}
+
+.growth-decay .moss-tuft,
+.growth-decay .growth-fern {
+  filter: grayscale(0.4) brightness(0.7) sepia(0.35);
+}
+
+.growth-shed .moss-tuft,
+.growth-shed .growth-fern {
+  animation: growth-fall 4s ease-in forwards;
+}
+
+.growth-ground {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 140px;
+  pointer-events: none;
+  z-index: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.growth-ground .dirt-layer {
+  width: 100%;
+  height: 0;
+  background: linear-gradient(180deg, rgba(97, 70, 45, 0.6) 0%, rgba(61, 44, 28, 0.95) 100%);
+  border-top: 2px solid rgba(60, 40, 25, 0.8);
+  transition: height 6s ease;
+}
+
+.growth-ground.is-rich .dirt-layer {
+  height: 70px;
+}
+
+.growth-ground .sprout {
+  position: absolute;
+  bottom: 50px;
+  width: 6px;
+  height: 24px;
+  background: #4a7f44;
+  border-radius: 6px;
+  opacity: 0;
+  transform: scaleY(0.2);
+  transform-origin: bottom center;
+  transition: opacity 3s ease, transform 6s ease;
+}
+
+.growth-ground .sprout::after {
+  content: "";
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  width: 18px;
+  height: 12px;
+  background: #5f9b4e;
+  border-radius: 50%;
+  transform: translateX(-50%);
+}
+
+.growth-ground .sprout.is-growing {
+  opacity: 0.85;
+  transform: scaleY(1);
+}
+
+.growth-ground .bush {
+  position: absolute;
+  bottom: 55px;
+  width: 50px;
+  height: 30px;
+  background: #4f7f4e;
+  border-radius: 50% 50% 40% 40%;
+  opacity: 0;
+  transform: scale(0.6);
+  transition: opacity 4s ease, transform 6s ease;
+}
+
+.growth-ground .bush.is-grown {
+  opacity: 0.9;
+  transform: scale(1);
+}
+
+.growth-ground .tree {
+  position: absolute;
+  bottom: 55px;
+  width: 16px;
+  height: 70px;
+  background: #6b4b2e;
+  border-radius: 6px;
+  opacity: 0;
+  transform: scaleY(0.4);
+  transform-origin: bottom center;
+  transition: opacity 4s ease, transform 7s ease;
+}
+
+.growth-ground .tree::after {
+  content: "";
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  width: 80px;
+  height: 60px;
+  background: radial-gradient(circle at center, #5b8d4b 0%, #3f6d3c 70%);
+  border-radius: 50%;
+  transform: translateX(-50%);
+}
+
+.growth-ground .tree.is-grown {
+  opacity: 0.9;
+  transform: scaleY(1);
+}
+
+.growth-ground .tree.is-dead::after {
+  background: radial-gradient(circle at center, #8b6a48 0%, #5a402c 70%);
+  opacity: 0.5;
+}
+
+.growth-ground .tree.is-stump {
+  height: 30px;
+}
+
+.growth-ground .tree.is-stump::after {
+  display: none;
+}
+
+.growth-sky {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 200px;
+  pointer-events: none;
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 6s ease;
+}
+
+.growth-sky.is-stormy {
+  opacity: 1;
+}
+
+.growth-cloud {
+  position: absolute;
+  top: 20px;
+  width: 180px;
+  height: 60px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 50px;
+  box-shadow: 40px 10px 0 rgba(255, 255, 255, 0.7), -30px 15px 0 rgba(255, 255, 255, 0.75);
+  animation: cloud-drift 40s linear infinite;
+}
+
+.growth-rain {
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(120deg, rgba(255, 255, 255, 0.4) 0, rgba(255, 255, 255, 0.4) 2px, rgba(255, 255, 255, 0) 3px, rgba(255, 255, 255, 0) 10px);
+  opacity: 0;
+  transition: opacity 4s ease;
+  animation: rain-fall 1s linear infinite;
+}
+
+.growth-sky.is-raining .growth-rain {
+  opacity: 0.4;
+}
+
+.growth-lightning {
+  position: absolute;
+  top: 0;
+  left: 60%;
+  width: 8px;
+  height: 200px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0));
+  opacity: 0;
+  transform: skewX(-10deg);
+}
+
+.growth-lightning.is-flashing {
+  animation: lightning-flash 2s ease;
+}
+
+@keyframes moss-sway {
+  0%,
+  100% {
+    transform: scale(var(--moss-scale)) translateY(0);
+  }
+  50% {
+    transform: scale(var(--moss-scale)) translateY(-3px);
+  }
+}
+
+@keyframes growth-fall {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(80px) scale(0.4);
+  }
+}
+
+@keyframes cloud-drift {
+  0% {
+    transform: translateX(-220px);
+  }
+  100% {
+    transform: translateX(calc(100vw + 220px));
+  }
+}
+
+@keyframes rain-fall {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 40px 80px;
+  }
+}
+
+@keyframes lightning-flash {
+  0%,
+  85%,
+  100% {
+    opacity: 0;
+  }
+  90% {
+    opacity: 1;
+  }
+  92% {
+    opacity: 0;
+  }
+  96% {
+    opacity: 0.8;
+  }
 }
 
 #posts {
