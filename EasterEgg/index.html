@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Easter Egg | Hydrogen Constellation Forge</title>
+  <meta name="description" content="An interactive Easter egg experience.">
+  <style>
+    :root {
+      --bg: #05070f;
+      --text: #ecf5ff;
+      --accent: #6ee7ff;
+      --accent-2: #a78bfa;
+      --glass: rgba(16, 20, 39, 0.58);
+      --border: rgba(255, 255, 255, 0.2);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      overflow: hidden;
+      font-family: "Inter", "Segoe UI", system-ui, sans-serif;
+      color: var(--text);
+      background: radial-gradient(circle at 20% 20%, #172039 0%, var(--bg) 46%),
+                  radial-gradient(circle at 80% 15%, #20153d 0%, transparent 35%),
+                  var(--bg);
+    }
+
+    canvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .hud {
+      position: fixed;
+      top: 1rem;
+      left: 1rem;
+      right: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 0.8rem;
+      pointer-events: none;
+    }
+
+    .panel {
+      pointer-events: auto;
+      max-width: min(95vw, 27rem);
+      backdrop-filter: blur(10px);
+      background: var(--glass);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 0.9rem 1rem;
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.35);
+    }
+
+    h1 {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      margin: 0 0 0.4rem;
+      letter-spacing: 0.02em;
+    }
+
+    p {
+      margin: 0;
+      opacity: 0.95;
+      line-height: 1.4;
+      font-size: 0.93rem;
+    }
+
+    .controls {
+      margin-top: 0.7rem;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.5rem;
+    }
+
+    button, a.btn {
+      appearance: none;
+      border: 1px solid rgba(255, 255, 255, 0.26);
+      border-radius: 10px;
+      padding: 0.46rem 0.65rem;
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text);
+      font: inherit;
+      text-decoration: none;
+      text-align: center;
+      cursor: pointer;
+      transition: transform 140ms ease, background 140ms ease, border-color 140ms ease;
+    }
+
+    button:hover, a.btn:hover {
+      transform: translateY(-1px);
+      background: rgba(255, 255, 255, 0.16);
+      border-color: rgba(255, 255, 255, 0.45);
+    }
+
+    .stats {
+      font-size: 0.87rem;
+      display: grid;
+      gap: 0.2rem;
+      min-width: 12rem;
+    }
+
+    .tag {
+      display: inline-block;
+      font-size: 0.72rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 0.2rem;
+    }
+
+    .hint {
+      position: fixed;
+      left: 50%;
+      bottom: 1rem;
+      transform: translateX(-50%);
+      text-align: center;
+      font-size: 0.85rem;
+      opacity: 0.85;
+      background: rgba(7, 9, 18, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 999px;
+      padding: 0.36rem 0.9rem;
+      backdrop-filter: blur(8px);
+    }
+
+    @media (max-width: 720px) {
+      .hud { flex-direction: column; align-items: stretch; }
+      .stats { min-width: auto; }
+      .hint { max-width: 95vw; }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="universe"></canvas>
+
+  <div class="hud">
+    <section class="panel">
+      <span class="tag">Hidden mode unlocked</span>
+      <h1>Hydrogen Constellation Forge</h1>
+      <p>Click to seed charged particles. Hold and drag to bend gravity. Build shimmering crystal webs from chaos.</p>
+      <div class="controls">
+        <button id="pulse">Pulse</button>
+        <button id="shuffle">Shuffle</button>
+        <button id="toggleTrails">Trails: On</button>
+        <a href="../index.html" class="btn">Return</a>
+      </div>
+    </section>
+
+    <aside class="panel stats" aria-live="polite">
+      <div><strong>Particles:</strong> <span id="count">0</span></div>
+      <div><strong>Resonance:</strong> <span id="energy">0</span></div>
+      <div><strong>Mode:</strong> <span id="mode">Drift</span></div>
+    </aside>
+  </div>
+
+  <div class="hint">Keyboard: <strong>Space</strong> pulse • <strong>R</strong> reset • <strong>T</strong> trails • <strong>M</strong> magnet mode</div>
+
+  <script>
+    const canvas = document.getElementById('universe');
+    const ctx = canvas.getContext('2d');
+    const countEl = document.getElementById('count');
+    const energyEl = document.getElementById('energy');
+    const modeEl = document.getElementById('mode');
+    const trailsBtn = document.getElementById('toggleTrails');
+
+    const state = {
+      particles: [],
+      pointer: { x: innerWidth / 2, y: innerHeight / 2, down: false },
+      magnetMode: false,
+      trails: true,
+      time: 0,
+      hue: 190
+    };
+
+    function resize() {
+      canvas.width = innerWidth * devicePixelRatio;
+      canvas.height = innerHeight * devicePixelRatio;
+      canvas.style.width = innerWidth + 'px';
+      canvas.style.height = innerHeight + 'px';
+      ctx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
+    }
+
+    class Particle {
+      constructor(x, y, radius = 2 + Math.random() * 2.8) {
+        this.x = x;
+        this.y = y;
+        const speed = 0.45 + Math.random() * 1.3;
+        const angle = Math.random() * Math.PI * 2;
+        this.vx = Math.cos(angle) * speed;
+        this.vy = Math.sin(angle) * speed;
+        this.radius = radius;
+        this.charge = Math.random() > 0.5 ? 1 : -1;
+        this.life = 1;
+      }
+
+      step() {
+        const p = state.pointer;
+        const dx = p.x - this.x;
+        const dy = p.y - this.y;
+        const d2 = Math.max(90, dx * dx + dy * dy);
+        const force = (state.magnetMode ? 2600 : 1300) / d2;
+        const direction = p.down ? 1 : -0.22;
+        this.vx += dx * force * direction * 0.01;
+        this.vy += dy * force * direction * 0.01;
+
+        this.vx += Math.sin((this.y + state.time * 25) * 0.004) * 0.018;
+        this.vy += Math.cos((this.x - state.time * 28) * 0.004) * 0.018;
+
+        this.vx *= 0.993;
+        this.vy *= 0.993;
+
+        this.x += this.vx;
+        this.y += this.vy;
+
+        if (this.x < -40) this.x = innerWidth + 40;
+        if (this.x > innerWidth + 40) this.x = -40;
+        if (this.y < -40) this.y = innerHeight + 40;
+        if (this.y > innerHeight + 40) this.y = -40;
+      }
+
+      draw() {
+        const speed = Math.hypot(this.vx, this.vy);
+        const glow = Math.min(18, 8 + speed * 8);
+        const hue = (state.hue + this.charge * 25 + speed * 26) % 360;
+        ctx.beginPath();
+        ctx.fillStyle = `hsla(${hue}, 95%, ${62 + this.charge * 4}%, 0.92)`;
+        ctx.shadowColor = `hsla(${hue}, 100%, 68%, 0.8)`;
+        ctx.shadowBlur = glow;
+        ctx.arc(this.x, this.y, this.radius + speed * 0.35, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    function seed(n = 8, x = state.pointer.x, y = state.pointer.y) {
+      for (let i = 0; i < n; i++) {
+        const offset = (Math.random() - 0.5) * 50;
+        state.particles.push(new Particle(x + offset, y + offset));
+      }
+      if (state.particles.length > 260) state.particles.splice(0, state.particles.length - 260);
+    }
+
+    function pulse() {
+      state.hue = (state.hue + 36) % 360;
+      for (const p of state.particles) {
+        const angle = Math.atan2(p.y - state.pointer.y, p.x - state.pointer.x);
+        p.vx += Math.cos(angle) * (1.4 + Math.random() * 0.9);
+        p.vy += Math.sin(angle) * (1.4 + Math.random() * 0.9);
+      }
+      seed(14);
+    }
+
+    function shuffle() {
+      for (const p of state.particles) {
+        p.vx = (Math.random() - 0.5) * 4;
+        p.vy = (Math.random() - 0.5) * 4;
+      }
+      state.hue = Math.random() * 360;
+    }
+
+    function reset(count = 64) {
+      state.particles = [];
+      for (let i = 0; i < count; i++) {
+        state.particles.push(new Particle(Math.random() * innerWidth, Math.random() * innerHeight, 1.5 + Math.random() * 2.5));
+      }
+    }
+
+    function drawLinks() {
+      for (let i = 0; i < state.particles.length; i++) {
+        const a = state.particles[i];
+        for (let j = i + 1; j < state.particles.length; j++) {
+          const b = state.particles[j];
+          const dx = a.x - b.x;
+          const dy = a.y - b.y;
+          const dist = Math.hypot(dx, dy);
+          if (dist < 85) {
+            const alpha = (1 - dist / 85) * 0.24;
+            const hue = (state.hue + 200 + (a.charge + b.charge) * 20) % 360;
+            ctx.strokeStyle = `hsla(${hue}, 100%, 72%, ${alpha})`;
+            ctx.lineWidth = 1.1;
+            ctx.beginPath();
+            ctx.moveTo(a.x, a.y);
+            ctx.lineTo(b.x, b.y);
+            ctx.stroke();
+          }
+        }
+      }
+    }
+
+    function render() {
+      state.time += 0.016;
+
+      if (state.trails) {
+        ctx.fillStyle = 'rgba(5, 7, 15, 0.18)';
+      } else {
+        ctx.fillStyle = 'rgba(5, 7, 15, 0.96)';
+      }
+      ctx.fillRect(0, 0, innerWidth, innerHeight);
+      ctx.shadowBlur = 0;
+
+      for (const p of state.particles) p.step();
+      drawLinks();
+      for (const p of state.particles) p.draw();
+
+      const energy = state.particles.reduce((sum, p) => sum + Math.hypot(p.vx, p.vy), 0);
+      countEl.textContent = state.particles.length;
+      energyEl.textContent = energy.toFixed(1);
+      modeEl.textContent = state.magnetMode ? 'Magnet' : (state.pointer.down ? 'Forge' : 'Drift');
+
+      requestAnimationFrame(render);
+    }
+
+    addEventListener('resize', resize);
+    addEventListener('pointermove', (event) => {
+      state.pointer.x = event.clientX;
+      state.pointer.y = event.clientY;
+      if (state.pointer.down && Math.random() > 0.58) seed(1, event.clientX, event.clientY);
+    });
+    addEventListener('pointerdown', (event) => {
+      state.pointer.down = true;
+      state.pointer.x = event.clientX;
+      state.pointer.y = event.clientY;
+      seed(12, event.clientX, event.clientY);
+    });
+    addEventListener('pointerup', () => state.pointer.down = false);
+    addEventListener('keydown', (event) => {
+      if (event.code === 'Space') { event.preventDefault(); pulse(); }
+      if (event.key.toLowerCase() === 'r') reset();
+      if (event.key.toLowerCase() === 't') toggleTrails();
+      if (event.key.toLowerCase() === 'm') toggleMode();
+    });
+
+    function toggleMode() {
+      state.magnetMode = !state.magnetMode;
+      modeEl.textContent = state.magnetMode ? 'Magnet' : 'Drift';
+    }
+
+    function toggleTrails() {
+      state.trails = !state.trails;
+      trailsBtn.textContent = `Trails: ${state.trails ? 'On' : 'Off'}`;
+    }
+
+    document.getElementById('pulse').addEventListener('click', pulse);
+    document.getElementById('shuffle').addEventListener('click', shuffle);
+    trailsBtn.addEventListener('click', toggleTrails);
+
+    resize();
+    reset(88);
+    render();
+  </script>
+</body>
+</html>
