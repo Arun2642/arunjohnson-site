@@ -39,6 +39,23 @@ const toNumber = (value) => {
 
 const toBoolean = (value) => String(value).trim().toLowerCase() === "true";
 
+const getCompletionPercent = (field, rawValue) => {
+  const config = TARGETS[field];
+  if (!config) {
+    return 0;
+  }
+  if (field === "sailing_done") {
+    return toBoolean(rawValue) ? 100 : 0;
+  }
+  const value = toNumber(rawValue);
+  if (field === "vo2_max") {
+    const rangeSpan = config.max - config.min;
+    return clamp(((value - config.min) / rangeSpan) * 100);
+  }
+  const baseline = config.min ?? 0;
+  return clamp(((value - baseline) / (config.goal - baseline)) * 100);
+};
+
 const updateProgress = (field, rawValue) => {
   const config = TARGETS[field];
   if (!config) {
@@ -185,6 +202,27 @@ const setupGraphToggles = () => {
   });
 };
 
+const sortResolutionsByCompletion = (latestRow) => {
+  const container = document.querySelector(".resolutions");
+  if (!container || !latestRow) {
+    return;
+  }
+
+  const cards = Array.from(container.querySelectorAll(":scope > .resolution"));
+  const rankedCards = cards.map((card, index) => {
+    const field =
+      card.querySelector("[data-progress]")?.dataset.progress ||
+      card.querySelector("[data-percent]")?.dataset.percent ||
+      card.querySelector("[data-field]")?.dataset.field;
+    const completion = field ? getCompletionPercent(field, latestRow[field]) : 0;
+    return { card, index, completion };
+  });
+
+  rankedCards
+    .sort((a, b) => b.completion - a.completion || a.index - b.index)
+    .forEach(({ card }) => container.appendChild(card));
+};
+
 const loadResolutions = async () => {
   try {
     const response = await fetch(DATA_URL, { cache: "no-cache" });
@@ -206,6 +244,7 @@ const loadResolutions = async () => {
         updateSailingStatusBadge(value);
       }
     });
+    sortResolutionsByCompletion(latestRow);
     buildGraphs(parsed.rows);
   } catch (error) {
     console.warn("Unable to update resolutions progress:", error);
