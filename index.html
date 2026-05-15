@@ -5,141 +5,49 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Arun Johnson – chemical engineer working on green hydrogen.">
   <meta property="og:title" content="Arun Johnson">
-  <meta property="og:description" content="Chemical engineer working on 10x cheaper systems for green hydrogen production.">
-  <title>Arun Johnson</title>
+  <meta property="og:description" content="Ask Arun questions about his work, writing, and background.">
+  <title>Arun Johnson | Interactive Q&A</title>
   <link rel="icon" type="image/png" href="ArunIcon_Basalt.png">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
-<header class="hero">
-  <img src="ArunIcon_Basalt.png" alt="Arun Johnson" class="hero-img" loading="lazy">
-  <h1>Arun Johnson</h1>
-  <nav>
-    <a href="#contact">Contact</a>
-    <a href="#publications">Publications</a>
-    <a href="#work">Work</a>
-    <a href="new-years-resolutions.html">New Year's Resolutions</a>
-    <div class="dropdown">
-      <a href="#">Blog (Nichrome)</a>
-      <div class="dropdown-content">
-        <a href="https://limiting.substack.com" target="_blank" rel="noopener noreferrer">Nichrome <span class="tooltip">?<span class="tooltiptext">Long form writing on limiting factors that hold back the cutting edge of technology</span></span></a>
-        <a href="https://t.me/s/nichromewire" target="_blank" rel="noopener noreferrer">Nichrome Shorts <span class="tooltip">?<span class="tooltiptext">Telegram blog for science news and fun facts</span></span></a>
+<body class="home-qa">
+  <main class="qa-shell">
+    <section class="profile-card">
+      <img src="ArunIcon_Basalt.png" alt="Arun Johnson" class="profile-image" loading="lazy">
+      <h1>Arun Johnson</h1>
+      <p>Graduate student in Chemical Engineering at MIT building 10x cheaper systems for green hydrogen. Previously at Terraform Industries, Berkeley, and Stanford.</p>
+    </section>
+
+    <section class="qa-card" aria-label="Interactive questions">
+      <h2>Ask me anything</h2>
+      <p class="qa-subtitle">Choose a starter question or send your own.</p>
+
+      <div id="qa-options" class="qa-options" aria-label="Question options"></div>
+
+      <div id="qa-answer" class="qa-answer" aria-live="polite">
+        <p>Select A, B, C, or D to see an instant answer.</p>
       </div>
-    </div>
-  </nav>
-</header>
-<main>
-<section class="profile">
-  <p>Graduate student in Chemical Engineering at MIT developing 10x cheaper systems for green hydrogen production.<br><br>Previously worked on carbon-neutral synthetic fuel at <a href="https://terraformindustries.com" class="ti-link">Terraform Industries</a> and materials research at Berkeley and Stanford.</p>
-</section>
-<section class="contact" id="contact">
-  <h2>Get in touch with me!</h2>
-  <p class="sub">You can use any of these methods, in order of preference</p>
-  <p class="contact-icons">
-    <a href="https://t.me/arunsjohnson" class="icon" aria-label="Telegram"><i class="fab fa-telegram"></i></a>
-    <span class="arrow">&gt;</span>
-    <a href="mailto:arun2642@gmail.com" class="icon" aria-label="Email"><i class="fas fa-envelope"></i></a>
-    <span class="arrow">&gt;</span>
-    <a href="https://www.linkedin.com/in/arunsjohnson/" class="icon" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-  </p>
-</section>
-<section id="publications">
-  <h2><a href="https://orcid.org/0000-0002-5775-0430">Academic Publications</a></h2>
-  <div class="publications">
-    <a class="pub-tile" href="https://doi.org/10.1021/jacs.4c05728" title="Chromium &amp; Arsenic Removal">
-      <img src="ChromiumArsenic_Article_Icon.png" alt="Chromium and Arsenic Removal icon" loading="lazy">
-      <span class="pub-title">Chromium &amp; Arsenic Removal</span>
-    </a>
-    <a class="pub-tile" href="https://doi.org/10.1039/d0nr07960j" title="Nanoparticle Coalescence">
-      <img src="Nanoparticle_Article_Icon.png" alt="Nanoparticle Coalescence icon" loading="lazy">
-      <span class="pub-title">Nanoparticle Coalescence</span>
-    </a>
-  </div>
-</section>
-<section id="work">
-  <h2>Work History</h2>
-  <ul class="work">
-    <li class="work-item">
-      <details>
-        <summary>
-          <img src="MIT_Icon.jpg" alt="MIT logo" class="logo-icon">
-          <span class="work-text">
-            <span class="work-title">Graduate Student, <strong>MIT Chemical Engineering</strong></span>
-            <span class="work-date">Aug&nbsp;2023–Present</span>
-          </span>
-        </summary>
-        <ul>
-          <li>Researching electrochemical systems for low-cost hydrogen in the Brushett group.</li>
-        </ul>
-      </details>
-    </li>
-    <li class="work-item">
-      <details>
-        <summary>
-          <img src="Terraform_Icon.jpg" alt="Terraform Industries logo" class="logo-icon">
-          <span class="work-text">
-            <span class="work-title">Chemical Engineer, <strong>Terraform Industries</strong></span>
-            <span class="work-date">May&nbsp;2022–Jul&nbsp;2023</span>
-          </span>
-        </summary>
-        <ul>
-          <li>Designed Sabatier reactor producing 10 Nm³/hr methane from air-captured CO₂ and green hydrogen.</li>
-          <li>Performed detailed GC analysis confirming &gt;99% CO₂ conversion.</li>
-          <li>Developed kinetic and thermodynamic models for reactor design.</li>
-          <li>Supported recruiting, investor outreach and business development.</li>
-        </ul>
-      </details>
-    </li>
-    <li class="work-item">
-      <details>
-        <summary>
-          <img src="Berkeley_Icon.png" alt="UC Berkeley logo" class="logo-icon">
-          <span class="work-text">
-            <span class="work-title">Undergraduate Researcher (Long Lab), <strong>UC Berkeley</strong></span>
-            <span class="work-date">Nov&nbsp;2019–Jul&nbsp;2023</span>
-          </span>
-        </summary>
-        <ul>
-          <li>Studied functionalized porous aromatic frameworks for removing arsenic and chromium from water (<a href="https://doi.org/10.1021/jacs.4c05728">paper</a>).</li>
-          <li>Work spun out into <a href="https://chemfinitytech.com">ChemFinity Tech</a>.</li>
-          <li>Combined experimental and computational approaches.</li>
-        </ul>
-      </details>
-    </li>
-    <li class="work-item">
-      <details>
-        <summary>
-          <img src="Biofuels_Icon.jpg" alt="Biofuels Technology Club logo" class="logo-icon">
-          <span class="work-text">
-            <span class="work-title">Vice President, <strong>UC&nbsp;Berkeley Biofuels Technology Club</strong></span>
-            <span class="work-date">May&nbsp;2022–May&nbsp;2023</span>
-          </span>
-        </summary>
-        <ul>
-          <li>Organized club projects and outreach around biofuels technology.</li>
-        </ul>
-      </details>
-    </li>
-    <li class="work-item">
-      <details>
-        <summary>
-          <img src="Stanford_Icon.jpg" alt="Stanford University logo" class="logo-icon">
-          <span class="work-text">
-            <span class="work-title">Research Intern (Cargnello Lab), <strong>Stanford University</strong></span>
-            <span class="work-date">Jun&nbsp;2018–Aug&nbsp;2019</span>
-          </span>
-        </summary>
-        <ul>
-          <li>Investigated metal nanoparticle sintering on oxide supports.</li>
-          <li>Developed Si and ZrO₂ nanocapsule reactors with embedded catalysts (<a href="https://doi.org/10.1039/d0nr07960j">paper</a>).</li>
-        </ul>
-      </details>
-    </li>
-  </ul>
-</section>
-</main>
-<footer>&copy; 2025 Arun Johnson</footer>
+
+      <label for="free-question" class="free-label">Ask a new question</label>
+      <div class="free-row">
+        <input id="free-question" type="text" placeholder="Type your question and press Enter" autocomplete="off">
+        <button id="send-question" type="button" aria-label="Send question">
+          <i class="fa-solid fa-paper-plane"></i>
+        </button>
+      </div>
+      <p class="free-note">Your custom question opens as a draft email to me.</p>
+    </section>
+
+    <nav class="secondary-links" aria-label="Additional pages">
+      <a href="blog/index.html">Blog</a>
+      <a href="new-years-resolutions.html">New Year’s Resolutions</a>
+      <a href="mailto:arun2642@gmail.com">Contact</a>
+      <a href="https://orcid.org/0000-0002-5775-0430" target="_blank" rel="noopener noreferrer">Publications</a>
+    </nav>
+  </main>
+
+  <script src="scripts/qa.js"></script>
 </body>
 </html>
