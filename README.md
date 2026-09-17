@@ -27,9 +27,9 @@ The local admin password defaults to `admin`; override it with `ADMIN_PASSWORD`.
 
 The editor's Dictate button uses the browser's built-in speech recognition, so no API key or audio upload is needed. Chrome and Edge can dictate directly in the answer editor; stopping the recording sends the resulting text to the locally installed Codex CLI. The CLI must be signed in on this machine. If browser speech recognition is unavailable, focus the editor, press `Win+H` to use Windows dictation, and click `Polish draft` when finished.
 
-By default the server invokes `codex.cmd exec --model gpt-5.6-luna` with the dictated text on standard input, using an ephemeral read-only run. Override `CODEX_COMMAND`, `CODEX_LUNA_MODEL`, or `CODEX_TIMEOUT_SECONDS` if needed. If Codex has not been signed in yet, run `codex login` once in PowerShell.
+By default the server invokes `codex.cmd exec --model gpt-5.6-luna` with the dictated text on standard input, using an ephemeral read-only run. Override `CODEX_COMMAND`, `CODEX_LUNA_MODEL`, `CODEX_TIMEOUT_SECONDS`, or `CODEX_SUGGESTION_WORKERS` if needed. If Codex has not been signed in yet, run `codex login` once in PowerShell.
 
-In the editor, right-click the canvas to create a blurb or question, double-click a node to edit it, and drag between nodes to connect them. Connections must run from blurb to question or question to blurb. Double-clicking a blurb opens an expanded rich editor with formatting, links, lists, and image URLs. Dragged node positions can be saved and restored.
+In the editor, right-click the canvas to create a blurb or question, double-click a node to edit it, and drag between nodes to connect them. Connections must run from blurb to question or question to blurb. Right-click any answer and choose `Suggest 4 questions` to start a background Codex job; the four generated question nodes and their connections are added when the job completes. Double-clicking a blurb opens an expanded rich editor with formatting, links, lists, and image URLs. Dragged node positions can be saved and restored.
 
 After editing the local graph, export the current MongoDB state to the static file before publishing:
 

@@ -23,6 +23,10 @@ const THEME_KEY = 'qna-admin-theme';
 const NODE_WIDTH = 280;
 const NODE_HEIGHT = 150;
 
+function wait(milliseconds) {
+  return new Promise((resolve) => window.setTimeout(resolve, milliseconds));
+}
+
 function GraphNode({ data, selected }) {
   return (
     <div className={`graph-node graph-node-${data.type} ${selected ? 'is-selected' : ''}`}>
@@ -393,6 +397,7 @@ function Editor() {
   const [menu, setMenu] = useState(null);
   const [editing, setEditing] = useState(null);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
+  const [suggestingNodeIds, setSuggestingNodeIds] = useState(() => new Set());
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
@@ -453,6 +458,47 @@ function Editor() {
       setIsAuthed(false);
     });
   }, [isAuthed, loadGraph]);
+
+  function setSuggestionInFlight(nodeId, inFlight) {
+    setSuggestingNodeIds((current) => {
+      const next = new Set(current);
+      if (inFlight) {
+        next.add(nodeId);
+      } else {
+        next.delete(nodeId);
+      }
+      return next;
+    });
+  }
+
+  async function suggestQuestions(answerNodeId) {
+    setMenu(null);
+    setSuggestionInFlight(answerNodeId, true);
+    try {
+      const job = await api(password, '/api/admin/suggestion-jobs', {
+        method: 'POST',
+        body: JSON.stringify({ answerNodeId })
+      });
+      setStatus('Codex Luna is suggesting four follow-up questions in the background...');
+
+      let currentJob = job;
+      while (currentJob.status === 'queued' || currentJob.status === 'running') {
+        await wait(1000);
+        currentJob = await api(password, `/api/admin/suggestion-jobs/${job.id}`);
+      }
+
+      if (currentJob.status !== 'completed') {
+        throw new Error(currentJob.error || 'The question suggestion job failed.');
+      }
+
+      await loadGraph();
+      setStatus(`Added ${currentJob.questionIds.length} follow-up questions.`);
+    } catch (error) {
+      setStatus(error.message);
+    } finally {
+      setSuggestionInFlight(answerNodeId, false);
+    }
+  }
 
   async function savePositions(nextNodes = nodes) {
     await api(password, '/api/admin/layout', {
@@ -682,6 +728,15 @@ function Editor() {
           {menu.type === 'node' && (
             <>
               <button type="button" onClick={() => { setEditing(menu.node); setMenu(null); }}>Edit</button>
+              {menu.node.data.type === 'blurb' && (
+                <button
+                  type="button"
+                  onClick={() => suggestQuestions(menu.node.id)}
+                  disabled={suggestingNodeIds.has(menu.node.id)}
+                >
+                  {suggestingNodeIds.has(menu.node.id) ? 'Suggesting questions...' : 'Suggest 4 questions'}
+                </button>
+              )}
               <button type="button" onClick={() => deleteNode(menu.node.id).catch((error) => setStatus(error.message))}>Delete</button>
             </>
           )}
