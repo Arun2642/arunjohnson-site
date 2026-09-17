@@ -100,8 +100,9 @@ function htmlForNode(node) {
 
 function RichBlurbEditor({ node, password, onSave, onCancel }) {
   const editorRef = useRef(null);
-  const recorderRef = useRef(null);
-  const streamRef = useRef(null);
+  const recognitionRef = useRef(null);
+  const transcriptRef = useRef('');
+  const stopRequestedRef = useRef(false);
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState('');
   const [dictationState, setDictationState] = useState('idle');
@@ -114,10 +115,9 @@ function RichBlurbEditor({ node, password, onSave, onCancel }) {
   }, [node]);
 
   useEffect(() => () => {
-    if (recorderRef.current && recorderRef.current.state !== 'inactive') {
-      recorderRef.current.stop();
+    if (recognitionRef.current) {
+      recognitionRef.current.abort();
     }
-    streamRef.current?.getTracks().forEach((track) => track.stop());
   }, []);
 
   function runCommand(command, value = null) {
@@ -151,17 +151,23 @@ function RichBlurbEditor({ node, password, onSave, onCancel }) {
     runCommand('insertHTML', `<img src="${escapeAttribute(url.trim())}" alt="${escapeAttribute(alt)}">`);
   }
 
-  async function polishDictation(audioBlob) {
+  async function polishText(text) {
+    const transcript = text.trim();
+    if (!transcript) {
+      throw new Error('No dictated text was captured. Try again or use Windows dictation, then click Polish draft.');
+    }
+
     setDictationState('polishing');
-    setDictationNote('Transcribing, then asking Codex Luna to polish the answer...');
+    setDictationNote('Asking local Codex Luna to polish the answer...');
     setError('');
 
-    const payload = new FormData();
-    payload.append('audio', audioBlob, 'dictation.webm');
     const response = await fetch('/api/admin/polish-dictation', {
       method: 'POST',
-      headers: { 'X-Admin-Password': password },
-      body: payload
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Admin-Password': password
+      },
+      body: JSON.stringify({ transcript })
     });
     const result = await response.json().catch(() => ({}));
     if (!response.ok) {
@@ -180,49 +186,87 @@ function RichBlurbEditor({ node, password, onSave, onCancel }) {
   }
 
   async function startDictation() {
-    if (!navigator.mediaDevices?.getUserMedia || !window.MediaRecorder) {
-      setError('Audio recording is not supported by this browser.');
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      editorRef.current?.focus();
+      setError('This browser does not expose speech recognition.');
+      setDictationNote('Use Windows dictation: focus the editor, press Win+H, dictate, then click Polish draft.');
       return;
     }
 
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      const mimeType = ['audio/webm;codecs=opus', 'audio/webm', 'audio/mp4']
-        .find((candidate) => MediaRecorder.isTypeSupported(candidate));
-      const recorder = mimeType ? new MediaRecorder(stream, { mimeType }) : new MediaRecorder(stream);
-      const chunks = [];
-      streamRef.current = stream;
-      recorderRef.current = recorder;
-      recorder.ondataavailable = (event) => {
-        if (event.data.size) {
-          chunks.push(event.data);
+    const recognition = new SpeechRecognition();
+    recognition.continuous = true;
+    recognition.interimResults = true;
+    recognition.lang = 'en-US';
+    transcriptRef.current = '';
+    stopRequestedRef.current = false;
+    recognitionRef.current = recognition;
+
+    recognition.onresult = (event) => {
+      let interim = '';
+      for (let index = event.resultIndex; index < event.results.length; index += 1) {
+        const phrase = event.results[index][0].transcript;
+        if (event.results[index].isFinal) {
+          transcriptRef.current += `${phrase} `;
+        } else {
+          interim += phrase;
         }
-      };
-      recorder.onstop = () => {
-        stream.getTracks().forEach((track) => track.stop());
-        streamRef.current = null;
-        recorderRef.current = null;
-        const audioBlob = new Blob(chunks, { type: recorder.mimeType || 'audio/webm' });
-        polishDictation(audioBlob).catch((dictationError) => {
-          setDictationState('idle');
-          setDictationNote('');
-          setError(dictationError.message);
-        });
-      };
-      recorder.start();
+      }
+      const preview = `${transcriptRef.current} ${interim}`.trim();
+      setDictationNote(preview ? `Recording... ${preview}` : 'Recording... click Stop & polish when you are done.');
+    };
+
+    recognition.onerror = (event) => {
+      if (event.error === 'aborted') {
+        return;
+      }
+      stopRequestedRef.current = false;
+      recognitionRef.current = null;
+      setDictationState('idle');
+      setError(`Dictation error: ${event.error || 'speech recognition failed'}.`);
+    };
+
+    recognition.onend = () => {
+      recognitionRef.current = null;
+      if (!stopRequestedRef.current) {
+        setDictationState('idle');
+        setDictationNote('Dictation ended. Click Dictate to try again.');
+        return;
+      }
+
+      stopRequestedRef.current = false;
+      polishText(transcriptRef.current).catch((dictationError) => {
+        setDictationState('idle');
+        setDictationNote('');
+        setError(dictationError.message);
+      });
+    };
+
+    try {
+      recognition.start();
       setError('');
       setDictationNote('Recording... click Stop & polish when you are done.');
       setDictationState('recording');
     } catch (recordingError) {
-      setError(recordingError.message || 'Microphone permission was not granted.');
+      recognitionRef.current = null;
+      setError(recordingError.message || 'Could not start browser dictation.');
     }
   }
 
   function stopDictation() {
-    if (recorderRef.current?.state === 'recording') {
-      recorderRef.current.stop();
+    if (recognitionRef.current) {
+      stopRequestedRef.current = true;
       setDictationState('polishing');
+      recognitionRef.current.stop();
     }
+  }
+
+  function polishCurrentDraft() {
+    polishText(editorRef.current?.innerText || '').catch((polishError) => {
+      setDictationState('idle');
+      setDictationNote('');
+      setError(polishError.message);
+    });
   }
 
   async function submit(event) {
@@ -241,7 +285,7 @@ function RichBlurbEditor({ node, password, onSave, onCancel }) {
     <form className="edit-modal rich-edit-modal" onClick={(event) => event.stopPropagation()} onSubmit={submit}>
       <p className="modal-eyebrow">ANSWER</p>
       <h2>Edit answer</h2>
-      <p className="rich-help">Format the answer directly. Select text before adding a link; Image inserts an image from a URL. The saved HTML is sanitized when it is shown publicly.</p>
+      <p className="rich-help">Format the answer directly. Dictate uses your browser's speech recognition; stopping it sends the text to the local Codex CLI. If unavailable, press Win+H while the editor is focused, then click Polish draft.</p>
       <div className="rich-toolbar" aria-label="Answer formatting">
         <button type="button" onClick={() => runCommand('bold')} title="Bold"><strong>B</strong></button>
         <button type="button" onClick={() => runCommand('italic')} title="Italic"><em>I</em></button>
@@ -258,6 +302,7 @@ function RichBlurbEditor({ node, password, onSave, onCancel }) {
             <i className="fa-solid fa-microphone" aria-hidden="true"></i> Dictate
           </button>
         )}
+        <button type="button" className="dictation-button polish-draft-button" onClick={polishCurrentDraft} disabled={dictationState !== 'idle'} title="Polish the text currently in the editor">Polish draft</button>
       </div>
       <div
         ref={editorRef}
@@ -271,8 +316,8 @@ function RichBlurbEditor({ node, password, onSave, onCancel }) {
       {dictationNote && <p className="dictation-note" role="status" aria-live="polite">{dictationNote}</p>}
       {error && <p className="rich-error" role="alert">{error}</p>}
       <div className="modal-actions">
-        <button type="button" onClick={onCancel} disabled={isSaving}>Cancel</button>
-        <button type="submit" disabled={isSaving}>{isSaving ? 'Saving...' : 'Save answer'}</button>
+        <button type="button" onClick={onCancel} disabled={isSaving || dictationState !== 'idle'}>Cancel</button>
+        <button type="submit" disabled={isSaving || dictationState !== 'idle'}>{isSaving ? 'Saving...' : 'Save answer'}</button>
       </div>
     </form>
   );

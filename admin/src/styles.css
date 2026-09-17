@@ -320,10 +320,14 @@ button {
 }
 
 .rich-toolbar .dictation-button {
-  margin-left: auto;
   min-width: 118px;
   color: var(--text);
   background: color-mix(in srgb, var(--blue) 22%, var(--panel));
+}
+
+.rich-toolbar .polish-draft-button {
+  min-width: 104px;
+  background: color-mix(in srgb, var(--panel-strong) 82%, transparent);
 }
 
 .rich-toolbar .dictation-button.is-recording {
