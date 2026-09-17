@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="An interactive Q&A about Arun Johnson's green hydrogen project at Climate Energy Ventures.">
+  <meta property="og:title" content="Climate Energy Ventures | Arun Johnson">
+  <meta property="og:description" content="Questions and answers about a lower-capital-cost architecture for green hydrogen production.">
+  <title>Climate Energy Ventures | Arun Johnson</title>
+  <link rel="icon" type="image/png" href="../ArunIcon_Basalt.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="cev.css">
+</head>
+<body class="cev-page" data-qna-api="/api/qna/public" data-qna-static="../data/qna.json">
+<main class="qa-shell">
+  <header class="qa-header">
+    <a class="back-link" href="../">&larr; arunjohnson.com</a>
+    <p class="eyebrow">Climate Energy Ventures</p>
+    <h1>Questions about green hydrogen</h1>
+    <p class="qa-tagline">A short, branching conversation about a new low-capital-cost electrolysis architecture.</p>
+  </header>
+
+  <section class="qa-card" aria-label="Ask Arun about green hydrogen">
+    <div class="qa-actions">
+      <button id="reset-questions" class="icon-button reset-button" type="button" aria-label="Back to main questions" hidden>
+        <i class="fa-solid fa-rotate-left" aria-hidden="true"></i>
+      </button>
+    </div>
+
+    <div class="portrait-wrap">
+      <img src="../ArunIcon_Basalt.png" alt="Arun Johnson" class="portrait" loading="eager">
+    </div>
+
+    <div class="current-response">
+      <div id="profile-blurb" class="profile-blurb" aria-live="polite">
+        <p class="intro-greeting">Hello!</p>
+        <p>I'm <a href="https://www.linkedin.com/in/arunsjohnson/" target="_blank" rel="noopener noreferrer">Arun</a>, a 4th year PhD student of Chemical Engineering in the <a href="https://brushettresearchgroup.mit.edu/" target="_blank" rel="noopener noreferrer">Brushett Lab</a> at MIT. For Climate Energy Ventures, I'm leading a project on green hydrogen. For the last 3 years, I've been developing a new type of device for producing green hydrogen from water, optimized for low capital costs (rather than for efficiency). My hope is that this architecture, at scale, will be 5-10x cheaper than incumbent solutions.</p>
+      </div>
+    </div>
+
+    <div class="question-heading">
+      <h2>Ask a question</h2>
+      <p>Choose a path to explore the project.</p>
+    </div>
+    <div id="question-options" class="question-options root-options" aria-live="polite"></div>
+
+    <form id="free-question-form" class="free-question-form">
+      <label for="free-question">Ask something else</label>
+      <div class="free-question-control">
+        <textarea id="free-question" name="question" rows="1" placeholder="Type a question for Arun..." autocomplete="off"></textarea>
+        <button class="send-button" type="submit" aria-label="Continue by email">
+          <i class="fa-solid fa-paper-plane" aria-hidden="true"></i>
+        </button>
+      </div>
+    </form>
+
+    <form id="email-draft-form" class="email-draft-form" hidden>
+      <div class="email-draft-header">
+        <p>Email Arun</p>
+        <button id="close-email-draft" class="icon-button" type="button" aria-label="Close email draft">
+          <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+        </button>
+      </div>
+      <label for="visitor-email">Your email address</label>
+      <input id="visitor-email" name="email" type="email" placeholder="you@example.com" autocomplete="email" required>
+      <label for="draft-message">Message</label>
+      <textarea id="draft-message" name="message" rows="5" required></textarea>
+      <button class="draft-send-button" type="submit">Send</button>
+      <p id="email-status" class="email-status" role="status" aria-live="polite"></p>
+    </form>
+  </section>
+</main>
+
+<footer class="qa-footer">
+  <span>&copy; 2026 Arun Johnson</span>
+  <a href="../">Back to the main site</a>
+</footer>
+
+<script src="../scripts/qna.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+{
+  "scripts": {
+    "admin:dev": "vite --config admin/vite.config.js --host 127.0.0.1",
+    "admin:build": "vite build --config admin/vite.config.js",
+    "admin:preview": "vite preview --config admin/vite.config.js --host 127.0.0.1",
+    "qna:seed": "python scripts/seed_mongo.py",
+    "qna:export": "python scripts/export_qna.py"
+  },
+  "dependencies": {
+    "@vitejs/plugin-react": "^5.1.1",
+    "@xyflow/react": "^12.10.0",
+    "dagre": "^0.8.5",
+    "vite": "^7.2.7",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3"
+  },
+  "devDependencies": {}
+}

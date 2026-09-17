@@ -1,0 +1,106 @@
+{
+  "rootNodeId": "blurb:intro",
+  "email": "arun2642@gmail.com",
+  "formEndpoint": "https://formsubmit.co/ajax/arun2642@gmail.com",
+  "layout": [
+    { "nodeId": "blurb:intro", "x": 80, "y": 260 },
+    { "nodeId": "question:green-hydrogen", "x": 430, "y": 80 },
+    { "nodeId": "question:how-started", "x": 430, "y": 230 },
+    { "nodeId": "question:project-progress", "x": 430, "y": 380 },
+    { "nodeId": "question:why-cheaper", "x": 430, "y": 530 },
+    { "nodeId": "blurb:green-hydrogen", "x": 800, "y": 80 },
+    { "nodeId": "blurb:how-started", "x": 800, "y": 230 },
+    { "nodeId": "blurb:project-progress", "x": 800, "y": 380 },
+    { "nodeId": "blurb:why-cheaper", "x": 800, "y": 530 }
+  ],
+  "nodes": [
+    {
+      "_id": "blurb:intro",
+      "type": "blurb",
+      "text": "",
+      "label": "",
+      "paragraphs": [
+        "Hello! I'm [Arun](https://www.linkedin.com/in/arunsjohnson/), a 4th year PhD student of Chemical Engineering in the [Brushett Lab](https://brushettresearchgroup.mit.edu/) at MIT.",
+        "For Climate Energy Ventures, I'm leading a project on green hydrogen. For the last 3 years, I've been developing a new type of device for producing green hydrogen from water, optimized for low capital costs (rather than for efficiency). My hope is that this architecture, at scale, will be 5-10x cheaper than incumbent solutions."
+      ]
+    },
+    {
+      "_id": "question:green-hydrogen",
+      "type": "question",
+      "text": "What is green hydrogen and why is it important?",
+      "label": "A",
+      "paragraphs": []
+    },
+    {
+      "_id": "blurb:green-hydrogen",
+      "type": "blurb",
+      "text": "",
+      "label": "",
+      "paragraphs": [
+        "Green hydrogen is hydrogen made by splitting water with electricity from low-carbon sources, rather than making it from fossil fuels. It is one way to make a versatile energy carrier without the carbon emissions associated with conventional hydrogen production.",
+        "Hydrogen is already used as a feedstock in industries such as fertilizer and refining, and it could also help decarbonize applications that are difficult to electrify directly. Making green hydrogen affordable is important because those potential uses are currently limited by cost."
+      ]
+    },
+    {
+      "_id": "question:how-started",
+      "type": "question",
+      "text": "How did you come to be working on this?",
+      "label": "B",
+      "paragraphs": []
+    },
+    {
+      "_id": "blurb:how-started",
+      "type": "blurb",
+      "text": "",
+      "label": "",
+      "paragraphs": [
+        "Before graduate school, I worked on carbon-neutral synthetic fuel at Terraform Industries. That work made it clear to me that the cost of green hydrogen is a central constraint for many promising energy technologies.",
+        "I had ideas for a different kind of hydrogen-production device, but developing a new architecture was too risky for the company to pursue as part of its main work. I came to MIT to test those ideas and see whether the lower-capital-cost approach could work in practice."
+      ]
+    },
+    {
+      "_id": "question:project-progress",
+      "type": "question",
+      "text": "How far along is this project?",
+      "label": "C",
+      "paragraphs": []
+    },
+    {
+      "_id": "blurb:project-progress",
+      "type": "blurb",
+      "text": "",
+      "label": "",
+      "paragraphs": [
+        "This is still a research project, but it has progressed beyond the initial concept stage. I have been developing and testing the architecture for about three years, and the current focus is improving the device while preparing it for scale-up.",
+        "The important next milestones are to demonstrate reliable operation, understand the tradeoffs between capital cost and efficiency, and increase the scale enough to evaluate the process as a potential industrial system."
+      ]
+    },
+    {
+      "_id": "question:why-cheaper",
+      "type": "question",
+      "text": "How can your system be 5-10x cheaper?",
+      "label": "D",
+      "paragraphs": []
+    },
+    {
+      "_id": "blurb:why-cheaper",
+      "type": "blurb",
+      "text": "",
+      "label": "",
+      "paragraphs": [
+        "The target comes from focusing on a different bottleneck. Many existing electrolyzers are designed to maximize efficiency, which can require expensive materials, components, and operating conditions. My approach is optimized first for low capital cost, even if that means accepting some efficiency tradeoffs.",
+        "If the architecture can be built from simpler, lower-cost equipment and operated at scale, I believe it could reach a 5-10x lower capital cost than incumbent solutions. That is the project hypothesis and long-term goal, not yet a commercial result."
+      ]
+    }
+  ],
+  "edges": [
+    { "_id": "edge:intro-green-hydrogen", "fromNodeId": "blurb:intro", "toNodeId": "question:green-hydrogen", "kind": "shows_question", "order": 0 },
+    { "_id": "edge:green-hydrogen-answer", "fromNodeId": "question:green-hydrogen", "toNodeId": "blurb:green-hydrogen", "kind": "answers_with", "order": 0 },
+    { "_id": "edge:intro-how-started", "fromNodeId": "blurb:intro", "toNodeId": "question:how-started", "kind": "shows_question", "order": 1 },
+    { "_id": "edge:how-started-answer", "fromNodeId": "question:how-started", "toNodeId": "blurb:how-started", "kind": "answers_with", "order": 0 },
+    { "_id": "edge:intro-project-progress", "fromNodeId": "blurb:intro", "toNodeId": "question:project-progress", "kind": "shows_question", "order": 2 },
+    { "_id": "edge:project-progress-answer", "fromNodeId": "question:project-progress", "toNodeId": "blurb:project-progress", "kind": "answers_with", "order": 0 },
+    { "_id": "edge:intro-why-cheaper", "fromNodeId": "blurb:intro", "toNodeId": "question:why-cheaper", "kind": "shows_question", "order": 3 },
+    { "_id": "edge:why-cheaper-answer", "fromNodeId": "question:why-cheaper", "toNodeId": "blurb:why-cheaper", "kind": "answers_with", "order": 0 }
+  ]
+}

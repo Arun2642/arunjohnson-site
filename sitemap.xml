@@ -1,15 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://arunjohnson.example.com/index.html</loc>
+    <loc>https://arunjohnson.com/index.html</loc>
   </url>
   <url>
-    <loc>https://arunjohnson.example.com/blog/index.html</loc>
+    <loc>https://arunjohnson.com/cev/</loc>
   </url>
   <url>
-    <loc>https://arunjohnson.example.com/new-years-resolutions.html</loc>
+    <loc>https://arunjohnson.com/blog/index.html</loc>
   </url>
   <url>
-    <loc>https://arunjohnson.example.com/EasterEgg/</loc>
+    <loc>https://arunjohnson.com/contact.html</loc>
+  </url>
+  <url>
+    <loc>https://arunjohnson.com/publications.html</loc>
+  </url>
+  <url>
+    <loc>https://arunjohnson.com/work.html</loc>
+  </url>
+  <url>
+    <loc>https://arunjohnson.com/new-years-resolutions.html</loc>
+  </url>
+  <url>
+    <loc>https://arunjohnson.com/EasterEgg/</loc>
   </url>
 </urlset>

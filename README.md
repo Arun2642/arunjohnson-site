@@ -1,0 +1,36 @@
+# Arun Johnson Site
+
+The main site remains a static GitHub Pages site. The Climate Energy Ventures Q&A is a side page at `/cev/`, using the dark interactive-Q&A visual language from the earlier homepage prototype.
+
+## Public Q&A
+
+GitHub Pages serves `cev/index.html` and the public graph in `data/qna.json`. The page first tries the local Flask API and then falls back to the checked-in JSON file, so the same page works locally and on GitHub Pages.
+
+## Local Q&A editor
+
+The editor uses Flask and a local MongoDB database. Make sure MongoDB is running locally, then from the repository root:
+
+```powershell
+npm install
+npm run admin:build
+python scripts\seed_mongo.py
+python app.py
+```
+
+Open these URLs:
+
+- Public site: `http://127.0.0.1:5000/`
+- CEV Q&A: `http://127.0.0.1:5000/cev/`
+- Graph editor: `http://127.0.0.1:5000/admin/`
+
+The local admin password defaults to `admin`; override it with `ADMIN_PASSWORD`.
+
+In the editor, right-click the canvas to create a blurb or question, double-click a node to edit it, and drag between nodes to connect them. Connections must run from blurb to question or question to blurb. Dragged node positions can be saved and restored.
+
+After editing the local graph, export the current MongoDB state to the static file before publishing:
+
+```powershell
+npm run qna:export
+```
+
+Commit the resulting `data/qna.json` along with any content changes and push the branch used by GitHub Pages.
