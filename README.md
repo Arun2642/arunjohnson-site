@@ -25,7 +25,7 @@ Open these URLs:
 
 The local admin password defaults to `admin`; override it with `ADMIN_PASSWORD`.
 
-In the editor, right-click the canvas to create a blurb or question, double-click a node to edit it, and drag between nodes to connect them. Connections must run from blurb to question or question to blurb. Dragged node positions can be saved and restored.
+In the editor, right-click the canvas to create a blurb or question, double-click a node to edit it, and drag between nodes to connect them. Connections must run from blurb to question or question to blurb. Double-clicking a blurb opens an expanded rich editor with formatting, links, lists, and image URLs. Dragged node positions can be saved and restored.
 
 After editing the local graph, export the current MongoDB state to the static file before publishing:
 

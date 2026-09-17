@@ -54,69 +54,21 @@ button {
 }
 
 .qa-shell {
-  width: min(900px, calc(100% - 40px));
-  min-height: calc(100vh - 80px);
+  width: min(860px, calc(100% - 40px));
+  min-height: 100vh;
   margin: 0 auto;
-  padding: 30px 0 38px;
-  display: grid;
-  gap: 18px;
-}
-
-.qa-header {
-  padding: 4px 4px 2px;
-}
-
-.back-link {
-  display: inline-block;
-  margin-bottom: 30px;
-  color: var(--muted);
-  font-size: 0.84rem;
-  font-weight: 600;
-  text-decoration: none;
-}
-
-.back-link:hover,
-.back-link:focus-visible {
-  color: var(--text);
-}
-
-.eyebrow {
-  margin: 0 0 10px;
-  color: var(--blue);
-  font-size: 0.76rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-}
-
-.qa-header h1 {
-  max-width: 700px;
-  margin: 0;
-  font-size: clamp(2rem, 5vw, 3.7rem);
-  line-height: 1.04;
-  letter-spacing: -0.045em;
-}
-
-.qa-tagline {
-  max-width: 650px;
-  margin: 14px 0 0;
-  color: var(--muted);
-  font-size: 1rem;
+  padding: 34px 0 48px;
 }
 
 .qa-card {
   position: relative;
-  padding: clamp(20px, 4vw, 34px);
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  background: linear-gradient(180deg, rgba(17, 27, 45, 0.94), rgba(12, 20, 34, 0.94));
-  box-shadow: var(--shadow);
+  padding: 0;
 }
 
 .qa-actions {
   position: absolute;
-  top: clamp(20px, 4vw, 34px);
-  right: clamp(20px, 4vw, 34px);
+  top: 0;
+  right: 0;
 }
 
 .portrait-wrap {
@@ -160,6 +112,36 @@ button {
 .profile-blurb a {
   color: #cfe6ff;
   font-weight: 700;
+}
+
+.profile-blurb h2,
+.profile-blurb h3 {
+  margin: 1.25rem 0 0.55rem;
+  color: var(--text);
+  line-height: 1.25;
+}
+
+.profile-blurb ul,
+.profile-blurb ol {
+  margin: 0.7rem 0;
+  padding-left: 1.35rem;
+}
+
+.profile-blurb blockquote {
+  margin: 1rem 0;
+  padding-left: 1rem;
+  border-left: 2px solid var(--blue);
+  color: var(--text);
+}
+
+.profile-blurb img {
+  display: block;
+  max-width: 100%;
+  max-height: 480px;
+  height: auto;
+  margin: 1rem auto;
+  border: 1px solid var(--line);
+  border-radius: 8px;
 }
 
 .profile-blurb.is-typing::after {
@@ -408,22 +390,6 @@ button {
   font-size: 0.84rem;
 }
 
-.qa-footer {
-  width: min(900px, calc(100% - 40px));
-  margin: 0 auto;
-  padding: 0 0 24px;
-  display: flex;
-  justify-content: space-between;
-  gap: 16px;
-  color: var(--dim);
-  font-size: 0.84rem;
-}
-
-.qa-footer a {
-  color: var(--muted);
-  text-decoration: none;
-}
-
 @keyframes answer-flash {
   0% { filter: none; }
   45% { filter: invert(1); }
@@ -436,21 +402,11 @@ button {
 
 @media (max-width: 640px) {
   .qa-shell {
-    width: min(100% - 28px, 900px);
-    padding-top: 20px;
-  }
-
-  .back-link {
-    margin-bottom: 24px;
+    width: min(100% - 28px, 860px);
+    padding-top: 24px;
   }
 
   .question-options.root-options {
     grid-template-columns: 1fr;
-  }
-
-  .qa-footer {
-    width: min(100% - 28px, 900px);
-    flex-direction: column;
-    padding-bottom: 18px;
   }
 }

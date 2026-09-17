@@ -83,10 +83,13 @@ def create_node():
         "type": node_type,
         "text": body.get("text", "").strip(),
         "paragraphs": body.get("paragraphs") or [],
+        "html": body.get("html", ""),
         "label": body.get("label", "").strip(),
         "createdAt": now_iso(),
         "updatedAt": now_iso(),
     }
+    if not isinstance(node["html"], str):
+        return jsonify({"error": "html must be a string"}), 400
     db.nodes.insert_one(node)
 
     x = body.get("x")
@@ -108,7 +111,7 @@ def update_node(node_id):
 
     body = request.get_json(force=True)
     allowed = {}
-    for key in ("text", "paragraphs", "label"):
+    for key in ("text", "paragraphs", "html", "label"):
         if key in body:
             allowed[key] = body[key]
 
@@ -118,6 +121,8 @@ def update_node(node_id):
         allowed["label"] = allowed["label"].strip()
     if "paragraphs" in allowed and not isinstance(allowed["paragraphs"], list):
         return jsonify({"error": "paragraphs must be a list"}), 400
+    if "html" in allowed and not isinstance(allowed["html"], str):
+        return jsonify({"error": "html must be a string"}), 400
 
     allowed["updatedAt"] = now_iso()
     result = db.nodes.update_one({"_id": node_id}, {"$set": allowed})

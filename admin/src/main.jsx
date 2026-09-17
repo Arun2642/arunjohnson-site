@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import {
   addEdge,
@@ -57,7 +57,130 @@ function previewForNode(node) {
   if (node.type === 'question') {
     return node.text || 'Untitled question';
   }
+  if (node.html) {
+    const text = new DOMParser().parseFromString(node.html, 'text/html').body.textContent.trim();
+    return text || 'Empty blurb';
+  }
   return (node.paragraphs || []).join('\n\n') || 'Empty blurb';
+}
+
+function escapeHtml(value) {
+  return String(value)
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#039;');
+}
+
+function escapeAttribute(value) {
+  return escapeHtml(value).replaceAll('`', '&#096;');
+}
+
+function isSafeRichUrl(url) {
+  return /^(https?:\/\/|mailto:|\/|\.\/|\.\.\/)/i.test(url);
+}
+
+function markdownToHtml(value) {
+  const escaped = escapeHtml(value);
+  return escaped
+    .replace(/!\[([^\]]*)\]\(((?:https?:\/\/|\/|\.\/|\.\.\/)[^)]+)\)/gi, '<img src="$2" alt="$1">')
+    .replace(/\[([^\]]+)\]\(((?:https?:\/\/|mailto:|\/|\.\/|\.\.\/)[^)]+)\)/gi, '<a href="$2">$1</a>')
+    .replace(/\n/g, '<br>');
+}
+
+function htmlForNode(node) {
+  if (node.html) {
+    return node.html;
+  }
+  return (node.paragraphs || []).map((paragraph) => `<p>${markdownToHtml(paragraph)}</p>`).join('');
+}
+
+function RichBlurbEditor({ node, onSave, onCancel }) {
+  const editorRef = useRef(null);
+  const [isSaving, setIsSaving] = useState(false);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    if (editorRef.current) {
+      editorRef.current.innerHTML = htmlForNode(node);
+    }
+  }, [node]);
+
+  function runCommand(command, value = null) {
+    editorRef.current?.focus();
+    document.execCommand(command, false, value);
+  }
+
+  function insertLink() {
+    const url = window.prompt('Link URL (https://..., mailto:, or a relative path)');
+    if (!url || !isSafeRichUrl(url.trim())) {
+      return;
+    }
+
+    const selection = window.getSelection();
+    if (selection && !selection.isCollapsed) {
+      runCommand('createLink', url.trim());
+      return;
+    }
+
+    const label = window.prompt('Link text', url.trim()) || url.trim();
+    runCommand('insertHTML', `<a href="${escapeAttribute(url.trim())}">${escapeHtml(label)}</a>`);
+  }
+
+  function insertImage() {
+    const url = window.prompt('Image URL (https://..., or a relative path)');
+    if (!url || !isSafeRichUrl(url.trim())) {
+      return;
+    }
+
+    const alt = window.prompt('Image description', 'Q&A image') || 'Q&A image';
+    runCommand('insertHTML', `<img src="${escapeAttribute(url.trim())}" alt="${escapeAttribute(alt)}">`);
+  }
+
+  async function submit(event) {
+    event.preventDefault();
+    setIsSaving(true);
+    setError('');
+    try {
+      await onSave(editorRef.current?.innerHTML.trim() || '');
+    } catch (saveError) {
+      setError(saveError.message);
+      setIsSaving(false);
+    }
+  }
+
+  return (
+    <form className="edit-modal rich-edit-modal" onClick={(event) => event.stopPropagation()} onSubmit={submit}>
+      <p className="modal-eyebrow">ANSWER</p>
+      <h2>Edit answer</h2>
+      <p className="rich-help">Format the answer directly. Select text before adding a link; Image inserts an image from a URL. The saved HTML is sanitized when it is shown publicly.</p>
+      <div className="rich-toolbar" aria-label="Answer formatting">
+        <button type="button" onClick={() => runCommand('bold')} title="Bold"><strong>B</strong></button>
+        <button type="button" onClick={() => runCommand('italic')} title="Italic"><em>I</em></button>
+        <button type="button" onClick={() => runCommand('underline')} title="Underline"><u>U</u></button>
+        <button type="button" onClick={() => runCommand('formatBlock', 'h3')} title="Heading">H</button>
+        <button type="button" onClick={() => runCommand('insertUnorderedList')} title="Bulleted list">&bull;</button>
+        <button type="button" onClick={() => runCommand('insertOrderedList')} title="Numbered list">1.</button>
+        <button type="button" onClick={insertLink} title="Add link">Link</button>
+        <button type="button" onClick={insertImage} title="Add image">Image</button>
+      </div>
+      <div
+        ref={editorRef}
+        className="rich-editor"
+        contentEditable
+        suppressContentEditableWarning
+        role="textbox"
+        aria-label="Answer content"
+        aria-multiline="true"
+      />
+      {error && <p className="rich-error" role="alert">{error}</p>}
+      <div className="modal-actions">
+        <button type="button" onClick={onCancel} disabled={isSaving}>Cancel</button>
+        <button type="submit" disabled={isSaving}>{isSaving ? 'Saving...' : 'Save answer'}</button>
+      </div>
+    </form>
+  );
 }
 
 function toFlowNode(node, layout) {
@@ -213,11 +336,20 @@ function Editor() {
     setMenu(null);
   }
 
-  async function updateNode(form) {
-    const body = editing.data.type === 'question'
-      ? { text: form.text.value }
-      : { paragraphs: form.paragraphs.value.split(/\n\s*\n/).map((item) => item.trim()).filter(Boolean) };
-    const updated = await api(password, `/api/admin/nodes/${editing.id}`, { method: 'PATCH', body: JSON.stringify(body) });
+  async function updateQuestion(form) {
+    const updated = await api(password, `/api/admin/nodes/${editing.id}`, {
+      method: 'PATCH',
+      body: JSON.stringify({ text: form.text.value })
+    });
+    setNodes((items) => items.map((node) => (node.id === updated._id ? { ...node, data: { ...updated, preview: previewForNode(updated) } } : node)));
+    setEditing(null);
+  }
+
+  async function updateBlurb(html) {
+    const updated = await api(password, `/api/admin/nodes/${editing.id}`, {
+      method: 'PATCH',
+      body: JSON.stringify({ html })
+    });
     setNodes((items) => items.map((node) => (node.id === updated._id ? { ...node, data: { ...updated, preview: previewForNode(updated) } } : node)));
     setEditing(null);
   }
@@ -315,19 +447,6 @@ function Editor() {
     return () => window.removeEventListener('keydown', onKeyDown);
   }, [selectedEdgeIds, selectedNodeIds]);
 
-  function insertSnippet(fieldName, snippet) {
-    const field = document.querySelector(`[name="${fieldName}"]`);
-    if (!field) {
-      return;
-    }
-
-    const start = field.selectionStart;
-    const end = field.selectionEnd;
-    field.value = `${field.value.slice(0, start)}${snippet}${field.value.slice(end)}`;
-    field.focus();
-    field.setSelectionRange(start + snippet.length, start + snippet.length);
-  }
-
   if (!isAuthed) {
     return (
       <main className="login-shell">
@@ -413,35 +532,30 @@ function Editor() {
 
       {editing && (
         <div className="modal-backdrop" onClick={() => setEditing(null)}>
-          <form
-            className="edit-modal"
-            onClick={(event) => event.stopPropagation()}
-            onSubmit={(event) => {
-              event.preventDefault();
-              updateNode(event.currentTarget).catch((error) => setStatus(error.message));
-            }}
-          >
-            <h2>Edit {editing.data.type}</h2>
-            {editing.data.type === 'question' ? (
-              <>
-                <label htmlFor="edit-text">Question</label>
-                <textarea id="edit-text" name="text" defaultValue={editing.data.text || ''} rows={5} />
-              </>
-            ) : (
-              <>
-                <label htmlFor="edit-paragraphs">Paragraphs</label>
-                <div className="insert-toolbar" aria-label="Insert content">
-                  <button type="button" onClick={() => insertSnippet('paragraphs', '[link text](https://example.com)')}>Link</button>
-                  <button type="button" onClick={() => insertSnippet('paragraphs', '![image description](https://example.com/image.jpg)')}>Image</button>
-                </div>
-                <textarea id="edit-paragraphs" name="paragraphs" defaultValue={(editing.data.paragraphs || []).join('\n\n')} rows={10} />
-              </>
-            )}
-            <div className="modal-actions">
-              <button type="button" onClick={() => setEditing(null)}>Cancel</button>
-              <button type="submit">Save</button>
-            </div>
-          </form>
+          {editing.data.type === 'question' ? (
+            <form
+              className="edit-modal"
+              onClick={(event) => event.stopPropagation()}
+              onSubmit={(event) => {
+                event.preventDefault();
+                updateQuestion(event.currentTarget).catch((error) => setStatus(error.message));
+              }}
+            >
+              <h2>Edit question</h2>
+              <label htmlFor="edit-text">Question</label>
+              <textarea id="edit-text" name="text" defaultValue={editing.data.text || ''} rows={5} />
+              <div className="modal-actions">
+                <button type="button" onClick={() => setEditing(null)}>Cancel</button>
+                <button type="submit">Save question</button>
+              </div>
+            </form>
+          ) : (
+            <RichBlurbEditor
+              node={editing.data}
+              onSave={updateBlurb}
+              onCancel={() => setEditing(null)}
+            />
+          )}
         </div>
       )}
     </main>

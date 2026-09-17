@@ -78,6 +78,71 @@
     return /^(https?:\/\/|mailto:|\/|\.\/|\.\.\/)/i.test(url);
   }
 
+  const richTextTags = new Set([
+    'p', 'br', 'strong', 'b', 'em', 'i', 'u', 'h2', 'h3', 'ul', 'ol', 'li',
+    'blockquote', 'a', 'img', 'div', 'span'
+  ]);
+
+  function appendRichHtml(parent, html) {
+    const parsed = new DOMParser().parseFromString(html, 'text/html');
+    const fragment = document.createDocumentFragment();
+
+    function appendNode(source, target) {
+      if (source.nodeType === Node.TEXT_NODE) {
+        target.appendChild(document.createTextNode(source.textContent));
+        return;
+      }
+
+      if (source.nodeType !== Node.ELEMENT_NODE) {
+        return;
+      }
+
+      const tag = source.tagName.toLowerCase();
+      if (!richTextTags.has(tag)) {
+        source.childNodes.forEach((child) => appendNode(child, target));
+        return;
+      }
+
+      if (tag === 'img') {
+        const src = source.getAttribute('src') || '';
+        if (!/^https?:\/\//i.test(src) && !/^\/|^\.\.?\//.test(src)) {
+          target.appendChild(document.createTextNode(source.getAttribute('alt') || ''));
+          return;
+        }
+        const image = document.createElement('img');
+        image.src = src;
+        image.alt = source.getAttribute('alt') || '';
+        image.loading = 'lazy';
+        target.appendChild(image);
+        return;
+      }
+
+      if (tag === 'a') {
+        const href = source.getAttribute('href') || '';
+        if (!isSafeUrl(href)) {
+          source.childNodes.forEach((child) => appendNode(child, target));
+          return;
+        }
+        const link = document.createElement('a');
+        link.href = href;
+        if (/^https?:\/\//i.test(href)) {
+          link.target = '_blank';
+          link.rel = 'noopener noreferrer';
+        }
+        source.childNodes.forEach((child) => appendNode(child, link));
+        target.appendChild(link);
+        return;
+      }
+
+      const element = document.createElement(tag);
+      source.childNodes.forEach((child) => appendNode(child, element));
+      target.appendChild(element);
+    }
+
+    parsed.body.childNodes.forEach((child) => appendNode(child, fragment));
+    parent.appendChild(fragment);
+  }
+
   function answerForQuestion(questionId) {
     const answerEdge = outgoingEdges(questionId, 'answers_with')[0];
     return answerEdge ? getNode(answerEdge.toNodeId) : null;
@@ -112,6 +177,11 @@
 
   async function typeBlurb(blurb, isRoot = false) {
     blurbEl.replaceChildren();
+    if (blurb.html) {
+      appendRichHtml(blurbEl, blurb.html);
+      return;
+    }
+
     blurbEl.classList.add('is-typing');
 
     for (const [index, paragraph] of blurb.paragraphs.entries()) {
@@ -190,6 +260,11 @@
     blurbEl.replaceChildren();
     if (!root) {
       blurbEl.innerHTML = initialBlurb;
+      return;
+    }
+
+    if (root.html) {
+      appendRichHtml(blurbEl, root.html);
       return;
     }
 

@@ -132,7 +132,7 @@ button {
 .login-panel button,
 .modal-actions button,
 .context-menu button,
-.insert-toolbar button {
+.rich-toolbar button {
   border: 1px solid var(--line);
   border-radius: 8px;
   color: var(--text);
@@ -150,7 +150,7 @@ button {
 .login-panel button:hover,
 .modal-actions button:hover,
 .context-menu button:hover,
-.insert-toolbar button:hover {
+.rich-toolbar button:hover {
   background: var(--blue);
   color: var(--panel);
 }
@@ -196,10 +196,31 @@ button {
   box-shadow: 0 24px 80px var(--shadow);
 }
 
+.rich-edit-modal {
+  width: min(960px, calc(100vw - 32px));
+  max-height: calc(100vh - 32px);
+  overflow: auto;
+}
+
 .login-panel h1,
 .edit-modal h2 {
   margin: 0 0 18px;
   font-size: 1.5rem;
+}
+
+.modal-eyebrow {
+  margin: 0 0 5px;
+  color: var(--blue);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.rich-help {
+  margin: -8px 0 16px;
+  color: var(--muted);
+  font-size: 0.86rem;
+  line-height: 1.45;
 }
 
 .login-panel label,
@@ -264,6 +285,11 @@ button {
   padding: 9px 12px;
 }
 
+.modal-actions button:disabled {
+  cursor: wait;
+  opacity: 0.62;
+}
+
 .theme-panel {
   padding: 0;
 }
@@ -275,13 +301,68 @@ button {
   box-shadow: 0 12px 30px var(--shadow);
 }
 
-.insert-toolbar {
+.rich-toolbar {
   display: flex;
-  gap: 8px;
-  margin-bottom: 8px;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 8px;
+  border: 1px solid var(--line);
+  border-bottom: 0;
+  border-radius: 8px 8px 0 0;
+  background: color-mix(in srgb, var(--panel-strong) 82%, transparent);
 }
 
-.insert-toolbar button {
-  padding: 7px 10px;
+.rich-toolbar button {
+  min-width: 34px;
+  min-height: 32px;
+  padding: 5px 9px;
   font-size: 0.82rem;
+}
+
+.rich-editor {
+  min-height: 360px;
+  max-height: calc(100vh - 260px);
+  overflow: auto;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 0 0 8px 8px;
+  outline: none;
+  color: var(--text);
+  background: color-mix(in srgb, var(--bg) 86%, var(--panel));
+  line-height: 1.6;
+}
+
+.rich-editor:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(78, 161, 255, 0.18);
+}
+
+.rich-editor p {
+  margin: 0 0 0.9rem;
+}
+
+.rich-editor h3 {
+  margin: 1rem 0 0.55rem;
+}
+
+.rich-editor ul,
+.rich-editor ol {
+  padding-left: 1.35rem;
+}
+
+.rich-editor img {
+  display: block;
+  max-width: 100%;
+  max-height: 460px;
+  margin: 1rem 0;
+}
+
+.rich-editor a {
+  color: var(--blue);
+}
+
+.rich-error {
+  margin: 10px 0 0;
+  color: #ffb6b6;
+  font-size: 0.84rem;
 }
