@@ -47,7 +47,9 @@ function api(password, path, options = {}) {
   }).then(async (response) => {
     const body = await response.json().catch(() => ({}));
     if (!response.ok) {
-      throw new Error(body.error || `Request failed: ${response.status}`);
+      const error = new Error(body.error || `Request failed: ${response.status}`);
+      error.status = response.status;
+      throw error;
     }
     return body;
   });
@@ -96,16 +98,27 @@ function htmlForNode(node) {
   return (node.paragraphs || []).map((paragraph) => `<p>${markdownToHtml(paragraph)}</p>`).join('');
 }
 
-function RichBlurbEditor({ node, onSave, onCancel }) {
+function RichBlurbEditor({ node, password, onSave, onCancel }) {
   const editorRef = useRef(null);
+  const recorderRef = useRef(null);
+  const streamRef = useRef(null);
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState('');
+  const [dictationState, setDictationState] = useState('idle');
+  const [dictationNote, setDictationNote] = useState('');
 
   useEffect(() => {
     if (editorRef.current) {
       editorRef.current.innerHTML = htmlForNode(node);
     }
   }, [node]);
+
+  useEffect(() => () => {
+    if (recorderRef.current && recorderRef.current.state !== 'inactive') {
+      recorderRef.current.stop();
+    }
+    streamRef.current?.getTracks().forEach((track) => track.stop());
+  }, []);
 
   function runCommand(command, value = null) {
     editorRef.current?.focus();
@@ -138,6 +151,80 @@ function RichBlurbEditor({ node, onSave, onCancel }) {
     runCommand('insertHTML', `<img src="${escapeAttribute(url.trim())}" alt="${escapeAttribute(alt)}">`);
   }
 
+  async function polishDictation(audioBlob) {
+    setDictationState('polishing');
+    setDictationNote('Transcribing, then asking Codex Luna to polish the answer...');
+    setError('');
+
+    const payload = new FormData();
+    payload.append('audio', audioBlob, 'dictation.webm');
+    const response = await fetch('/api/admin/polish-dictation', {
+      method: 'POST',
+      headers: { 'X-Admin-Password': password },
+      body: payload
+    });
+    const result = await response.json().catch(() => ({}));
+    if (!response.ok) {
+      throw new Error(result.error || `Dictation failed: ${response.status}`);
+    }
+
+    if (!result.html) {
+      throw new Error('Codex Luna returned an empty answer.');
+    }
+
+    if (editorRef.current) {
+      editorRef.current.innerHTML = result.html;
+    }
+    setDictationNote('Polished draft inserted. Review it, then save the answer.');
+    setDictationState('idle');
+  }
+
+  async function startDictation() {
+    if (!navigator.mediaDevices?.getUserMedia || !window.MediaRecorder) {
+      setError('Audio recording is not supported by this browser.');
+      return;
+    }
+
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      const mimeType = ['audio/webm;codecs=opus', 'audio/webm', 'audio/mp4']
+        .find((candidate) => MediaRecorder.isTypeSupported(candidate));
+      const recorder = mimeType ? new MediaRecorder(stream, { mimeType }) : new MediaRecorder(stream);
+      const chunks = [];
+      streamRef.current = stream;
+      recorderRef.current = recorder;
+      recorder.ondataavailable = (event) => {
+        if (event.data.size) {
+          chunks.push(event.data);
+        }
+      };
+      recorder.onstop = () => {
+        stream.getTracks().forEach((track) => track.stop());
+        streamRef.current = null;
+        recorderRef.current = null;
+        const audioBlob = new Blob(chunks, { type: recorder.mimeType || 'audio/webm' });
+        polishDictation(audioBlob).catch((dictationError) => {
+          setDictationState('idle');
+          setDictationNote('');
+          setError(dictationError.message);
+        });
+      };
+      recorder.start();
+      setError('');
+      setDictationNote('Recording... click Stop & polish when you are done.');
+      setDictationState('recording');
+    } catch (recordingError) {
+      setError(recordingError.message || 'Microphone permission was not granted.');
+    }
+  }
+
+  function stopDictation() {
+    if (recorderRef.current?.state === 'recording') {
+      recorderRef.current.stop();
+      setDictationState('polishing');
+    }
+  }
+
   async function submit(event) {
     event.preventDefault();
     setIsSaving(true);
@@ -164,6 +251,13 @@ function RichBlurbEditor({ node, onSave, onCancel }) {
         <button type="button" onClick={() => runCommand('insertOrderedList')} title="Numbered list">1.</button>
         <button type="button" onClick={insertLink} title="Add link">Link</button>
         <button type="button" onClick={insertImage} title="Add image">Image</button>
+        {dictationState === 'recording' ? (
+          <button type="button" className="dictation-button is-recording" onClick={stopDictation} title="Stop recording and polish with Codex Luna">Stop &amp; polish</button>
+        ) : (
+          <button type="button" className="dictation-button" onClick={startDictation} disabled={dictationState === 'polishing'} title="Dictate and polish with Codex Luna">
+            <i className="fa-solid fa-microphone" aria-hidden="true"></i> Dictate
+          </button>
+        )}
       </div>
       <div
         ref={editorRef}
@@ -174,6 +268,7 @@ function RichBlurbEditor({ node, onSave, onCancel }) {
         aria-label="Answer content"
         aria-multiline="true"
       />
+      {dictationNote && <p className="dictation-note" role="status" aria-live="polite">{dictationNote}</p>}
       {error && <p className="rich-error" role="alert">{error}</p>}
       <div className="modal-actions">
         <button type="button" onClick={onCancel} disabled={isSaving}>Cancel</button>
@@ -337,19 +432,37 @@ function Editor() {
   }
 
   async function updateQuestion(form) {
-    const updated = await api(password, `/api/admin/nodes/${editing.id}`, {
-      method: 'PATCH',
-      body: JSON.stringify({ text: form.text.value })
-    });
+    let updated;
+    try {
+      updated = await api(password, `/api/admin/nodes/${editing.id}`, {
+        method: 'PATCH',
+        body: JSON.stringify({ text: form.text.value })
+      });
+    } catch (error) {
+      if (error.status === 404) {
+        await loadGraph();
+        throw new Error('This node no longer exists. The graph was reloaded; reopen the current node and try again.');
+      }
+      throw error;
+    }
     setNodes((items) => items.map((node) => (node.id === updated._id ? { ...node, data: { ...updated, preview: previewForNode(updated) } } : node)));
     setEditing(null);
   }
 
   async function updateBlurb(html) {
-    const updated = await api(password, `/api/admin/nodes/${editing.id}`, {
-      method: 'PATCH',
-      body: JSON.stringify({ html })
-    });
+    let updated;
+    try {
+      updated = await api(password, `/api/admin/nodes/${editing.id}`, {
+        method: 'PATCH',
+        body: JSON.stringify({ html })
+      });
+    } catch (error) {
+      if (error.status === 404) {
+        await loadGraph();
+        throw new Error('This answer no longer exists. The graph was reloaded; reopen the current answer and try again.');
+      }
+      throw error;
+    }
     setNodes((items) => items.map((node) => (node.id === updated._id ? { ...node, data: { ...updated, preview: previewForNode(updated) } } : node)));
     setEditing(null);
   }
@@ -431,11 +544,14 @@ function Editor() {
 
   useEffect(() => {
     function onKeyDown(event) {
+      if (editing) {
+        return;
+      }
       if (event.key !== 'Delete' && event.key !== 'Backspace') {
         return;
       }
       const active = document.activeElement;
-      if (active && ['INPUT', 'TEXTAREA'].includes(active.tagName)) {
+      if (active && (['INPUT', 'TEXTAREA'].includes(active.tagName) || active.isContentEditable)) {
         return;
       }
       if (selectedNodeIds.size || selectedEdgeIds.size) {
@@ -445,7 +561,7 @@ function Editor() {
 
     window.addEventListener('keydown', onKeyDown);
     return () => window.removeEventListener('keydown', onKeyDown);
-  }, [selectedEdgeIds, selectedNodeIds]);
+  }, [editing, selectedEdgeIds, selectedNodeIds]);
 
   if (!isAuthed) {
     return (
@@ -552,6 +668,7 @@ function Editor() {
           ) : (
             <RichBlurbEditor
               node={editing.data}
+              password={password}
               onSave={updateBlurb}
               onCancel={() => setEditing(null)}
             />

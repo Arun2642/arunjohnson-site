@@ -319,6 +319,23 @@ button {
   font-size: 0.82rem;
 }
 
+.rich-toolbar .dictation-button {
+  margin-left: auto;
+  min-width: 118px;
+  color: var(--text);
+  background: color-mix(in srgb, var(--blue) 22%, var(--panel));
+}
+
+.rich-toolbar .dictation-button.is-recording {
+  color: #fff;
+  background: #b43c4a;
+}
+
+.rich-toolbar .dictation-button:disabled {
+  cursor: wait;
+  opacity: 0.62;
+}
+
 .rich-editor {
   min-height: 360px;
   max-height: calc(100vh - 260px);
@@ -359,6 +376,12 @@ button {
 
 .rich-editor a {
   color: var(--blue);
+}
+
+.dictation-note {
+  margin: 10px 0 0;
+  color: var(--muted);
+  font-size: 0.84rem;
 }
 
 .rich-error {

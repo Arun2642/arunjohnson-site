@@ -25,6 +25,15 @@ Open these URLs:
 
 The local admin password defaults to `admin`; override it with `ADMIN_PASSWORD`.
 
+To enable the editor's Dictate button, set `OPENAI_API_KEY` in the shell before starting Flask:
+
+```powershell
+$env:OPENAI_API_KEY = "your-api-key"
+python app.py
+```
+
+When recording stops, the server transcribes the audio and sends the transcript to Codex Luna for a polished HTML answer. The API key stays on the local Flask server and is never sent to the browser. Without the key, the rest of the editor still works and Dictate shows a setup message.
+
 In the editor, right-click the canvas to create a blurb or question, double-click a node to edit it, and drag between nodes to connect them. Connections must run from blurb to question or question to blurb. Double-clicking a blurb opens an expanded rich editor with formatting, links, lists, and image URLs. Dragged node positions can be saved and restored.
 
 After editing the local graph, export the current MongoDB state to the static file before publishing:
