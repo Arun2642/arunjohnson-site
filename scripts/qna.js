@@ -162,55 +162,41 @@
     const text = document.createElement('span');
     text.textContent = question.text;
     button.appendChild(text);
-    button.addEventListener('click', () => selectQuestion(question, button));
+    button.addEventListener('click', (event) => {
+      if (event.ctrlKey || event.metaKey || event.altKey || event.shiftKey) {
+        return;
+      }
+      selectQuestion(question, button);
+    });
     return button;
   }
 
-  function renderQuestions(questions, isRoot = false) {
+  function renderQuestions(questions) {
     state.visibleQuestions = questions;
-    optionsEl.classList.toggle('root-options', isRoot);
     optionsEl.replaceChildren();
     questions.forEach((question, index) => {
       optionsEl.appendChild(makeButton(question, index));
     });
   }
 
-  async function typeBlurb(blurb, isRoot = false) {
+  function renderBlurb(blurb) {
     blurbEl.replaceChildren();
     if (blurb.html) {
       appendRichHtml(blurbEl, blurb.html);
       return;
     }
 
-    blurbEl.classList.add('is-typing');
-
-    for (const [index, paragraph] of blurb.paragraphs.entries()) {
+    for (const paragraph of blurb.paragraphs) {
       const p = document.createElement('p');
-      if (isRoot && index === 0) {
-        p.className = 'intro-greeting';
-      }
       blurbEl.appendChild(p);
-      await typeText(p, paragraph);
-      p.textContent = '';
       appendFormattedText(p, paragraph);
     }
-
-    blurbEl.classList.remove('is-typing');
   }
 
-  function typeText(element, text) {
-    const interval = 10;
-    return new Promise((resolve) => {
-      let index = 0;
-      const timer = setInterval(() => {
-        element.textContent += text.slice(index, index + 3);
-        index += 3;
-        if (index >= text.length) {
-          clearInterval(timer);
-          resolve();
-        }
-      }, interval);
-    });
+  function flashScreen() {
+    document.body.classList.remove('qa-flash');
+    void document.body.offsetWidth;
+    document.body.classList.add('qa-flash');
   }
 
   async function selectQuestion(question, button) {
@@ -220,6 +206,7 @@
 
     state.isTransitioning = true;
     button.classList.add('is-selected');
+    resetButton.hidden = false;
     await delay(170);
     await showQuestion(question);
     state.isTransitioning = false;
@@ -234,15 +221,14 @@
     }
 
     state.currentBlurbId = answer._id;
-    await typeBlurb(answer);
-    renderQuestions(visibleQuestionsForBlurb(answer._id), false);
-    resetButton.hidden = false;
+    renderBlurb(answer);
+    flashScreen();
+    renderQuestions(visibleQuestionsForBlurb(answer._id));
   }
 
   function resetQuestions() {
     state.activeQuestion = null;
     state.isTransitioning = false;
-    blurbEl.classList.remove('is-typing');
     const root = getNode(state.data.rootNodeId);
     if (!root) {
       blurbEl.innerHTML = initialBlurb;
@@ -252,7 +238,7 @@
 
     state.currentBlurbId = root._id;
     renderRootBlurb(root);
-    renderQuestions(visibleQuestionsForBlurb(root._id), true);
+    renderQuestions(visibleQuestionsForBlurb(root._id));
     resetButton.hidden = true;
   }
 
@@ -268,11 +254,8 @@
       return;
     }
 
-    root.paragraphs.forEach((paragraph, index) => {
+    root.paragraphs.forEach((paragraph) => {
       const p = document.createElement('p');
-      if (index === 0) {
-        p.className = 'intro-greeting';
-      }
       appendFormattedText(p, paragraph);
       blurbEl.appendChild(p);
     });
@@ -334,7 +317,7 @@
 
         state.currentBlurbId = root._id;
         renderRootBlurb(root);
-        renderQuestions(visibleQuestionsForBlurb(root._id), true);
+        renderQuestions(visibleQuestionsForBlurb(root._id));
         return;
       } catch (error) {
         lastError = error;
@@ -358,7 +341,8 @@
   document.addEventListener('keydown', (event) => {
     const activeElement = document.activeElement;
     const isTyping = activeElement && ['INPUT', 'TEXTAREA'].includes(activeElement.tagName);
-    if (isTyping || state.isTransitioning) {
+    const hasModifier = event.ctrlKey || event.metaKey || event.altKey || event.shiftKey;
+    if (isTyping || state.isTransitioning || hasModifier || event.key.length !== 1) {
       return;
     }
 

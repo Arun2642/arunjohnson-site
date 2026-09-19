@@ -4,14 +4,18 @@
   "formEndpoint": "https://formsubmit.co/ajax/arun2642@gmail.com",
   "layout": [
     { "nodeId": "blurb:intro", "x": 80, "y": 260 },
-    { "nodeId": "question:green-hydrogen", "x": 430, "y": 80 },
-    { "nodeId": "question:how-started", "x": 430, "y": 230 },
-    { "nodeId": "question:project-progress", "x": 430, "y": 380 },
-    { "nodeId": "question:why-cheaper", "x": 430, "y": 530 },
-    { "nodeId": "blurb:green-hydrogen", "x": 800, "y": 80 },
-    { "nodeId": "blurb:how-started", "x": 800, "y": 230 },
-    { "nodeId": "blurb:project-progress", "x": 800, "y": 380 },
-    { "nodeId": "blurb:why-cheaper", "x": 800, "y": 530 }
+    { "nodeId": "question:who-you-are", "x": 430, "y": 260 },
+    { "nodeId": "blurb:who-you-are", "x": 800, "y": 260 },
+    { "nodeId": "question:what-working-on", "x": 1130, "y": 260 },
+    { "nodeId": "blurb:what-working-on", "x": 1500, "y": 260 },
+    { "nodeId": "question:green-hydrogen", "x": 1870, "y": 80 },
+    { "nodeId": "question:how-started", "x": 1870, "y": 230 },
+    { "nodeId": "question:project-progress", "x": 1870, "y": 380 },
+    { "nodeId": "question:why-cheaper", "x": 1870, "y": 530 },
+    { "nodeId": "blurb:green-hydrogen", "x": 2240, "y": 80 },
+    { "nodeId": "blurb:how-started", "x": 2240, "y": 230 },
+    { "nodeId": "blurb:project-progress", "x": 2240, "y": 380 },
+    { "nodeId": "blurb:why-cheaper", "x": 2240, "y": 530 }
   ],
   "nodes": [
     {
@@ -20,7 +24,38 @@
       "text": "",
       "label": "",
       "paragraphs": [
-        "Hello! I'm [Arun](https://www.linkedin.com/in/arunsjohnson/), a 4th year PhD student of Chemical Engineering in the [Brushett Lab](https://brushettresearchgroup.mit.edu/) at MIT.",
+        "Hello! I'm [Arun](https://www.linkedin.com/in/arunsjohnson/)."
+      ]
+    },
+    {
+      "_id": "question:who-you-are",
+      "type": "question",
+      "text": "Who are you?",
+      "label": "A",
+      "paragraphs": []
+    },
+    {
+      "_id": "blurb:who-you-are",
+      "type": "blurb",
+      "text": "",
+      "label": "",
+      "paragraphs": [
+        "Hello! I'm [Arun](https://www.linkedin.com/in/arunsjohnson/), a 4th year PhD student of Chemical Engineering in the [Brushett Lab](https://brushettresearchgroup.mit.edu/) at MIT."
+      ]
+    },
+    {
+      "_id": "question:what-working-on",
+      "type": "question",
+      "text": "What are you working on?",
+      "label": "A",
+      "paragraphs": []
+    },
+    {
+      "_id": "blurb:what-working-on",
+      "type": "blurb",
+      "text": "",
+      "label": "",
+      "paragraphs": [
         "For Climate Energy Ventures, I'm leading a project on green hydrogen. For the last 3 years, I've been developing a new type of device for producing green hydrogen from water, optimized for low capital costs (rather than for efficiency). My hope is that this architecture, at scale, will be 5-10x cheaper than incumbent solutions."
       ]
     },
@@ -94,13 +129,17 @@
     }
   ],
   "edges": [
-    { "_id": "edge:intro-green-hydrogen", "fromNodeId": "blurb:intro", "toNodeId": "question:green-hydrogen", "kind": "shows_question", "order": 0 },
+    { "_id": "edge:intro-who-you-are", "fromNodeId": "blurb:intro", "toNodeId": "question:who-you-are", "kind": "shows_question", "order": 0 },
+    { "_id": "edge:who-you-are-answer", "fromNodeId": "question:who-you-are", "toNodeId": "blurb:who-you-are", "kind": "answers_with", "order": 0 },
+    { "_id": "edge:who-you-are-working-on", "fromNodeId": "blurb:who-you-are", "toNodeId": "question:what-working-on", "kind": "shows_question", "order": 0 },
+    { "_id": "edge:what-working-on-answer", "fromNodeId": "question:what-working-on", "toNodeId": "blurb:what-working-on", "kind": "answers_with", "order": 0 },
+    { "_id": "edge:working-on-green-hydrogen", "fromNodeId": "blurb:what-working-on", "toNodeId": "question:green-hydrogen", "kind": "shows_question", "order": 0 },
     { "_id": "edge:green-hydrogen-answer", "fromNodeId": "question:green-hydrogen", "toNodeId": "blurb:green-hydrogen", "kind": "answers_with", "order": 0 },
-    { "_id": "edge:intro-how-started", "fromNodeId": "blurb:intro", "toNodeId": "question:how-started", "kind": "shows_question", "order": 1 },
+    { "_id": "edge:working-on-how-started", "fromNodeId": "blurb:what-working-on", "toNodeId": "question:how-started", "kind": "shows_question", "order": 1 },
     { "_id": "edge:how-started-answer", "fromNodeId": "question:how-started", "toNodeId": "blurb:how-started", "kind": "answers_with", "order": 0 },
-    { "_id": "edge:intro-project-progress", "fromNodeId": "blurb:intro", "toNodeId": "question:project-progress", "kind": "shows_question", "order": 2 },
+    { "_id": "edge:working-on-project-progress", "fromNodeId": "blurb:what-working-on", "toNodeId": "question:project-progress", "kind": "shows_question", "order": 2 },
     { "_id": "edge:project-progress-answer", "fromNodeId": "question:project-progress", "toNodeId": "blurb:project-progress", "kind": "answers_with", "order": 0 },
-    { "_id": "edge:intro-why-cheaper", "fromNodeId": "blurb:intro", "toNodeId": "question:why-cheaper", "kind": "shows_question", "order": 3 },
+    { "_id": "edge:working-on-why-cheaper", "fromNodeId": "blurb:what-working-on", "toNodeId": "question:why-cheaper", "kind": "shows_question", "order": 3 },
     { "_id": "edge:why-cheaper-answer", "fromNodeId": "question:why-cheaper", "toNodeId": "blurb:why-cheaper", "kind": "answers_with", "order": 0 }
   ]
 }
