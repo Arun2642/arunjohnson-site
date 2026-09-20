@@ -1,1 +1,3 @@
 node_modules/
+admin/dist/
+__pycache__/
