@@ -218,7 +218,7 @@
     {
       "_id": "question:what-working-on",
       "type": "question",
-      "text": "What are you working on?",
+      "text": "What would you like to know about?",
       "label": "A",
       "paragraphs": []
     },
@@ -228,6 +228,7 @@
       "text": "",
       "label": "",
       "paragraphs": [
+        "Hello! I'm [Arun](https://www.linkedin.com/in/arunsjohnson/), a 4th year PhD student of Chemical Engineering in the [Brushett Lab](https://brushettresearchgroup.mit.edu/) at MIT.",
         "For Climate Energy Ventures, I'm leading a project on green hydrogen. For the last 3 years, I've been developing a new type of device for producing green hydrogen from water, optimized for low capital costs (rather than for efficiency). My hope is that this architecture, at scale, will be 5-10x cheaper than incumbent solutions."
       ]
     },

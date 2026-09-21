@@ -70,8 +70,8 @@ button {
   top: 18px;
   left: 18px;
   z-index: 40;
-  width: 36px;
-  height: 36px;
+  width: 52px;
+  height: 52px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -79,7 +79,7 @@ button {
   border-radius: 0;
   color: var(--dark-blue);
   background: transparent;
-  font-size: 1.35rem;
+  font-size: 1.8rem;
 }
 
 .site-menu-toggle:hover,
@@ -149,6 +149,8 @@ body.menu-open {
   position: absolute;
   top: 0;
   right: 0;
+  display: flex;
+  gap: 8px;
 }
 
 .portrait-wrap {
@@ -296,14 +298,14 @@ body.menu-open {
 
 .question-option.is-selected {
   animation: answer-confirm 420ms ease-out;
-  border-color: var(--mit-red);
-  background: var(--mit-red);
-  color: var(--white);
+  border-color: var(--gold);
+  background: var(--gold);
+  color: var(--dark-blue);
 }
 
 .question-option.is-selected .option-letter {
-  background: var(--white);
-  color: var(--mit-red);
+  background: var(--dark-blue);
+  color: var(--gold);
 }
 
 .option-letter {

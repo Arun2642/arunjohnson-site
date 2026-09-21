@@ -6,11 +6,13 @@
     currentBlurbId: null,
     nodesById: new Map(),
     visibleQuestions: [],
+    blurbHistory: [],
     isTransitioning: false
   };
 
   const optionsEl = document.getElementById('question-options');
   const blurbEl = document.getElementById('profile-blurb');
+  const backButton = document.getElementById('back-question');
   const resetButton = document.getElementById('reset-questions');
   const freeQuestionForm = document.getElementById('free-question-form');
   const freeQuestionInput = document.getElementById('free-question');
@@ -218,11 +220,17 @@
       return;
     }
 
+    const answer = answerForQuestion(question._id);
+    if (!answer) {
+      return;
+    }
+
     state.isTransitioning = true;
+    state.blurbHistory.push(state.currentBlurbId);
     button.classList.add('is-selected');
-    resetButton.hidden = false;
     await delay(170);
     await showQuestion(question);
+    updateNavigationButtons();
     state.isTransitioning = false;
   }
 
@@ -240,9 +248,45 @@
     renderQuestions(visibleQuestionsForBlurb(answer._id));
   }
 
+  function updateNavigationButtons() {
+    const hasHistory = state.blurbHistory.length > 0;
+    backButton.hidden = !hasHistory;
+    resetButton.hidden = !hasHistory;
+  }
+
+  function renderBlurbForNavigation(blurb) {
+    if (blurb._id === state.data.rootNodeId) {
+      renderRootBlurb(blurb);
+      return;
+    }
+
+    renderBlurb(blurb);
+  }
+
+  function goBackOneStep() {
+    if (state.isTransitioning || !state.blurbHistory.length) {
+      return;
+    }
+
+    const previousBlurbId = state.blurbHistory.pop();
+    const previousBlurb = getNode(previousBlurbId);
+    if (!previousBlurb) {
+      updateNavigationButtons();
+      return;
+    }
+
+    state.activeQuestion = null;
+    state.currentBlurbId = previousBlurb._id;
+    renderBlurbForNavigation(previousBlurb);
+    animateBlurbChange();
+    renderQuestions(visibleQuestionsForBlurb(previousBlurb._id));
+    updateNavigationButtons();
+  }
+
   function resetQuestions() {
     state.activeQuestion = null;
     state.isTransitioning = false;
+    state.blurbHistory = [];
     const root = getNode(state.data.rootNodeId);
     if (!root) {
       blurbEl.innerHTML = initialBlurb;
@@ -253,7 +297,7 @@
     state.currentBlurbId = root._id;
     renderRootBlurb(root);
     renderQuestions(visibleQuestionsForBlurb(root._id));
-    resetButton.hidden = true;
+    updateNavigationButtons();
   }
 
   function renderRootBlurb(root) {
@@ -330,8 +374,10 @@
         }
 
         state.currentBlurbId = root._id;
+        state.blurbHistory = [];
         renderRootBlurb(root);
         renderQuestions(visibleQuestionsForBlurb(root._id));
+        updateNavigationButtons();
         return;
       } catch (error) {
         lastError = error;
@@ -341,6 +387,7 @@
     throw lastError || new Error('Q&A content is unavailable');
   }
 
+  backButton.addEventListener('click', goBackOneStep);
   resetButton.addEventListener('click', resetQuestions);
   closeEmailDraft.addEventListener('click', hideEmailDraft);
 
@@ -375,7 +422,17 @@
     const activeElement = document.activeElement;
     const isTyping = activeElement && ['INPUT', 'TEXTAREA'].includes(activeElement.tagName);
     const hasModifier = event.ctrlKey || event.metaKey || event.altKey || event.shiftKey;
-    if (isTyping || state.isTransitioning || hasModifier || event.key.length !== 1) {
+    if (isTyping || state.isTransitioning || hasModifier) {
+      return;
+    }
+
+    if (event.key === 'ArrowLeft') {
+      event.preventDefault();
+      goBackOneStep();
+      return;
+    }
+
+    if (event.key.length !== 1) {
       return;
     }
 
