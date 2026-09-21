@@ -370,6 +370,10 @@ body.menu-open {
   height: 34px;
 }
 
+.icon-button[hidden] {
+  display: none;
+}
+
 .icon-button.back-button {
   width: 56px;
   height: 56px;
