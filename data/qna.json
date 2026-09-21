@@ -3,19 +3,191 @@
   "email": "arun2642@gmail.com",
   "formEndpoint": "https://formsubmit.co/ajax/arun2642@gmail.com",
   "layout": [
-    { "nodeId": "blurb:intro", "x": 80, "y": 260 },
-    { "nodeId": "question:who-you-are", "x": 430, "y": 260 },
-    { "nodeId": "blurb:who-you-are", "x": 800, "y": 260 },
-    { "nodeId": "question:what-working-on", "x": 1130, "y": 260 },
-    { "nodeId": "blurb:what-working-on", "x": 1500, "y": 260 },
-    { "nodeId": "question:currently-focused", "x": 1870, "y": 80 },
-    { "nodeId": "question:before-mit", "x": 1870, "y": 230 },
-    { "nodeId": "question:writing-topics", "x": 1870, "y": 380 },
-    { "nodeId": "question:reach-you", "x": 1870, "y": 530 },
-    { "nodeId": "blurb:currently-focused", "x": 2240, "y": 80 },
-    { "nodeId": "blurb:before-mit", "x": 2240, "y": 230 },
-    { "nodeId": "blurb:writing-topics", "x": 2240, "y": 380 },
-    { "nodeId": "blurb:reach-you", "x": 2240, "y": 530 }
+    {
+      "nodeId": "blurb:intro",
+      "x": 80,
+      "y": 260
+    },
+    {
+      "nodeId": "question:who-you-are",
+      "x": 430,
+      "y": 260
+    },
+    {
+      "nodeId": "blurb:who-you-are",
+      "x": 800,
+      "y": 260
+    },
+    {
+      "nodeId": "question:what-working-on",
+      "x": 1130,
+      "y": 260
+    },
+    {
+      "nodeId": "blurb:what-working-on",
+      "x": 1500,
+      "y": 260
+    },
+    {
+      "nodeId": "question:terraform",
+      "x": 1870,
+      "y": 80
+    },
+    {
+      "nodeId": "blurb:terraform",
+      "x": 2240,
+      "y": 80
+    },
+    {
+      "nodeId": "question:terraform-grad-school",
+      "x": 2610,
+      "y": 30
+    },
+    {
+      "nodeId": "blurb:terraform-grad-school",
+      "x": 2980,
+      "y": 30
+    },
+    {
+      "nodeId": "question:terraform-reactor",
+      "x": 2610,
+      "y": 115
+    },
+    {
+      "nodeId": "blurb:terraform-reactor",
+      "x": 2980,
+      "y": 115
+    },
+    {
+      "nodeId": "question:terraform-jobs",
+      "x": 2610,
+      "y": 200
+    },
+    {
+      "nodeId": "blurb:terraform-jobs",
+      "x": 2980,
+      "y": 200
+    },
+    {
+      "nodeId": "question:research",
+      "x": 1870,
+      "y": 250
+    },
+    {
+      "nodeId": "blurb:research",
+      "x": 2240,
+      "y": 250
+    },
+    {
+      "nodeId": "question:research-device",
+      "x": 2610,
+      "y": 285
+    },
+    {
+      "nodeId": "blurb:research-device",
+      "x": 2980,
+      "y": 285
+    },
+    {
+      "nodeId": "question:research-timeline",
+      "x": 2610,
+      "y": 370
+    },
+    {
+      "nodeId": "blurb:research-timeline",
+      "x": 2980,
+      "y": 370
+    },
+    {
+      "nodeId": "question:research-company",
+      "x": 2610,
+      "y": 455
+    },
+    {
+      "nodeId": "blurb:research-company",
+      "x": 2980,
+      "y": 455
+    },
+    {
+      "nodeId": "question:research-publishing",
+      "x": 2610,
+      "y": 540
+    },
+    {
+      "nodeId": "blurb:research-publishing",
+      "x": 2980,
+      "y": 540
+    },
+    {
+      "nodeId": "question:board-games",
+      "x": 1870,
+      "y": 420
+    },
+    {
+      "nodeId": "blurb:board-games",
+      "x": 2240,
+      "y": 420
+    },
+    {
+      "nodeId": "question:board-games-liz-paige",
+      "x": 2610,
+      "y": 625
+    },
+    {
+      "nodeId": "blurb:board-games-liz-paige",
+      "x": 2980,
+      "y": 625
+    },
+    {
+      "nodeId": "question:board-games-origin",
+      "x": 2610,
+      "y": 710
+    },
+    {
+      "nodeId": "blurb:board-games-origin",
+      "x": 2980,
+      "y": 710
+    },
+    {
+      "nodeId": "question:board-games-where",
+      "x": 2610,
+      "y": 795
+    },
+    {
+      "nodeId": "blurb:board-games-where",
+      "x": 2980,
+      "y": 795
+    },
+    {
+      "nodeId": "question:live-forever",
+      "x": 1870,
+      "y": 590
+    },
+    {
+      "nodeId": "blurb:live-forever",
+      "x": 2240,
+      "y": 590
+    },
+    {
+      "nodeId": "question:live-forever-frozen",
+      "x": 2610,
+      "y": 880
+    },
+    {
+      "nodeId": "blurb:live-forever-frozen",
+      "x": 2980,
+      "y": 880
+    },
+    {
+      "nodeId": "question:future",
+      "x": 2610,
+      "y": 965
+    },
+    {
+      "nodeId": "blurb:future",
+      "x": 2980,
+      "y": 965
+    }
   ],
   "nodes": [
     {
@@ -60,82 +232,533 @@
       ]
     },
     {
-      "_id": "question:currently-focused",
+      "_id": "question:terraform",
       "type": "question",
-      "text": "What are you currently focused on?",
+      "text": "Tell me more about your time at Terraform",
       "label": "A",
       "paragraphs": []
     },
     {
-      "_id": "blurb:currently-focused",
+      "_id": "blurb:terraform",
       "type": "blurb",
       "text": "",
       "label": "",
       "paragraphs": [
-        "I’m a graduate student in Chemical Engineering at MIT, focused on electrochemical systems that can reduce the cost of green hydrogen production by an order of magnitude."
+        "I joined Terraform Industries in 2023, as a summer intern after my 3rd year of college. I was the 5th full time hire at the company, and the only chemical engineer during my time there.",
+        "I developed our first two generations of Sabatier reactors, devices that turn hydrogen from water and carbon dioxide from the air into methane for use as a net-zero fuel. I had never built or operated a thermochemical reactor before joining the company, but I was able to design, build, and test our first prototype reactor in just 6 weeks.",
+        "I spent the rest of my time there scaling up this initial reactor by a factor of 20. I also helped out with setting up our chemistry lab, hiring, and helping out the engineers working on our carbon capture and water electrolysis systems.",
+        "I had a great time working there, and if you're interested in joining Terraform and want to chat about it, please reach out!"
       ]
     },
     {
-      "_id": "question:before-mit",
+      "_id": "question:terraform-grad-school",
       "type": "question",
-      "text": "What did you work on before MIT?",
+      "text": "If you had such a great time in industry, why did you decide to go to graduate school?",
+      "label": "",
+      "paragraphs": []
+    },
+    {
+      "_id": "blurb:terraform-grad-school",
+      "type": "blurb",
+      "text": "",
+      "label": "",
+      "paragraphs": [
+        "The reason I joined Terraform was because I felt the technology Terraform was developing, carbon-neutral synthetic fuels, was the most promising technology to speed up our path toward net-zero that I could work on.",
+        "I still think synthetic fuels are quite promising, but during my time at Terraform I came to believe that whether synthetic fuels succeed will mostly come down to whether green hydrogen prices can be massively reduced in the near future.",
+        "I had some ideas about how to get hydrogen costs down, but developing a whole new type of device for green hydrogen production was too risky for Terraform to pursue, so I came to MIT to develop them instead."
+      ]
+    },
+    {
+      "_id": "question:terraform-reactor",
+      "type": "question",
+      "text": "Tell me more about this reactor...",
+      "label": "",
+      "paragraphs": []
+    },
+    {
+      "_id": "blurb:terraform-reactor",
+      "type": "blurb",
+      "text": "",
+      "label": "",
+      "paragraphs": [
+        "Hydrogen and carbon dioxide can react to form methane, methanol, or various other fuels. While this reaction is energetically favorable, it requires high temperatures around 350 C and pressures around 10 bar to get it going quickly.",
+        "The reaction can be catalyzed by a few metals, with nickel nanoparticles being the typical choice for industrial systems. Our first reactor prototype was a stainless steel tube loaded with a nickel catalyst. We could flow hydrogen and carbon dioxide into it at a controlled ratio, rate, temperature, and pressure.",
+        "I plan to add reactor photos and tour links here in a later content pass."
+      ]
+    },
+    {
+      "_id": "question:terraform-jobs",
+      "type": "question",
+      "text": "I want to work there. How?",
+      "label": "",
+      "paragraphs": []
+    },
+    {
+      "_id": "blurb:terraform-jobs",
+      "type": "blurb",
+      "text": "",
+      "label": "",
+      "paragraphs": [
+        "Terraform posts job listings on its website. The best way to apply is to send an email to hiring@terraformindustries.com with a one-page document explaining why your experience would position you well to help solve Terraform's hardest problems.",
+        "Terraform's founder, Casey Handmer, has written a lot about how he thinks about hiring. I'd recommend reading those posts before applying.",
+        "If you'd like to chat about my experience at Terraform, feel free to schedule a meeting with me or send me a message."
+      ]
+    },
+    {
+      "_id": "question:research",
+      "type": "question",
+      "text": "How does your research make green hydrogen cheaper?",
       "label": "B",
       "paragraphs": []
     },
     {
-      "_id": "blurb:before-mit",
+      "_id": "blurb:research",
       "type": "blurb",
       "text": "",
       "label": "",
       "paragraphs": [
-        "Before MIT, I worked on carbon-neutral synthetic fuel at Terraform Industries and conducted materials research at Berkeley and Stanford."
+        "Currently, green hydrogen is about 5x more expensive than hydrogen from fossil fuels. Green hydrogen is typically made by splitting water into hydrogen and oxygen.",
+        "Two things make this expensive: the cost of the electricity used to split the water, and the cost of the devices that use the energy to split the water. Historically, renewable electricity has been the major cost, but thanks to the rapid decline in the price of solar energy, the price of the devices is becoming the new bottleneck.",
+        "For my thesis research, I am developing a new type of device for green hydrogen production which sidesteps the primary engineering constraint that makes existing devices expensive. If this new type of device works, I believe it will be 10-20% the cost of existing solutions."
       ]
     },
     {
-      "_id": "question:writing-topics",
+      "_id": "question:research-device",
       "type": "question",
-      "text": "What kinds of topics do you write about?",
+      "text": "How does this new device work?",
+      "label": "",
+      "paragraphs": []
+    },
+    {
+      "_id": "blurb:research-device",
+      "type": "blurb",
+      "text": "",
+      "label": "",
+      "paragraphs": [
+        "An electrolysis device always performs two reactions, an oxidation reaction on the anode and a reduction reaction on the cathode. In a normal water electrolyzer, you oxidize water to oxygen and reduce water to hydrogen.",
+        "In a decoupled electrolyzer, instead of doing both water oxidation and water reduction in the same device, you split them up. Specifically, you add a new chemical into the electrolyte solution that can be oxidized instead of the water.",
+        "Then you pump this chemical out of the electrolysis cell and into a tank where, by exposing it to a catalyst, it produces the oxygen that you avoided producing in the electrolysis cell."
+      ]
+    },
+    {
+      "_id": "question:research-timeline",
+      "type": "question",
+      "text": "What's the timeline for getting it done?",
+      "label": "",
+      "paragraphs": []
+    },
+    {
+      "_id": "blurb:research-timeline",
+      "type": "blurb",
+      "text": "",
+      "label": "",
+      "paragraphs": [
+        "Research is inherently unpredictable, but we have a small prototype of this device already built.",
+        "Currently, we expect it to take another 9-18 months to optimize the performance of this small scale device and scale it up by a factor of 100. At that point it will become less of a research project and more of a pilot industrial process."
+      ]
+    },
+    {
+      "_id": "question:research-company",
+      "type": "question",
+      "text": "What do you plan on doing with it once you figure out how to make it work?",
+      "label": "",
+      "paragraphs": []
+    },
+    {
+      "_id": "blurb:research-company",
+      "type": "blurb",
+      "text": "",
+      "label": "",
+      "paragraphs": [
+        "Spin out a company to further scale up, manufacture, and commercialize these devices.",
+        "We expect them to be useful as replacements for existing hydrogen production needs, in the steel industry, and for the emerging synthetic fuel ecosystem."
+      ]
+    },
+    {
+      "_id": "question:research-publishing",
+      "type": "question",
+      "text": "Publishing... when?",
+      "label": "",
+      "paragraphs": []
+    },
+    {
+      "_id": "blurb:research-publishing",
+      "type": "blurb",
+      "text": "",
+      "label": "",
+      "paragraphs": [
+        "Publishing timelines are inherently unpredictable because research is inherently unpredictable. But hopefully another 9 months or so."
+      ]
+    },
+    {
+      "_id": "question:board-games",
+      "type": "question",
+      "text": "What kinds of board games?",
       "label": "C",
       "paragraphs": []
     },
     {
-      "_id": "blurb:writing-topics",
+      "_id": "blurb:board-games",
       "type": "blurb",
       "text": "",
       "label": "",
       "paragraphs": [
-        "I write about science and technology bottlenecks, practical engineering constraints, and the limiting factors that shape real-world progress."
+        "Many types! I'm a big fan of social deduction games, like Blood on the Clocktower, and deck-building games, like Dominion.",
+        "Over the last couple of years I've been playing a wide variety of games with my friends Liz and Paige, and we've been rating them. At the moment, our favorites are Harmonies and Ark Nova."
       ]
     },
     {
-      "_id": "question:reach-you",
+      "_id": "question:board-games-liz-paige",
       "type": "question",
-      "text": "What’s the best way to reach you?",
+      "text": "How did you meet Liz and Paige?",
+      "label": "",
+      "paragraphs": []
+    },
+    {
+      "_id": "blurb:board-games-liz-paige",
+      "type": "blurb",
+      "text": "",
+      "label": "",
+      "paragraphs": [
+        "They were my neighbors in 2025. We met at a block party on our street."
+      ]
+    },
+    {
+      "_id": "question:board-games-origin",
+      "type": "question",
+      "text": "How did you get into playing board games?",
+      "label": "",
+      "paragraphs": []
+    },
+    {
+      "_id": "blurb:board-games-origin",
+      "type": "blurb",
+      "text": "",
+      "label": "",
+      "paragraphs": [
+        "One of my friends in high school really liked board games and started a club. The club would play games in the large first-floor hallway where many people ate lunch.",
+        "Eventually about half of our class joined the club. It turns out board games are really fun."
+      ]
+    },
+    {
+      "_id": "question:board-games-where",
+      "type": "question",
+      "text": "Where do you usually play them?",
+      "label": "",
+      "paragraphs": []
+    },
+    {
+      "_id": "blurb:board-games-where",
+      "type": "blurb",
+      "text": "",
+      "label": "",
+      "paragraphs": [
+        "Recently, at Liz and Paige's house, which also gives me an excuse to play with their cats and dog."
+      ]
+    },
+    {
+      "_id": "question:live-forever",
+      "type": "question",
+      "text": "Do you really think you could live forever? Why?",
       "label": "D",
       "paragraphs": []
     },
     {
-      "_id": "blurb:reach-you",
+      "_id": "blurb:live-forever",
       "type": "blurb",
       "text": "",
       "label": "",
       "paragraphs": [
-        "The fastest path is usually Telegram, followed by email and LinkedIn."
+        "I don't think the odds are better than 50%, but I think it's possible.",
+        "Medical technology has advanced rapidly over the last two centuries. Many things once considered fatal no longer are. So the core idea is this: immediately after your death, we preserve your body in a state nearly immune from decay.",
+        "Then at some point in the relatively near future, medicine is likely to have advanced to the point where we can fix whatever problem caused you to die and resuscitate you."
+      ]
+    },
+    {
+      "_id": "question:live-forever-frozen",
+      "type": "question",
+      "text": "So you want to be frozen?",
+      "label": "",
+      "paragraphs": []
+    },
+    {
+      "_id": "blurb:live-forever-frozen",
+      "type": "blurb",
+      "text": "",
+      "label": "",
+      "paragraphs": [
+        "More or less, though the interesting question is not the freezing itself. The interesting question is whether preservation can retain enough information about the brain and body for future medicine to repair the underlying damage."
+      ]
+    },
+    {
+      "_id": "question:future",
+      "type": "question",
+      "text": "How do you predict the future?",
+      "label": "",
+      "paragraphs": []
+    },
+    {
+      "_id": "blurb:future",
+      "type": "blurb",
+      "text": "",
+      "label": "",
+      "paragraphs": [
+        "I am still drafting this answer. The short version is that I try to combine base rates, incentives, bottlenecks, and a lot of explicit uncertainty."
       ]
     }
   ],
   "edges": [
-    { "_id": "edge:intro-who-you-are", "fromNodeId": "blurb:intro", "toNodeId": "question:who-you-are", "kind": "shows_question", "order": 0 },
-    { "_id": "edge:who-you-are-answer", "fromNodeId": "question:who-you-are", "toNodeId": "blurb:who-you-are", "kind": "answers_with", "order": 0 },
-    { "_id": "edge:who-you-are-working-on", "fromNodeId": "blurb:who-you-are", "toNodeId": "question:what-working-on", "kind": "shows_question", "order": 0 },
-    { "_id": "edge:what-working-on-answer", "fromNodeId": "question:what-working-on", "toNodeId": "blurb:what-working-on", "kind": "answers_with", "order": 0 },
-    { "_id": "edge:working-on-currently-focused", "fromNodeId": "blurb:what-working-on", "toNodeId": "question:currently-focused", "kind": "shows_question", "order": 0 },
-    { "_id": "edge:currently-focused-answer", "fromNodeId": "question:currently-focused", "toNodeId": "blurb:currently-focused", "kind": "answers_with", "order": 0 },
-    { "_id": "edge:working-on-before-mit", "fromNodeId": "blurb:what-working-on", "toNodeId": "question:before-mit", "kind": "shows_question", "order": 1 },
-    { "_id": "edge:before-mit-answer", "fromNodeId": "question:before-mit", "toNodeId": "blurb:before-mit", "kind": "answers_with", "order": 0 },
-    { "_id": "edge:working-on-writing-topics", "fromNodeId": "blurb:what-working-on", "toNodeId": "question:writing-topics", "kind": "shows_question", "order": 2 },
-    { "_id": "edge:writing-topics-answer", "fromNodeId": "question:writing-topics", "toNodeId": "blurb:writing-topics", "kind": "answers_with", "order": 0 },
-    { "_id": "edge:working-on-reach-you", "fromNodeId": "blurb:what-working-on", "toNodeId": "question:reach-you", "kind": "shows_question", "order": 3 },
-    { "_id": "edge:reach-you-answer", "fromNodeId": "question:reach-you", "toNodeId": "blurb:reach-you", "kind": "answers_with", "order": 0 }
+    {
+      "_id": "edge:intro-who-you-are",
+      "fromNodeId": "blurb:intro",
+      "toNodeId": "question:who-you-are",
+      "kind": "shows_question",
+      "order": 0
+    },
+    {
+      "_id": "edge:who-you-are-answer",
+      "fromNodeId": "question:who-you-are",
+      "toNodeId": "blurb:who-you-are",
+      "kind": "answers_with",
+      "order": 0
+    },
+    {
+      "_id": "edge:who-you-are-working-on",
+      "fromNodeId": "blurb:who-you-are",
+      "toNodeId": "question:what-working-on",
+      "kind": "shows_question",
+      "order": 0
+    },
+    {
+      "_id": "edge:what-working-on-answer",
+      "fromNodeId": "question:what-working-on",
+      "toNodeId": "blurb:what-working-on",
+      "kind": "answers_with",
+      "order": 0
+    },
+    {
+      "_id": "edge:working-on-terraform",
+      "fromNodeId": "blurb:what-working-on",
+      "toNodeId": "question:terraform",
+      "kind": "shows_question",
+      "order": 0
+    },
+    {
+      "_id": "edge:terraform-answer",
+      "fromNodeId": "question:terraform",
+      "toNodeId": "blurb:terraform",
+      "kind": "answers_with",
+      "order": 0
+    },
+    {
+      "_id": "edge:terraform-terraform-grad-school",
+      "fromNodeId": "blurb:terraform",
+      "toNodeId": "question:terraform-grad-school",
+      "kind": "shows_question",
+      "order": 0
+    },
+    {
+      "_id": "edge:terraform-grad-school-answer",
+      "fromNodeId": "question:terraform-grad-school",
+      "toNodeId": "blurb:terraform-grad-school",
+      "kind": "answers_with",
+      "order": 0
+    },
+    {
+      "_id": "edge:terraform-terraform-reactor",
+      "fromNodeId": "blurb:terraform",
+      "toNodeId": "question:terraform-reactor",
+      "kind": "shows_question",
+      "order": 1
+    },
+    {
+      "_id": "edge:terraform-reactor-answer",
+      "fromNodeId": "question:terraform-reactor",
+      "toNodeId": "blurb:terraform-reactor",
+      "kind": "answers_with",
+      "order": 0
+    },
+    {
+      "_id": "edge:terraform-terraform-jobs",
+      "fromNodeId": "blurb:terraform",
+      "toNodeId": "question:terraform-jobs",
+      "kind": "shows_question",
+      "order": 2
+    },
+    {
+      "_id": "edge:terraform-jobs-answer",
+      "fromNodeId": "question:terraform-jobs",
+      "toNodeId": "blurb:terraform-jobs",
+      "kind": "answers_with",
+      "order": 0
+    },
+    {
+      "_id": "edge:working-on-research",
+      "fromNodeId": "blurb:what-working-on",
+      "toNodeId": "question:research",
+      "kind": "shows_question",
+      "order": 1
+    },
+    {
+      "_id": "edge:research-answer",
+      "fromNodeId": "question:research",
+      "toNodeId": "blurb:research",
+      "kind": "answers_with",
+      "order": 0
+    },
+    {
+      "_id": "edge:research-research-device",
+      "fromNodeId": "blurb:research",
+      "toNodeId": "question:research-device",
+      "kind": "shows_question",
+      "order": 0
+    },
+    {
+      "_id": "edge:research-device-answer",
+      "fromNodeId": "question:research-device",
+      "toNodeId": "blurb:research-device",
+      "kind": "answers_with",
+      "order": 0
+    },
+    {
+      "_id": "edge:research-research-timeline",
+      "fromNodeId": "blurb:research",
+      "toNodeId": "question:research-timeline",
+      "kind": "shows_question",
+      "order": 1
+    },
+    {
+      "_id": "edge:research-timeline-answer",
+      "fromNodeId": "question:research-timeline",
+      "toNodeId": "blurb:research-timeline",
+      "kind": "answers_with",
+      "order": 0
+    },
+    {
+      "_id": "edge:research-research-company",
+      "fromNodeId": "blurb:research",
+      "toNodeId": "question:research-company",
+      "kind": "shows_question",
+      "order": 2
+    },
+    {
+      "_id": "edge:research-company-answer",
+      "fromNodeId": "question:research-company",
+      "toNodeId": "blurb:research-company",
+      "kind": "answers_with",
+      "order": 0
+    },
+    {
+      "_id": "edge:research-research-publishing",
+      "fromNodeId": "blurb:research",
+      "toNodeId": "question:research-publishing",
+      "kind": "shows_question",
+      "order": 3
+    },
+    {
+      "_id": "edge:research-publishing-answer",
+      "fromNodeId": "question:research-publishing",
+      "toNodeId": "blurb:research-publishing",
+      "kind": "answers_with",
+      "order": 0
+    },
+    {
+      "_id": "edge:working-on-board-games",
+      "fromNodeId": "blurb:what-working-on",
+      "toNodeId": "question:board-games",
+      "kind": "shows_question",
+      "order": 2
+    },
+    {
+      "_id": "edge:board-games-answer",
+      "fromNodeId": "question:board-games",
+      "toNodeId": "blurb:board-games",
+      "kind": "answers_with",
+      "order": 0
+    },
+    {
+      "_id": "edge:board-games-board-games-liz-paige",
+      "fromNodeId": "blurb:board-games",
+      "toNodeId": "question:board-games-liz-paige",
+      "kind": "shows_question",
+      "order": 0
+    },
+    {
+      "_id": "edge:board-games-liz-paige-answer",
+      "fromNodeId": "question:board-games-liz-paige",
+      "toNodeId": "blurb:board-games-liz-paige",
+      "kind": "answers_with",
+      "order": 0
+    },
+    {
+      "_id": "edge:board-games-board-games-origin",
+      "fromNodeId": "blurb:board-games",
+      "toNodeId": "question:board-games-origin",
+      "kind": "shows_question",
+      "order": 1
+    },
+    {
+      "_id": "edge:board-games-origin-answer",
+      "fromNodeId": "question:board-games-origin",
+      "toNodeId": "blurb:board-games-origin",
+      "kind": "answers_with",
+      "order": 0
+    },
+    {
+      "_id": "edge:board-games-board-games-where",
+      "fromNodeId": "blurb:board-games",
+      "toNodeId": "question:board-games-where",
+      "kind": "shows_question",
+      "order": 2
+    },
+    {
+      "_id": "edge:board-games-where-answer",
+      "fromNodeId": "question:board-games-where",
+      "toNodeId": "blurb:board-games-where",
+      "kind": "answers_with",
+      "order": 0
+    },
+    {
+      "_id": "edge:working-on-live-forever",
+      "fromNodeId": "blurb:what-working-on",
+      "toNodeId": "question:live-forever",
+      "kind": "shows_question",
+      "order": 3
+    },
+    {
+      "_id": "edge:live-forever-answer",
+      "fromNodeId": "question:live-forever",
+      "toNodeId": "blurb:live-forever",
+      "kind": "answers_with",
+      "order": 0
+    },
+    {
+      "_id": "edge:live-forever-live-forever-frozen",
+      "fromNodeId": "blurb:live-forever",
+      "toNodeId": "question:live-forever-frozen",
+      "kind": "shows_question",
+      "order": 0
+    },
+    {
+      "_id": "edge:live-forever-frozen-answer",
+      "fromNodeId": "question:live-forever-frozen",
+      "toNodeId": "blurb:live-forever-frozen",
+      "kind": "answers_with",
+      "order": 0
+    },
+    {
+      "_id": "edge:live-forever-future",
+      "fromNodeId": "blurb:live-forever",
+      "toNodeId": "question:future",
+      "kind": "shows_question",
+      "order": 1
+    },
+    {
+      "_id": "edge:future-answer",
+      "fromNodeId": "question:future",
+      "toNodeId": "blurb:future",
+      "kind": "answers_with",
+      "order": 0
+    }
   ]
 }
