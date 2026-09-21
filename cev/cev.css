@@ -67,11 +67,11 @@ button {
 
 .site-menu-toggle {
   position: fixed;
-  top: 18px;
-  left: 18px;
+  top: 14px;
+  left: 14px;
   z-index: 40;
-  width: 52px;
-  height: 52px;
+  width: 68px;
+  height: 68px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -79,7 +79,7 @@ button {
   border-radius: 0;
   color: var(--dark-blue);
   background: transparent;
-  font-size: 1.8rem;
+  font-size: 2.25rem;
 }
 
 .site-menu-toggle:hover,
