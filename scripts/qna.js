@@ -292,9 +292,20 @@
     renderBlurb(blurb);
   }
 
-  function goBackOneStep() {
+  function animateBackButton() {
+    backButton.classList.remove('is-keyboard-activated');
+    void backButton.offsetWidth;
+    backButton.classList.add('is-keyboard-activated');
+    window.setTimeout(() => backButton.classList.remove('is-keyboard-activated'), 360);
+  }
+
+  function goBackOneStep({ animate = false } = {}) {
     if (state.isTransitioning || !state.blurbHistory.length) {
       return;
+    }
+
+    if (animate) {
+      animateBackButton();
     }
 
     const previousBlurbId = state.blurbHistory.pop();
@@ -460,7 +471,7 @@
 
     if (event.key === 'ArrowLeft') {
       event.preventDefault();
-      goBackOneStep();
+      goBackOneStep({ animate: true });
       return;
     }
 
