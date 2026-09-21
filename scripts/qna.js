@@ -279,7 +279,9 @@
   function updateNavigationButtons() {
     const hasHistory = state.blurbHistory.length > 0;
     backButton.hidden = !hasHistory;
+    backButton.classList.toggle('is-hidden', !hasHistory);
     resetButton.hidden = !hasHistory;
+    resetButton.classList.toggle('is-hidden', !hasHistory);
     syncBlurbScale();
   }
 

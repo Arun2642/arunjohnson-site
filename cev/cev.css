@@ -371,7 +371,11 @@ body.menu-open {
 }
 
 .icon-button[hidden] {
-  display: none;
+  display: none !important;
+}
+
+.icon-button.is-hidden {
+  display: none !important;
 }
 
 .icon-button.back-button {
