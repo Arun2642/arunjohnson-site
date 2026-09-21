@@ -183,6 +183,32 @@ body.menu-open {
   margin-bottom: 26px;
 }
 
+.last-question {
+  max-width: 760px;
+  margin: 0 auto 1.25rem;
+  padding: 0.1rem 0 0.1rem 1rem;
+  border-left: 4px solid var(--gold);
+  color: var(--dark-blue);
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.last-question::before {
+  content: "You asked";
+  display: block;
+  margin-bottom: 0.2rem;
+  color: var(--grey);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.last-question[hidden] {
+  display: none;
+}
+
 .profile-blurb {
   max-width: 760px;
   margin: 0 auto;
@@ -193,7 +219,7 @@ body.menu-open {
 }
 
 .profile-blurb.qa-condensed {
-  font-size: clamp(1.35rem, 3vw, 1.8rem);
+  font-size: clamp(1.2rem, 2.5vw, 1.6rem);
   line-height: 1.5;
 }
 

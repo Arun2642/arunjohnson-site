@@ -12,6 +12,7 @@
 
   const optionsEl = document.getElementById('question-options');
   const blurbEl = document.getElementById('profile-blurb');
+  const lastQuestionEl = document.getElementById('last-question');
   const backButton = document.getElementById('back-question');
   const resetButton = document.getElementById('reset-questions');
   const freeQuestionForm = document.getElementById('free-question-form');
@@ -164,6 +165,13 @@
     return answerEdge ? getNode(answerEdge.toNodeId) : null;
   }
 
+  function questionForBlurb(blurbId) {
+    const answerEdge = state.data.edges.find((edge) => (
+      edge.toNodeId === blurbId && edge.kind === 'answers_with'
+    ));
+    return answerEdge ? getNode(answerEdge.fromNodeId) : null;
+  }
+
   function makeButton(question, index) {
     const button = document.createElement('button');
     button.type = 'button';
@@ -171,8 +179,8 @@
     button.dataset.questionId = question._id;
 
     const label = document.createElement('span');
-    label.className = question.label ? 'option-letter' : 'option-letter subtle';
-    label.textContent = question.label || String(index + 1);
+    label.className = 'option-letter';
+    label.textContent = letterForIndex(index);
     button.appendChild(label);
 
     const text = document.createElement('span');
@@ -185,6 +193,10 @@
       selectQuestion(question, button);
     });
     return button;
+  }
+
+  function letterForIndex(index) {
+    return index < 26 ? String.fromCharCode(65 + index) : String(index + 1);
   }
 
   function renderQuestions(questions) {
@@ -207,6 +219,17 @@
       blurbEl.appendChild(p);
       appendFormattedText(p, paragraph);
     }
+  }
+
+  function renderLastQuestion(question) {
+    if (!question) {
+      lastQuestionEl.replaceChildren();
+      lastQuestionEl.hidden = true;
+      return;
+    }
+
+    lastQuestionEl.textContent = question.text;
+    lastQuestionEl.hidden = false;
   }
 
   function animateBlurbChange() {
@@ -247,6 +270,7 @@
     }
 
     state.currentBlurbId = answer._id;
+    renderLastQuestion(question);
     renderBlurb(answer);
     animateBlurbChange();
     renderQuestions(visibleQuestionsForBlurb(answer._id));
@@ -282,6 +306,7 @@
 
     state.activeQuestion = null;
     state.currentBlurbId = previousBlurb._id;
+    renderLastQuestion(questionForBlurb(previousBlurb._id));
     renderBlurbForNavigation(previousBlurb);
     animateBlurbChange();
     renderQuestions(visibleQuestionsForBlurb(previousBlurb._id));
@@ -300,6 +325,7 @@
     }
 
     state.currentBlurbId = root._id;
+    renderLastQuestion(null);
     renderRootBlurb(root);
     renderQuestions(visibleQuestionsForBlurb(root._id));
     updateNavigationButtons();
@@ -380,6 +406,7 @@
 
         state.currentBlurbId = root._id;
         state.blurbHistory = [];
+        renderLastQuestion(null);
         renderRootBlurb(root);
         renderQuestions(visibleQuestionsForBlurb(root._id));
         updateNavigationButtons();
@@ -442,7 +469,7 @@
     }
 
     const key = event.key.toLowerCase();
-    if (!/^[a-d]$/.test(key)) {
+    if (!/^[a-z]$/.test(key)) {
       return;
     }
 
