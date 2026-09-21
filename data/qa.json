@@ -1,0 +1,22 @@
+[
+  {
+    "id": "A",
+    "question": "What are you currently focused on?",
+    "answer": "I’m a graduate student in Chemical Engineering at MIT, focused on electrochemical systems that can reduce the cost of green hydrogen production by an order of magnitude."
+  },
+  {
+    "id": "B",
+    "question": "What did you work on before MIT?",
+    "answer": "Before MIT, I worked on carbon-neutral synthetic fuel at Terraform Industries and conducted materials research at Berkeley and Stanford."
+  },
+  {
+    "id": "C",
+    "question": "What kinds of topics do you write about?",
+    "answer": "I write about science and technology bottlenecks, practical engineering constraints, and the limiting factors that shape real-world progress."
+  },
+  {
+    "id": "D",
+    "question": "What’s the best way to reach you?",
+    "answer": "The fastest path is usually Telegram, followed by email and LinkedIn."
+  }
+]
