@@ -215,6 +215,10 @@
     blurbEl.classList.add('qa-updated');
   }
 
+  function syncBlurbScale() {
+    blurbEl.classList.toggle('qa-condensed', state.blurbHistory.length > 0);
+  }
+
   async function selectQuestion(question, button) {
     if (state.isTransitioning) {
       return;
@@ -252,6 +256,7 @@
     const hasHistory = state.blurbHistory.length > 0;
     backButton.hidden = !hasHistory;
     resetButton.hidden = !hasHistory;
+    syncBlurbScale();
   }
 
   function renderBlurbForNavigation(blurb) {

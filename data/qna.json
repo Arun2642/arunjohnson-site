@@ -4,226 +4,274 @@
   "formEndpoint": "https://formsubmit.co/ajax/arun2642@gmail.com",
   "layout": [
     {
-      "_id": "6ab07feeed6a8ae9f890ded4",
       "nodeId": "blurb:intro",
-      "x": 80,
-      "y": 260
-    },
-    {
-      "_id": "6ab07feeed6a8ae9f890ded5",
-      "nodeId": "question:who-you-are",
-      "x": 430,
-      "y": 260
-    },
-    {
-      "_id": "6ab07feeed6a8ae9f890ded6",
-      "nodeId": "blurb:who-you-are",
-      "x": 800,
-      "y": 260
+      "x": -410,
+      "y": 1320
     },
     {
       "_id": "6ab07feeed6a8ae9f890ded7",
       "nodeId": "question:what-working-on",
-      "x": 1130,
-      "y": 260
+      "x": 410,
+      "y": 1320,
+      "updatedAt": "2026-09-21T16:48:13.540487+00:00"
     },
     {
       "_id": "6ab07feeed6a8ae9f890ded8",
       "nodeId": "blurb:what-working-on",
-      "x": 1500,
-      "y": 260
+      "x": 820,
+      "y": 1320,
+      "updatedAt": "2026-09-21T16:48:13.543110+00:00"
     },
     {
       "_id": "6ab07feeed6a8ae9f890ded9",
       "nodeId": "question:terraform",
-      "x": 1870,
-      "y": 80
+      "x": 1230,
+      "y": 220,
+      "updatedAt": "2026-09-21T16:48:13.545322+00:00"
     },
     {
       "_id": "6ab07feeed6a8ae9f890deda",
       "nodeId": "blurb:terraform",
-      "x": 2240,
-      "y": 80
+      "x": 1640,
+      "y": 220,
+      "updatedAt": "2026-09-21T16:48:13.547120+00:00"
     },
     {
       "_id": "6ab07feeed6a8ae9f890dedb",
       "nodeId": "question:terraform-grad-school",
-      "x": 2610,
-      "y": 30
+      "x": 2050,
+      "y": 0,
+      "updatedAt": "2026-09-21T16:48:13.548593+00:00"
     },
     {
       "_id": "6ab07feeed6a8ae9f890dedc",
       "nodeId": "blurb:terraform-grad-school",
-      "x": 2980,
-      "y": 30
+      "x": 2460,
+      "y": 0,
+      "updatedAt": "2026-09-21T16:48:13.550191+00:00"
     },
     {
       "_id": "6ab07feeed6a8ae9f890dedd",
       "nodeId": "question:terraform-reactor",
-      "x": 2610,
-      "y": 115
+      "x": 2050,
+      "y": 220,
+      "updatedAt": "2026-09-21T16:48:13.551787+00:00"
     },
     {
       "_id": "6ab07feeed6a8ae9f890dede",
       "nodeId": "blurb:terraform-reactor",
-      "x": 2980,
-      "y": 115
+      "x": 2460,
+      "y": 220,
+      "updatedAt": "2026-09-21T16:48:13.553265+00:00"
     },
     {
       "_id": "6ab07feeed6a8ae9f890dedf",
       "nodeId": "question:terraform-jobs",
-      "x": 2610,
-      "y": 200
+      "x": 2050,
+      "y": 440,
+      "updatedAt": "2026-09-21T16:48:13.554967+00:00"
     },
     {
       "_id": "6ab07feeed6a8ae9f890dee0",
       "nodeId": "blurb:terraform-jobs",
-      "x": 2980,
-      "y": 200
+      "x": 2460,
+      "y": 440,
+      "updatedAt": "2026-09-21T16:48:13.556612+00:00"
     },
     {
       "_id": "6ab07feeed6a8ae9f890dee1",
       "nodeId": "question:research",
-      "x": 1870,
-      "y": 250
+      "x": 1230,
+      "y": 990,
+      "updatedAt": "2026-09-21T16:48:13.558148+00:00"
     },
     {
       "_id": "6ab07feeed6a8ae9f890dee2",
       "nodeId": "blurb:research",
-      "x": 2240,
-      "y": 250
+      "x": 1640,
+      "y": 990,
+      "updatedAt": "2026-09-21T16:48:13.559816+00:00"
     },
     {
       "_id": "6ab07feeed6a8ae9f890dee3",
       "nodeId": "question:research-device",
-      "x": 2610,
-      "y": 285
+      "x": 2050,
+      "y": 660,
+      "updatedAt": "2026-09-21T16:48:13.561572+00:00"
     },
     {
       "_id": "6ab07feeed6a8ae9f890dee4",
       "nodeId": "blurb:research-device",
-      "x": 2980,
-      "y": 285
+      "x": 2460,
+      "y": 660,
+      "updatedAt": "2026-09-21T16:48:13.563437+00:00"
     },
     {
       "_id": "6ab07feeed6a8ae9f890dee5",
       "nodeId": "question:research-timeline",
-      "x": 2610,
-      "y": 370
+      "x": 2050,
+      "y": 880,
+      "updatedAt": "2026-09-21T16:48:13.564813+00:00"
     },
     {
       "_id": "6ab07feeed6a8ae9f890dee6",
       "nodeId": "blurb:research-timeline",
-      "x": 2980,
-      "y": 370
+      "x": 2460,
+      "y": 880,
+      "updatedAt": "2026-09-21T16:48:13.566058+00:00"
     },
     {
       "_id": "6ab07feeed6a8ae9f890dee7",
       "nodeId": "question:research-company",
-      "x": 2610,
-      "y": 455
+      "x": 2050,
+      "y": 1100,
+      "updatedAt": "2026-09-21T16:48:13.567456+00:00"
     },
     {
       "_id": "6ab07feeed6a8ae9f890dee8",
       "nodeId": "blurb:research-company",
-      "x": 2980,
-      "y": 455
+      "x": 2460,
+      "y": 1100,
+      "updatedAt": "2026-09-21T16:48:13.569084+00:00"
     },
     {
       "_id": "6ab07feeed6a8ae9f890dee9",
       "nodeId": "question:research-publishing",
-      "x": 2610,
-      "y": 540
+      "x": 2050,
+      "y": 1320,
+      "updatedAt": "2026-09-21T16:48:13.570367+00:00"
     },
     {
       "_id": "6ab07feeed6a8ae9f890deea",
       "nodeId": "blurb:research-publishing",
-      "x": 2980,
-      "y": 540
+      "x": 2460,
+      "y": 1320,
+      "updatedAt": "2026-09-21T16:48:13.571865+00:00"
     },
     {
       "_id": "6ab07feeed6a8ae9f890deeb",
       "nodeId": "question:board-games",
-      "x": 1870,
-      "y": 420
+      "x": 1230,
+      "y": 1760,
+      "updatedAt": "2026-09-21T16:48:13.573397+00:00"
     },
     {
       "_id": "6ab07feeed6a8ae9f890deec",
       "nodeId": "blurb:board-games",
-      "x": 2240,
-      "y": 420
+      "x": 1640,
+      "y": 1760,
+      "updatedAt": "2026-09-21T16:48:13.575182+00:00"
     },
     {
       "_id": "6ab07feeed6a8ae9f890deed",
       "nodeId": "question:board-games-liz-paige",
-      "x": 2610,
-      "y": 625
+      "x": 2050,
+      "y": 1540,
+      "updatedAt": "2026-09-21T16:48:13.576819+00:00"
     },
     {
       "_id": "6ab07feeed6a8ae9f890deee",
       "nodeId": "blurb:board-games-liz-paige",
-      "x": 2980,
-      "y": 625
+      "x": 2460,
+      "y": 1540,
+      "updatedAt": "2026-09-21T16:48:13.578598+00:00"
     },
     {
       "_id": "6ab07feeed6a8ae9f890deef",
       "nodeId": "question:board-games-origin",
-      "x": 2610,
-      "y": 710
+      "x": 2050,
+      "y": 1760,
+      "updatedAt": "2026-09-21T16:48:13.579984+00:00"
     },
     {
       "_id": "6ab07feeed6a8ae9f890def0",
       "nodeId": "blurb:board-games-origin",
-      "x": 2980,
-      "y": 710
+      "x": 2460,
+      "y": 1760,
+      "updatedAt": "2026-09-21T16:48:13.581516+00:00"
     },
     {
       "_id": "6ab07feeed6a8ae9f890def1",
       "nodeId": "question:board-games-where",
-      "x": 2610,
-      "y": 795
+      "x": 2050,
+      "y": 1980,
+      "updatedAt": "2026-09-21T16:48:13.583745+00:00"
     },
     {
       "_id": "6ab07feeed6a8ae9f890def2",
       "nodeId": "blurb:board-games-where",
-      "x": 2980,
-      "y": 795
+      "x": 2460,
+      "y": 1980,
+      "updatedAt": "2026-09-21T16:48:13.585589+00:00"
     },
     {
       "_id": "6ab07feeed6a8ae9f890def3",
       "nodeId": "question:live-forever",
-      "x": 1870,
-      "y": 590
+      "x": 976.9390062455352,
+      "y": 683.8641739802446,
+      "updatedAt": "2026-09-21T16:46:30.240556+00:00"
     },
     {
       "_id": "6ab07feeed6a8ae9f890def4",
       "nodeId": "blurb:live-forever",
-      "x": 2240,
-      "y": 590
+      "x": 2460,
+      "y": 2200,
+      "updatedAt": "2026-09-21T16:48:13.587255+00:00"
     },
     {
       "_id": "6ab07feeed6a8ae9f890def5",
       "nodeId": "question:live-forever-frozen",
-      "x": 2610,
-      "y": 880
+      "x": 2870,
+      "y": 2090,
+      "updatedAt": "2026-09-21T16:48:13.588912+00:00"
     },
     {
       "_id": "6ab07feeed6a8ae9f890def6",
       "nodeId": "blurb:live-forever-frozen",
-      "x": 2980,
-      "y": 880
+      "x": 3280,
+      "y": 2090,
+      "updatedAt": "2026-09-21T16:48:13.590795+00:00"
     },
     {
       "_id": "6ab07feeed6a8ae9f890def7",
       "nodeId": "question:future",
-      "x": 2610,
-      "y": 965
+      "x": 2870,
+      "y": 2310,
+      "updatedAt": "2026-09-21T16:48:13.592356+00:00"
     },
     {
       "_id": "6ab07feeed6a8ae9f890def8",
       "nodeId": "blurb:future",
-      "x": 2980,
-      "y": 965
+      "x": 3280,
+      "y": 2310,
+      "updatedAt": "2026-09-21T16:48:13.593841+00:00"
+    },
+    {
+      "_id": "6ab15ea10cc3761112ff6ff3",
+      "nodeId": "6ab15ea11957ad8130e44468",
+      "x": 1230,
+      "y": 2200,
+      "updatedAt": "2026-09-21T16:48:13.595396+00:00"
+    },
+    {
+      "_id": "6ab15ec70cc3761112ff6ff4",
+      "nodeId": "6ab15ec71957ad8130e4446a",
+      "x": 1640,
+      "y": 2200,
+      "updatedAt": "2026-09-21T16:48:13.597458+00:00"
+    },
+    {
+      "_id": "6ab15f430cc3761112ff6ff5",
+      "nodeId": "6ab15f431957ad8130e4446b",
+      "x": 2050,
+      "y": 2200,
+      "updatedAt": "2026-09-21T16:48:13.599132+00:00"
+    },
+    {
+      "_id": "6ab15f680cc3761112ff6ff6",
+      "nodeId": "6ab15f681957ad8130e4446f",
+      "x": 1582.4803086811803,
+      "y": 721.6093363786907
     }
   ],
   "nodes": [
@@ -234,29 +282,7 @@
       "label": "",
       "paragraphs": [
         "Hello! I'm [Arun](https://www.linkedin.com/in/arunsjohnson/)."
-      ],
-      "createdAt": "2026-09-21T00:53:02.264272+00:00",
-      "updatedAt": "2026-09-21T00:53:02.264272+00:00"
-    },
-    {
-      "_id": "question:who-you-are",
-      "type": "question",
-      "text": "Who are you?",
-      "label": "A",
-      "paragraphs": [],
-      "createdAt": "2026-09-21T00:53:02.264334+00:00",
-      "updatedAt": "2026-09-21T00:53:02.264334+00:00"
-    },
-    {
-      "_id": "blurb:who-you-are",
-      "type": "blurb",
-      "text": "",
-      "label": "",
-      "paragraphs": [
-        "Hello! I'm [Arun](https://www.linkedin.com/in/arunsjohnson/), a 4th year PhD student of Chemical Engineering in the [Brushett Lab](https://brushettresearchgroup.mit.edu/) at MIT."
-      ],
-      "createdAt": "2026-09-21T00:53:02.264345+00:00",
-      "updatedAt": "2026-09-21T00:53:02.264345+00:00"
+      ]
     },
     {
       "_id": "question:what-working-on",
@@ -277,8 +303,8 @@
         "I'm a 3rd year PhD student in ChemE at MIT, where I work on making 10x cheaper green hydrogen in the [Brushett Lab](https://brushettresearchgroup.mit.edu/). I previously worked at Terraform Industries on synthetic fuel production. I'm interested in energy, sustainable resource extraction, and research automation. My hobbies include board games, bouldering, reading, and juggling. My other interests include researching how to live forever and predicting the future."
       ],
       "createdAt": "2026-09-21T00:53:02.264358+00:00",
-      "updatedAt": "2026-09-21T00:59:24.367177+00:00",
-      "html": "<p>Hello! I'm <a href=\"https://www.linkedin.com/in/arunsjohnson/\">Arun</a>. I'm a 4th year PhD student in ChemE at MIT, where I work on making 10x cheaper green hydrogen in the <a href=\"https://brushettresearchgroup.mit.edu/\">Brushett Lab</a>. I previously worked at <a href=\"https://terraformindustries.com/\">Terraform Industries</a> on synthetic fuel production. I'm interested in energy, sustainable resource extraction, and research automation. My hobbies include board games, bouldering, reading, and juggling. My other interests include researching how to live forever and predicting the future.</p>"
+      "updatedAt": "2026-09-21T16:41:19.747383+00:00",
+      "html": "<p>Hello! I'm <a href=\"https://www.linkedin.com/in/arunsjohnson/\">Arun</a>. I'm a 4th year PhD student in ChemE at MIT, where I work on making 10x cheaper green hydrogen in the <a href=\"https://brushettresearchgroup.mit.edu/\">Brushett Lab</a>. <br><br>I previously worked at <a href=\"https://terraformindustries.com/\">Terraform Industries</a> on synthetic fuel production.<br><br>I'm interested in energy, sustainable resource extraction, and research automation. My hobbies include board games, bouldering, reading, and juggling.<br><br>I'm also interested in forecasting and longevity research.&nbsp;</p>"
     },
     {
       "_id": "question:terraform",
@@ -560,11 +586,11 @@
     {
       "_id": "question:live-forever",
       "type": "question",
-      "text": "Do you really think you could live forever? Why?",
+      "text": "Forecasting.... like the weather?",
       "label": "D",
       "paragraphs": [],
       "createdAt": "2026-09-21T00:53:02.264522+00:00",
-      "updatedAt": "2026-09-21T00:53:02.264522+00:00"
+      "updatedAt": "2026-09-21T16:43:03.340094+00:00"
     },
     {
       "_id": "blurb:live-forever",
@@ -618,35 +644,59 @@
       ],
       "createdAt": "2026-09-21T00:53:02.264546+00:00",
       "updatedAt": "2026-09-21T00:53:02.264546+00:00"
+    },
+    {
+      "_id": "6ab15ea11957ad8130e44468",
+      "type": "question",
+      "text": "What is longevity research?",
+      "paragraphs": [],
+      "html": "",
+      "label": "",
+      "createdAt": "2026-09-21T16:43:13.148672+00:00",
+      "updatedAt": "2026-09-21T16:43:34.360082+00:00"
+    },
+    {
+      "_id": "6ab15ec71957ad8130e4446a",
+      "type": "blurb",
+      "text": "",
+      "paragraphs": [
+        "New blurb"
+      ],
+      "html": "<p>Research into slowing, halting, or even reversing human aging. Rather than tackling all of the various diseases that are symptoms of aging (cancer, Alzheimer's, heart disease), what if we treated the underlying cause instead?&nbsp;</p>",
+      "label": "",
+      "createdAt": "2026-09-21T16:43:51.701875+00:00",
+      "updatedAt": "2026-09-21T16:45:51.891689+00:00"
+    },
+    {
+      "_id": "6ab15f431957ad8130e4446b",
+      "type": "question",
+      "text": "Do you really think it's possible to halt or reverse aging in our lifetime?",
+      "paragraphs": [],
+      "html": "",
+      "label": "",
+      "createdAt": "2026-09-21T16:45:55.365630+00:00",
+      "updatedAt": "2026-09-21T16:46:25.801320+00:00"
+    },
+    {
+      "_id": "6ab15f681957ad8130e4446f",
+      "type": "blurb",
+      "text": "",
+      "paragraphs": [
+        "New blurb"
+      ],
+      "html": "",
+      "label": "",
+      "createdAt": "2026-09-21T16:46:32.757267+00:00",
+      "updatedAt": "2026-09-21T16:46:32.757282+00:00"
     }
   ],
   "edges": [
     {
-      "_id": "edge:intro-who-you-are",
+      "_id": "edge:intro-what-working-on",
       "fromNodeId": "blurb:intro",
-      "toNodeId": "question:who-you-are",
-      "kind": "shows_question",
-      "order": 0,
-      "createdAt": "2026-09-21T00:53:02.264556+00:00",
-      "updatedAt": "2026-09-21T00:53:02.264556+00:00"
-    },
-    {
-      "_id": "edge:who-you-are-answer",
-      "fromNodeId": "question:who-you-are",
-      "toNodeId": "blurb:who-you-are",
-      "kind": "answers_with",
-      "order": 0,
-      "createdAt": "2026-09-21T00:53:02.264563+00:00",
-      "updatedAt": "2026-09-21T00:53:02.264563+00:00"
-    },
-    {
-      "_id": "edge:who-you-are-working-on",
-      "fromNodeId": "blurb:who-you-are",
       "toNodeId": "question:what-working-on",
       "kind": "shows_question",
-      "order": 0,
-      "createdAt": "2026-09-21T00:53:02.264568+00:00",
-      "updatedAt": "2026-09-21T00:53:02.264568+00:00"
+      "order": 0
     },
     {
       "_id": "edge:what-working-on-answer",
@@ -901,15 +951,6 @@
       "updatedAt": "2026-09-21T00:53:02.264727+00:00"
     },
     {
-      "_id": "edge:live-forever-answer",
-      "fromNodeId": "question:live-forever",
-      "toNodeId": "blurb:live-forever",
-      "kind": "answers_with",
-      "order": 0,
-      "createdAt": "2026-09-21T00:53:02.264732+00:00",
-      "updatedAt": "2026-09-21T00:53:02.264732+00:00"
-    },
-    {
       "_id": "edge:live-forever-live-forever-frozen",
       "fromNodeId": "blurb:live-forever",
       "toNodeId": "question:live-forever-frozen",
@@ -944,6 +985,42 @@
       "order": 0,
       "createdAt": "2026-09-21T00:53:02.264751+00:00",
       "updatedAt": "2026-09-21T00:53:02.264751+00:00"
+    },
+    {
+      "_id": "6ab15ec01957ad8130e44469",
+      "fromNodeId": "blurb:what-working-on",
+      "toNodeId": "6ab15ea11957ad8130e44468",
+      "kind": "shows_question",
+      "order": 4,
+      "createdAt": "2026-09-21T16:43:44.935213+00:00",
+      "updatedAt": "2026-09-21T16:43:44.935238+00:00"
+    },
+    {
+      "_id": "6ab15f541957ad8130e4446c",
+      "fromNodeId": "6ab15ec71957ad8130e4446a",
+      "toNodeId": "6ab15f431957ad8130e4446b",
+      "kind": "shows_question",
+      "order": 0,
+      "createdAt": "2026-09-21T16:46:12.612770+00:00",
+      "updatedAt": "2026-09-21T16:46:12.612802+00:00"
+    },
+    {
+      "_id": "6ab15f581957ad8130e4446d",
+      "fromNodeId": "6ab15f431957ad8130e4446b",
+      "toNodeId": "blurb:live-forever",
+      "kind": "answers_with",
+      "order": 0,
+      "createdAt": "2026-09-21T16:46:16.306546+00:00",
+      "updatedAt": "2026-09-21T16:46:16.306563+00:00"
+    },
+    {
+      "_id": "6ab15f5c1957ad8130e4446e",
+      "fromNodeId": "6ab15ea11957ad8130e44468",
+      "toNodeId": "6ab15ec71957ad8130e4446a",
+      "kind": "answers_with",
+      "order": 0,
+      "createdAt": "2026-09-21T16:46:20.245970+00:00",
+      "updatedAt": "2026-09-21T16:46:20.246003+00:00"
     }
   ]
 }

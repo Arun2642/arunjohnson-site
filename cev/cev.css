@@ -149,8 +149,13 @@ body.menu-open {
   position: absolute;
   top: 0;
   right: 0;
-  display: flex;
-  gap: 8px;
+}
+
+.back-button {
+  position: absolute;
+  top: clamp(34px, calc(19vw - 28px), 50px);
+  left: calc(50% - min(77px, 19vw) - 74px);
+  z-index: 5;
 }
 
 .portrait-wrap {
@@ -169,6 +174,8 @@ body.menu-open {
   height: 100%;
   display: block;
   object-fit: cover;
+  transform: translateY(4%) scale(1.15);
+  transform-origin: center center;
 }
 
 .current-response {
@@ -182,6 +189,12 @@ body.menu-open {
   color: var(--muted);
   font-size: clamp(1.7rem, 4vw, 2.35rem);
   line-height: 1.35;
+  transition: font-size 180ms ease, line-height 180ms ease;
+}
+
+.profile-blurb.qa-condensed {
+  font-size: clamp(1.35rem, 3vw, 1.8rem);
+  line-height: 1.5;
 }
 
 .profile-blurb.qa-updated {
@@ -340,6 +353,12 @@ body.menu-open {
 .icon-button {
   width: 34px;
   height: 34px;
+}
+
+.icon-button.back-button {
+  width: 56px;
+  height: 56px;
+  font-size: 1.45rem;
 }
 
 .send-button {
