@@ -143,6 +143,7 @@ body.menu-open {
 .qa-card {
   position: relative;
   padding: 0;
+  --blurb-column-width: min(760px, 100%);
 }
 
 .qa-actions {
@@ -154,7 +155,7 @@ body.menu-open {
 .back-button {
   position: absolute;
   top: clamp(34px, calc(19vw - 28px), 50px);
-  left: max(0px, calc((100% - 760px) / 2));
+  left: calc((100% - var(--blurb-column-width)) / 2);
   z-index: 5;
 }
 
@@ -184,7 +185,7 @@ body.menu-open {
 }
 
 .last-question {
-  max-width: 760px;
+  max-width: var(--blurb-column-width);
   margin: 0 auto 1.25rem;
   padding: 0.1rem 0 0.1rem 1rem;
   border-left: 4px solid var(--gold);
@@ -199,7 +200,7 @@ body.menu-open {
 }
 
 .profile-blurb {
-  max-width: 760px;
+  max-width: var(--blurb-column-width);
   margin: 0 auto;
   color: var(--muted);
   font-size: clamp(1.7rem, 4vw, 2.35rem);
