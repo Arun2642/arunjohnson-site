@@ -70,22 +70,22 @@ button {
   top: 18px;
   left: 18px;
   z-index: 40;
-  width: 44px;
-  height: 44px;
+  width: 36px;
+  height: 36px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border: 2px solid var(--dark-blue);
-  border-radius: 50%;
-  color: var(--white);
-  background: var(--dark-blue);
-  font-size: 1.1rem;
+  border: 0;
+  border-radius: 0;
+  color: var(--dark-blue);
+  background: transparent;
+  font-size: 1.35rem;
 }
 
 .site-menu-toggle:hover,
 .site-menu-toggle:focus-visible {
-  border-color: var(--mit-red);
-  background: var(--mit-red);
+  color: var(--mit-red);
+  background: transparent;
   outline: none;
 }
 
@@ -117,13 +117,23 @@ button {
   color: var(--dark-blue);
   font-size: clamp(1.5rem, 4vw, 2.35rem);
   font-weight: 700;
-  text-decoration: none;
+  text-decoration: underline;
+  text-decoration-color: var(--gold);
+  text-decoration-thickness: 3px;
+  text-underline-offset: 0.16em;
 }
 
 .site-menu-inner a:hover,
 .site-menu-inner a:focus-visible {
   color: var(--mit-red);
+  text-decoration-color: var(--mit-red);
   outline: none;
+}
+
+.site-menu-inner .resume-link i {
+  margin-left: 0.28em;
+  color: var(--gold);
+  font-size: 0.72em;
 }
 
 body.menu-open {
