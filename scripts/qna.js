@@ -207,10 +207,10 @@
     }
   }
 
-  function flashScreen() {
-    document.body.classList.remove('qa-flash');
-    void document.body.offsetWidth;
-    document.body.classList.add('qa-flash');
+  function animateBlurbChange() {
+    blurbEl.classList.remove('qa-updated');
+    void blurbEl.offsetWidth;
+    blurbEl.classList.add('qa-updated');
   }
 
   async function selectQuestion(question, button) {
@@ -236,7 +236,7 @@
 
     state.currentBlurbId = answer._id;
     renderBlurb(answer);
-    flashScreen();
+    animateBlurbChange();
     renderQuestions(visibleQuestionsForBlurb(answer._id));
   }
 
