@@ -15,6 +15,19 @@
   <link rel="stylesheet" href="cev.css">
 </head>
 <body class="cev-page" data-qna-api="/api/qna/public" data-qna-static="../data/qna.json">
+<button id="site-menu-toggle" class="site-menu-toggle" type="button" aria-label="Open site menu" aria-controls="site-menu" aria-expanded="false">
+  <i class="fa-solid fa-bars" aria-hidden="true"></i>
+</button>
+<nav id="site-menu" class="site-menu" aria-label="Main site menu" hidden>
+  <div class="site-menu-inner">
+    <a href="https://arunjohnson.com/#contact">Contact</a>
+    <a href="https://arunjohnson.com/#publications">Publications</a>
+    <a href="https://arunjohnson.com/#work">Work</a>
+    <a href="https://arunjohnson.com/new-years-resolutions.html">New Year's Resolutions</a>
+    <a href="https://limiting.substack.com" target="_blank" rel="noopener noreferrer">Blog (Nichrome)</a>
+    <a href="https://t.me/s/nichromewire" target="_blank" rel="noopener noreferrer">Nichrome Shorts</a>
+  </div>
+</nav>
 <main class="qa-shell">
   <section class="qa-card" aria-label="Ask Arun about green hydrogen">
     <div class="qa-actions">
@@ -33,10 +46,6 @@
       </div>
     </div>
 
-    <div class="question-heading">
-      <h2>Ask a question</h2>
-      <p>Choose a path to explore the project.</p>
-    </div>
     <div id="question-options" class="question-options" aria-live="polite"></div>
 
     <form id="free-question-form" class="free-question-form">

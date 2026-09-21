@@ -19,6 +19,20 @@
   const visitorEmailInput = document.getElementById('visitor-email');
   const draftMessageInput = document.getElementById('draft-message');
   const emailStatus = document.getElementById('email-status');
+  const menuToggle = document.getElementById('site-menu-toggle');
+  const siteMenu = document.getElementById('site-menu');
+
+  function setMenuOpen(isOpen) {
+    if (!menuToggle || !siteMenu) {
+      return;
+    }
+
+    siteMenu.hidden = !isOpen;
+    document.body.classList.toggle('menu-open', isOpen);
+    menuToggle.setAttribute('aria-expanded', String(isOpen));
+    menuToggle.setAttribute('aria-label', isOpen ? 'Close site menu' : 'Open site menu');
+    menuToggle.querySelector('i').className = isOpen ? 'fa-solid fa-xmark' : 'fa-solid fa-bars';
+  }
 
   function getNode(id) {
     return state.nodesById.get(id);
@@ -330,6 +344,15 @@
   resetButton.addEventListener('click', resetQuestions);
   closeEmailDraft.addEventListener('click', hideEmailDraft);
 
+  if (menuToggle && siteMenu) {
+    menuToggle.addEventListener('click', () => setMenuOpen(siteMenu.hidden));
+    siteMenu.addEventListener('click', (event) => {
+      if (event.target.closest('a')) {
+        setMenuOpen(false);
+      }
+    });
+  }
+
   freeQuestionInput.addEventListener('input', autoresizeInput);
   freeQuestionInput.addEventListener('keydown', (event) => {
     if (event.key === 'Enter' && !event.shiftKey) {
@@ -339,6 +362,16 @@
   });
 
   document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && menuToggle && !siteMenu.hidden) {
+      setMenuOpen(false);
+      menuToggle.focus();
+      return;
+    }
+
+    if (siteMenu && !siteMenu.hidden) {
+      return;
+    }
+
     const activeElement = document.activeElement;
     const isTyping = activeElement && ['INPUT', 'TEXTAREA'].includes(activeElement.tagName);
     const hasModifier = event.ctrlKey || event.metaKey || event.altKey || event.shiftKey;
